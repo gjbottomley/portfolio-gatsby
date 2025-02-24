@@ -3,16 +3,16 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `Freedom Wellness`,
-    description: `Coming soon, Wellness, Health, Lifestyle...`,
+    title: `George Bottomley - Portfolio`,
+    description: `George Bottomley's portfolio website.`,
     image: `/logo.png`,
-    ogImage: '/og.png',
-    siteUrl: `https://www.freedomwellness.co.nz`,
+    ogImage: "/og.png",
+    siteUrl: `https://www.george-bottomley.co.nz`,
   },
   plugins: [
     "gatsby-plugin-sass",
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
-    ]
+  ],
 };

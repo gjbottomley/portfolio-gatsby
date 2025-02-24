@@ -4,12 +4,13 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby Minimal Starter
+  George Bottomley Portfolio
 </h1>
 
 ## 🚀 Quick start
 
 **Dependancies**
+
 ```shell
 nvm install 20.8.0
 ```
@@ -19,7 +20,7 @@ nvm install 20.8.0
     Navigate into your new site’s directory and start it up.
 
     ```shell
-    cd maintenance/
+    cd portfolio-gatsby/
     npm run develop
     ```
 
