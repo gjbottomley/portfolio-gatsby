@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Bentham&family=Poppins:wght@300;400;600&display=swap');
+
+
+$font-family: "Poppins", serif;
+
+//Colors
+$coffee: #8A8075;
+$coffee-light: #B3A79B;
+$sand: #E3D9CE;
+$cream: #F5F6EC;
+$white: #ffffff;
+
+
+$background: $cream;
+$font-color-light: $white;
+$font-color-dark: $coffee;
+
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-size: 1.6rem;
+  padding: 20px;
+  background-color: $background;
+
+  font-family: $font-family;
+  font-weight: 400;
+  font-style: normal;
+  color: $coffee;
+
+  position: relative;
+}
+
+h1 {
+    color: $font-color-dark;
+    font-weight: 600;
+    @media all and (max-width:960px) { 
+        font-size: 3rem;
+    }
+}
+
+h2 {
+    font-size: 7rem;
+
+    @media all and (max-width:960px) { 
+        font-size: 5rem;
+    }
+}
+
+.logo {
+    @media all and (max-width:960px) { 
+        width: 260px;
+        margin: 0 auto;
+    }
+}
+
+main {
+    padding: 20px;
+    border: 1px solid $coffee-light;
+    height: calc(100vh - 40px);
+    min-height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    @media all and (min-width:600px) { 
+        min-height: 600px;
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+
+    text-align: center;
+
+    @media all and (min-width:960px) { 
+        margin-bottom: 60px;
+    }
+}
+
+.counter {
+    display: flex;
+    flex-direction: column;
+    @media all and (max-width:960px) { 
+        gap: 10px;
+    }
+}
+
+.socials {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    a {
+        opacity: 1;
+        transition: 0.2s ease-in-out;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}
+
+.tease-wrapper {
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+}
+.tease {
+    background-color: $background;
+    padding: 0 20px;
+    position: relative;
+    top: 30px;
+    margin-bottom: -50px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    transition: 0.2s ease-in-out;
+
+    @media all and (max-width:600px) {
+        opacity: 0;
+        display: none;
+        
+    }
+}
+
+.card {
+    background-color: $sand;
+    width: 300px;
+    height: 150px;
+    border-radius: 14px;
+    transform: scale(1) translateY(0%);
+    transition: 0.2s ease-in-out;
+    opacity: 0;
+    position: relative;
+    top: 0;
+    overflow: hidden;
+    animation: enter 1.0s forwards;
+
+    &:hover {
+        top: -30px;
+    }
+
+    @for $i from 1 through 3 {
+        &:nth-child(#{$i}n) {
+            animation-delay: #{$i * 0.2}s;
+        }
+    }
+
+    @media all and (max-width:960px) {
+        width: 200px;
+    }
+
+    @media all and (max-width:768px) {
+        &:nth-child(1) {
+            display: none;
+        }
+    }
+}
+
+@keyframes enter {
+    0%   { transform: translateY(50%); opacity: 0; }
+    100% { transform: translateY(0%); opacity: 1; }
+}
+
+.button {
+    background-color: $coffee-light;
+    color: $font-color-light;
+    border-radius: 4px;
+    text-decoration: none;
+    padding: 14px 20px;
+}
