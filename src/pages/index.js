@@ -4,53 +4,15 @@ import Layout from "../components/layout";
 import { SEO } from "../components/SEO";
 import { Link } from "gatsby";
 
-import { StaticImage } from "gatsby-plugin-image";
 import { TypeAnimation } from "react-type-animation";
-
-const useMousePosition = () => {
-  const [mousePosition, setMousePosition] = useState({
-    x: null,
-    y: null,
-  });
-
-  useEffect(() => {
-    const updateMousePosition = (ev) => {
-      setMousePosition({ x: ev.clientX, y: ev.clientY });
-    };
-
-    window.addEventListener("mousemove", updateMousePosition);
-
-    return () => {
-      window.removeEventListener("mousemove", updateMousePosition);
-    };
-  }, []);
-
-  return mousePosition;
-};
+import CustomCursor from "../components/CustomCursor";
 
 const IndexPage = () => {
-  const mousePosition = useMousePosition();
-
   return (
     <Layout>
+      <CustomCursor />
       <div className="content">
-        <div className="logo">
-          <StaticImage
-            src="../images/logo.png"
-            alt="George Bottomley"
-            placeholder="blurred"
-            width={100}
-          />
-        </div>
         <div className="counter">
-          <div
-            className="mouse-gradient"
-            style={{
-              position: "absolute",
-              top: mousePosition.y,
-              left: mousePosition.x,
-            }}
-          ></div>
           <h1>
             George Bottomley
             <br />

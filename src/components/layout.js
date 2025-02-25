@@ -4,11 +4,13 @@ import Favicon from "react-favicon";
 // Styles
 import "../styles/main.scss";
 import icon from "../images/favicon.png";
+import SidePanel from "./SidePanel";
 
 export default function Layout({ children }) {
   return (
     <>
       <Favicon url={icon} />
+      <SidePanel />
       <main>{children}</main>
     </>
   );
