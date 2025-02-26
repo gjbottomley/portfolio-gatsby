@@ -6,6 +6,7 @@ import { Link } from "gatsby";
 
 import { TypeAnimation } from "react-type-animation";
 import CustomCursor from "../components/CustomCursor";
+import { StaticImage } from "gatsby-plugin-image";
 
 const IndexPage = () => {
   return (
@@ -41,6 +42,14 @@ const IndexPage = () => {
         <Link to="" className="button">
           see portfolio
         </Link>
+        <StaticImage
+          className="shape"
+          src="../images/shape.png"
+          alt=""
+          width={420}
+          layout="fixed"
+          placeholder="none"
+        />
       </div>
     </Layout>
   );

@@ -11,6 +11,7 @@ export default function Layout({ children }) {
     <>
       <Favicon url={icon} />
       <SidePanel />
+      <div className="gradient"></div>
       <main>{children}</main>
     </>
   );

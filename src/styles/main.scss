@@ -16,7 +16,6 @@ $background: $white;
 $font-color-light: $white;
 $font-color-dark: $black;
 
-
 *,
 *::before,
 *::after {
@@ -60,10 +59,6 @@ h2 {
     }
 }
 
-.logo {
-   
-}
-
 main {
     padding: 20px;
     height: calc(100vh - 40px);
@@ -71,7 +66,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-
 
     @media all and (min-width:600px) { 
         min-height: 600px;
@@ -107,7 +101,7 @@ a {
 
 .button {
     position: relative;
-    background: rgba($white, 0.3);
+    background: linear-gradient( 90deg, rgba($white, 0.7), rgba($white, 0));
     font-family: $font-family-alt;
     text-transform: uppercase;
     color: $font-color-dark;
@@ -115,32 +109,17 @@ a {
     padding: 14px 20px;
     transition: 0.4s ease-in-out;
 
-    max-width: 300px;
+    max-width: 240px;
     text-align: center;
     border-radius: 3px;
     overflow: hidden;
-
-    &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;transition: 0.7s ease-in-out;
-            border: 10px solid;
-                border-image-slice: 1;
-                border-width: 2px;
-                border-radius: 6px;
-                border-image-source: linear-gradient(90deg, #FF2BE3, #4FEDFF);
-        z-index: -1;
-    }
+    box-shadow: 0 0 20px 20px rgba($white, 0.3);
+    border: 1px solid $black;
+    border-radius: 50px;
 
     &:hover {
-        transform: scale(1.1);
-        &::before {
-           background: rgba($white, 0.5);
-           border-image-source: linear-gradient(-90deg,#FF2BE3, #4FEDFF);
-        }
+        transform: scale(1.07);
+        
     }
 }
 
@@ -148,41 +127,38 @@ a {
     position: fixed;
     width: 740px;
     height: 740px;
-    background: radial-gradient(44.49% 39.31% at 48.43% 50%, rgba(255, 43, 227, 0.3) 0%, rgba(79, 237, 255, 0.3) 46.5%, rgba(255, 255, 255, 0) 100%);
+    background-image: radial-gradient(44.49% 39.31% at 48.43% 50%, rgba(255, 43, 227, 0.3) 0%, rgba(79, 237, 255, 0.3) 46.5%, rgba(255, 255, 255, 0) 100%);
     transform: translate(-50%, -50%);
     border-radius: "50%";
     z-index: -1;
-    animation: gradientflux 5s infinite;
+    transition: opacity 0.2s ease-in-out;
+
+    &.active {
+        opacity: 0.7;
+    }
+}
+
+.gradient {
+    /* Ellipse 2 */
+    z-index: -2;
+    position: absolute;
+    width: 736px;
+    height: 736px;
+    left: -278px;
+    top: -318px;
+
+    background: radial-gradient(44.49% 39.31% at 48.43% 50%, rgba(79, 237, 255, 0.3) 0%, rgba(43, 255, 181, 0.3) 36.5%, rgba(255, 255, 255, 0) 100%);
 }
 
 .custom-cursor {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: rgba($black,0.5);
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba($black,0.5);
+    position: fixed;
+    //pointer-events: none;
+    z-index: 9999;
 
-}
-
-@keyframes gradientflux {
-    0% {
-        opacity: 0.8;
-    }
-
-    25% {
-        opacity: 0.5;
-    }
-    
-    50% {
-        opacity: 0.3;
-    }
-
-    100% {
-        opacity: 0.8;
-    }
 }
 
 .side-panel {
@@ -200,6 +176,11 @@ a {
         .nav-item {
             transform: rotate(0deg);
         }
+        .nav-item {
+            &:not(:hover) {
+                opacity: 0.6;
+            }
+        }
     }
 }
 
@@ -207,21 +188,50 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 60px;
-
 }
 
 .nav-item {
     transform: rotate(-90deg);
     transform-origin: center;
-    transition: 0.2s ease-in-out;flex-basis: 0;
+    transition: 0.2s ease-in-out;
+    flex-basis: 0;
     color: $font-color-dark;
     text-decoration: none;
+    position: relative;
+    padding: 40px 10px;
+    opacity: 1;
+
+    &:before {
+        content: "";
+        position: absolute;
+        bottom: 30px;
+        right: 100%;
+        left: 15px;
+        height: 2px;
+        transition: 0.2s ease-in-out;
+        box-shadow: 0 0 10px 0 rgba($white, 0.5);
+        background: #333;
+        border-radius: 2px;
+        opacity: 0.6;
+    }
+
+    &:hover {
+        &::before, &.active {
+            right: 15px;
+            opacity: 1;
+        }
+    }
 }
 
-        @for $i from 1 through 20 {
-            .nav-item:nth-child(#{$i}) {
-                // units are in the variable so SCSS just does math
-                animation-delay: $i * 0.5s;
-            }
-        }
+@for $i from 1 through 20 {
+    .nav-item:nth-child(#{$i}) {
+        // units are in the variable so SCSS just does math
+        transition-delay: $i * 0.1s;
+    }
+}
+
+.shape {
+    position: fixed;
+    bottom: 80px;
+    right: 60px;
+}

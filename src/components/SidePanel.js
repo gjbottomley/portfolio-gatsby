@@ -26,7 +26,12 @@ const SidePanel = () => {
       </div>
 
       <Link to="" className="icon">
-        Git
+        <StaticImage
+          src="../images/git.png"
+          alt="Github George Bottomley"
+          placeholder="blurred"
+          width={36}
+        />
       </Link>
     </div>
   );
