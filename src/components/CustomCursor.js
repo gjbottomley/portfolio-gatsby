@@ -19,17 +19,21 @@ const CustomCursor = () => {
     };
 
     window.addEventListener("mousemove", updateMousePosition);
-    document.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("mouseenter", handleLinkHover);
-      link.addEventListener("mouseleave", handleLinkUnhover);
-    });
+    document
+      .querySelectorAll(".button, input, textarea, .nav-item")
+      .forEach((link) => {
+        link.addEventListener("mouseenter", handleLinkHover);
+        link.addEventListener("mouseleave", handleLinkUnhover);
+      });
 
     return () => {
       window.removeEventListener("mousemove", updateMousePosition);
-      document.querySelectorAll("a").forEach((link) => {
-        link.removeEventListener("mouseenter", handleLinkHover);
-        link.removeEventListener("mouseleave", handleLinkUnhover);
-      });
+      document
+        .querySelectorAll(".button, input, textarea, .nav-item")
+        .forEach((link) => {
+          link.removeEventListener("mouseenter", handleLinkHover);
+          link.removeEventListener("mouseleave", handleLinkUnhover);
+        });
     };
   }, []);
 
@@ -45,7 +49,7 @@ const CustomCursor = () => {
         }}
         animate={{
           transform: isHoveringLink
-            ? "scale(1.3) translate(-50%,-50%)"
+            ? "scale(1.5) translate(-35%,-35%)"
             : "scale(1) translate(-50%,-50%)",
           opacity: isHoveringLink ? 0.5 : 1,
         }}

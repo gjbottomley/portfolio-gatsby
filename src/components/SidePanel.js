@@ -1,11 +1,49 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { StaticImage } from "gatsby-plugin-image";
 import { Link } from "gatsby";
 
 const SidePanel = () => {
+  const [isDarkSection, setIsDarkSection] = useState(false);
+
+  const handleClick = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    section?.scrollIntoView({ behavior: "smooth" });
+
+    if (section && section.classList.contains("dark")) {
+      setIsDarkSection(true);
+    } else {
+      setIsDarkSection(false);
+    }
+  };
+
+  const checkCurrentSection = () => {
+    const sections = document.querySelectorAll("section");
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      if (
+        rect.top <= window.innerHeight / 2 &&
+        rect.bottom >= window.innerHeight / 2
+      ) {
+        if (section.classList.contains("dark")) {
+          setIsDarkSection(true);
+        } else {
+          setIsDarkSection(false);
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    checkCurrentSection();
+    window.addEventListener("scroll", checkCurrentSection);
+    return () => {
+      window.removeEventListener("scroll", checkCurrentSection);
+    };
+  }, []);
+
   return (
-    <div className="side-panel">
-      <div className="logo">
+    <div className={`side-panel ${isDarkSection ? "dark" : ""}`}>
+      <div className="logo" onClick={() => handleClick("top")}>
         <StaticImage
           src="../images/logo.png"
           alt="George Bottomley"
@@ -14,15 +52,15 @@ const SidePanel = () => {
         />
       </div>
       <div className="nav">
-        <Link to="" className="nav-item">
+        <div onClick={() => handleClick("about")} className="nav-item">
           About
-        </Link>
-        <Link to="" className="nav-item">
+        </div>
+        <div onClick={() => handleClick("portfolio")} className="nav-item">
           Portfolio
-        </Link>
-        <Link to="" className="nav-item">
+        </div>
+        <div onClick={() => handleClick("contact")} className="nav-item">
           Contact
-        </Link>
+        </div>
       </div>
 
       <Link to="" className="icon">

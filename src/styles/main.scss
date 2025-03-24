@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-$font-family: "Libre Baskerville", serif;
-
-$font-family-alt: "Lato", serif;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+$font-family: "Poppins", serif;
+$font-family-alt: "Poppins", serif;
 
 //Colors
 $coffee: #8A8075;
@@ -11,10 +10,14 @@ $cream: #F5F6EC;
 $white: #ffffff;
 $black: #222;
 
+$pink: #e35d82;
+$blue: #30314f;
+$green: #2abd79;
+
 
 $background: $white;
 $font-color-light: $white;
-$font-color-dark: $black;
+$font-color-dark: $blue;
 
 *,
 *::before,
@@ -26,12 +29,16 @@ $font-color-dark: $black;
 
 html {
   font-size: 62.5%;
+  scroll-snap-type: y mandatory;
+}
+
+p {
+    margin-bottom: 10px;
 }
 
 body {
   box-sizing: border-box;
   font-size: 1.6rem;
-  padding: 20px;
   background-color: $background;
 
   font-family: $font-family;
@@ -55,14 +62,57 @@ h2 {
     font-size: 7rem;
 
     @media all and (max-width:960px) { 
-        font-size: 5rem;
+        font-size: 2rem;
+    }
+
+    &:after {
+        content: '.';
+        color: $pink;
     }
 }
 
-main {
+h3 {
+    font-size: 3rem;
+
+    @media all and (max-width:960px) {
+        font-size: 2rem;
+    }
+
+    &:after {
+        content: '.';
+        color: $pink;
+    }
+}
+
+section {
+    height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 110px;
+
+    &.header {
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    & > * {
+        //position: relative;
+        z-index: 2;
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+
+.head {
     padding: 20px;
-    height: calc(100vh - 40px);
-    min-height: 480px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -70,6 +120,24 @@ main {
     @media all and (min-width:600px) { 
         min-height: 600px;
     }
+}
+
+.headshot-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transition: 0.3s ease;
+    pointer-events: none;
+
+}
+.headshot {
+
+}
+
+.name {
+    font-size: 12vw;
+    line-height: 1;
+    color: #a2a3b9;
 }
 
 .content {
@@ -101,10 +169,10 @@ a {
 
 .button {
     position: relative;
-    background: linear-gradient( 90deg, rgba($white, 0.7), rgba($white, 0));
+    background: $blue;
     font-family: $font-family-alt;
     text-transform: uppercase;
-    color: $font-color-dark;
+    color: $white;
     text-decoration: none;
     padding: 14px 20px;
     transition: 0.4s ease-in-out;
@@ -114,8 +182,7 @@ a {
     border-radius: 3px;
     overflow: hidden;
     box-shadow: 0 0 20px 20px rgba($white, 0.3);
-    border: 1px solid $black;
-    border-radius: 50px;
+    border-radius: 6px;
 
     &:hover {
         transform: scale(1.07);
@@ -127,29 +194,16 @@ a {
     position: fixed;
     width: 740px;
     height: 740px;
-    background-image: radial-gradient(44.49% 39.31% at 48.43% 50%, rgba(255, 43, 227, 0.3) 0%, rgba(79, 237, 255, 0.3) 46.5%, rgba(255, 255, 255, 0) 100%);
+    background-image: radial-gradient(44.49% 39.31% at 48.43% 50%, rgba($pink, 0.2) 0%, rgba($white, 0) 100%);
     transform: translate(-50%, -50%);
     border-radius: "50%";
-    z-index: -1;
+    z-index: 1;
     transition: opacity 0.2s ease-in-out;
 
     &.active {
-        opacity: 0.7;
+        opacity: 0.6;
     }
 }
-
-.gradient {
-    /* Ellipse 2 */
-    z-index: -2;
-    position: absolute;
-    width: 736px;
-    height: 736px;
-    left: -278px;
-    top: -318px;
-
-    background: radial-gradient(44.49% 39.31% at 48.43% 50%, rgba(79, 237, 255, 0.3) 0%, rgba(43, 255, 181, 0.3) 36.5%, rgba(255, 255, 255, 0) 100%);
-}
-
 .custom-cursor {
     width: 40px;
     height: 40px;
@@ -171,6 +225,7 @@ a {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    z-index: 9999;
 
     &:hover {
         .nav-item {
@@ -180,6 +235,16 @@ a {
             &:not(:hover) {
                 opacity: 0.6;
             }
+        }
+    }
+
+    &.dark {
+        .nav-item {
+            color: $white;
+        }
+
+        .icon img, .logo {
+            filter: invert(1);
         }
     }
 }
@@ -195,28 +260,21 @@ a {
     transform-origin: center;
     transition: 0.2s ease-in-out;
     flex-basis: 0;
-    color: $font-color-dark;
+    color: $blue;
     text-decoration: none;
     position: relative;
     padding: 40px 10px;
     opacity: 1;
 
-    &:before {
-        content: "";
-        position: absolute;
-        bottom: 30px;
-        right: 100%;
-        left: 15px;
-        height: 2px;
+    &:after {
+        content: ".";
+        opacity: 0;
         transition: 0.2s ease-in-out;
-        box-shadow: 0 0 10px 0 rgba($white, 0.5);
-        background: #333;
-        border-radius: 2px;
-        opacity: 0.6;
+        color: $pink;
     }
 
     &:hover {
-        &::before, &.active {
+        &:after, &.active {
             right: 15px;
             opacity: 1;
         }
@@ -231,7 +289,187 @@ a {
 }
 
 .shape {
-    position: fixed;
+    position: absolute;
     bottom: 80px;
     right: 60px;
+}
+
+.bar {
+    position: relative;
+
+    &.dark {
+        h2 {
+            color: $white;
+        }
+    }
+}
+
+.bar--grey {
+    background: #f1f1f1;
+}
+
+.block {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 6px;
+    min-height: 400px;
+    padding: 40px;
+    background-color: $white;
+
+    box-shadow: 0 0 20px 20px rgba($black, 0.01);
+
+}
+
+.block--contact {
+    background: transparent;
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: $green;
+        border-radius: 6px;
+        z-index: -1;
+        transform: rotate(-1deg);
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: $white;
+        border-radius: 6px;
+        z-index: -1;
+        transform: rotate(2deg);
+        opacity: 1;
+        transition: 0.2s ease-in-out;
+    }
+
+    &.succeeded {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+            font-size: 40px;
+                text-align: center;
+                font-weight: bold;
+        &::after {
+            opacity: 0;
+        }
+    }
+}
+
+.title {
+    position: absolute;
+    top: calc(50% - 100px);
+    right: 100px;
+    z-index: 2;
+}
+.velocity-container {
+    position: absolute;
+    bottom: 40px;
+    right: 0;
+    left: 0;
+
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+
+    .parallax {
+
+        &:nth-child(2) {
+            .scroller {
+                font-size: 40px;
+            }
+        }
+    }
+}
+
+.velcoity-container--about {
+    .parallax {
+        .scroller {
+            font-size: 40px;
+            text-transform: none;
+        }
+
+        &:nth-child(2) {
+            .scroller {
+                font-size: 30px;
+            }
+        }
+    }
+}
+
+.parallax {
+    overflow: hidden;
+    letter-spacing: -2px;
+    line-height: 0.8;
+    margin: 0;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+    color: #bbbccc;
+
+    .scroller {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 64px;
+        display: flex;
+        white-space: nowrap;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    span {
+        display: block;
+        margin-right: 30px;
+    }
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    label {
+        display: block;
+        margin: 0;
+        cursor: none;
+    }
+
+    textarea,
+    select,
+    input[type="text"],
+    input[type="email"],
+    input[type="number"]{
+        font-family: $font-family-alt;
+        font-size: 1em;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        width: 100%;
+        max-width: 100%;
+        padding: 10px 10px;
+        border-radius: 4px;
+        background-color: #f1f1f1;
+
+        &:focus {
+            outline-color: $pink;
+        }
+    }
+
+    button {
+        cursor: pointer;
+    }
 }

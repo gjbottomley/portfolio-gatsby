@@ -4,14 +4,13 @@ import Favicon from "react-favicon";
 // Styles
 import "../styles/main.scss";
 import icon from "../images/favicon.png";
-import SidePanel from "./SidePanel";
+import SidePanel from "./sidePanel";
 
 export default function Layout({ children }) {
   return (
     <>
       <Favicon url={icon} />
       <SidePanel />
-      <div className="gradient"></div>
       <main>{children}</main>
     </>
   );

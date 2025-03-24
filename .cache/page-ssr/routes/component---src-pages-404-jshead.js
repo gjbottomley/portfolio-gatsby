@@ -2775,61 +2775,6 @@ Z.displayName = "StaticImage", Z.propTypes = Q;
 
 /***/ }),
 
-/***/ "./src/components/SidePanel.js":
-/*!*************************************!*\
-  !*** ./src/components/SidePanel.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! gatsby-plugin-image */ "./node_modules/gatsby-plugin-image/dist/gatsby-image.module.js");
-/* harmony import */ var gatsby__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gatsby */ "./.cache/gatsby-browser-entry.js");
-
-
-
-const SidePanel = () => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "side-panel"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "logo"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_2__.StaticImage, {
-    src: "../images/logo.png",
-    alt: "George Bottomley",
-    placeholder: "blurred",
-    width: 50,
-    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/924930019.json */ "./.cache/caches/gatsby-plugin-image/924930019.json")
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "nav"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby__WEBPACK_IMPORTED_MODULE_1__.Link, {
-    to: "",
-    className: "nav-item"
-  }, "About"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby__WEBPACK_IMPORTED_MODULE_1__.Link, {
-    to: "",
-    className: "nav-item"
-  }, "Portfolio"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby__WEBPACK_IMPORTED_MODULE_1__.Link, {
-    to: "",
-    className: "nav-item"
-  }, "Contact")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby__WEBPACK_IMPORTED_MODULE_1__.Link, {
-    to: "",
-    className: "icon"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_2__.StaticImage, {
-    src: "../images/git.png",
-    alt: "Github George Bottomley",
-    placeholder: "blurred",
-    width: 36,
-    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/3919071205.json */ "./.cache/caches/gatsby-plugin-image/3919071205.json")
-  })));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SidePanel);
-
-/***/ }),
-
 /***/ "./src/components/layout.js":
 /*!**********************************!*\
   !*** ./src/components/layout.js ***!
@@ -2848,7 +2793,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_main_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../styles/main.scss */ "./src/styles/main.scss");
 /* harmony import */ var _styles_main_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_styles_main_scss__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _images_favicon_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../images/favicon.png */ "./src/images/favicon.png");
-/* harmony import */ var _SidePanel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SidePanel */ "./src/components/SidePanel.js");
+/* harmony import */ var _sidePanel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidePanel */ "./src/components/sidePanel.js");
 
 
 
@@ -2861,10 +2806,99 @@ function Layout({
 }) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react_favicon__WEBPACK_IMPORTED_MODULE_1___default()), {
     url: _images_favicon_png__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SidePanel__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "gradient"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", null, children));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_sidePanel__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", null, children));
 }
+
+/***/ }),
+
+/***/ "./src/components/sidePanel.js":
+/*!*************************************!*\
+  !*** ./src/components/sidePanel.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! gatsby-plugin-image */ "./node_modules/gatsby-plugin-image/dist/gatsby-image.module.js");
+/* harmony import */ var gatsby__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gatsby */ "./.cache/gatsby-browser-entry.js");
+
+
+
+const SidePanel = () => {
+  const {
+    0: isDarkSection,
+    1: setIsDarkSection
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const handleClick = sectionId => {
+    const section = document.getElementById(sectionId);
+    section === null || section === void 0 ? void 0 : section.scrollIntoView({
+      behavior: "smooth"
+    });
+    if (section && section.classList.contains("dark")) {
+      setIsDarkSection(true);
+    } else {
+      setIsDarkSection(false);
+    }
+  };
+  const checkCurrentSection = () => {
+    const sections = document.querySelectorAll("section");
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+        if (section.classList.contains("dark")) {
+          setIsDarkSection(true);
+        } else {
+          setIsDarkSection(false);
+        }
+      }
+    });
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    checkCurrentSection();
+    window.addEventListener("scroll", checkCurrentSection);
+    return () => {
+      window.removeEventListener("scroll", checkCurrentSection);
+    };
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: `side-panel ${isDarkSection ? "dark" : ""}`
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "logo",
+    onClick: () => handleClick("top")
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_2__.StaticImage, {
+    src: "../images/logo.png",
+    alt: "George Bottomley",
+    placeholder: "blurred",
+    width: 50,
+    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/335882052.json */ "./.cache/caches/gatsby-plugin-image/335882052.json")
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "nav"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    onClick: () => handleClick("about"),
+    className: "nav-item"
+  }, "About"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    onClick: () => handleClick("portfolio"),
+    className: "nav-item"
+  }, "Portfolio"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    onClick: () => handleClick("contact"),
+    className: "nav-item"
+  }, "Contact")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    to: "",
+    className: "icon"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_2__.StaticImage, {
+    src: "../images/git.png",
+    alt: "Github George Bottomley",
+    placeholder: "blurred",
+    width: 36,
+    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/2481344115.json */ "./.cache/caches/gatsby-plugin-image/2481344115.json")
+  })));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SidePanel);
 
 /***/ }),
 
@@ -4628,7 +4662,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("data:image/png;base64,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");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/static/favicon-fb38a93223151da73904a2b0ed20a4e4.png");
 
 /***/ }),
 
@@ -4751,14 +4785,25 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./.cache/caches/gatsby-plugin-image/3919071205.json":
+/***/ "./.cache/caches/gatsby-plugin-image/2481344115.json":
 /*!***********************************************************!*\
-  !*** ./.cache/caches/gatsby-plugin-image/3919071205.json ***!
+  !*** ./.cache/caches/gatsby-plugin-image/2481344115.json ***!
   \***********************************************************/
 /***/ ((module) => {
 
 "use strict";
 module.exports = JSON.parse('{"layout":"constrained","placeholder":{"fallback":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAATCAYAAACQjC21AAAACXBIWXMAABYlAAAWJQFJUiTwAAABy0lEQVR42pWUSyiFQRTHx73kkQ0WRJGNZEFkYWfDVtnYkAVbO4pSpESKlCJKWSiPLJDHmoVXUawolLAReYV73Xtd/qP/4TQ+ytSvb+a85syc840x38MHYjivBHPgEgRAFLyBJ3AMRkCx8vMZZ4ggCyyBdwaJcq4Rmd1gFCQ7Mb4m+eBMGQdBGEQcwtRFaLsLMtyg6eCEBvfg2snGK8MbcMf5jsr0c0woh37KWpnxHlgA82AbXIAO4Aftym9IghWBEI9iFU2Ux4JE58Jt0ZKos6OOPhEWz16b6aUwwG8HjeNVEJ/TBaJrok+Q307DY0jatyBbBYoxP4eWp4BT5b9phY/qohfdav0x5NiDqlgPhgu5v1ka+f8RsMeJYV5Uhlv/CBjH77Tq3WfDtpCU7S6FKqhXYC3PZD/KHe4b9o9dXHGHQ1CgCuBVFDtywRp9X/kdtopyLo5AFThQFRsACU523WCDm7+rh8POK8RwlYIVviLnXE96HHOMuhADyT+9ro9RwqfJKhpBGigFqeqYUtUWJ2CU8zLjVLRGGS6DGVCvbGLVPy5/lhy1we0OmVTzBRHDPtVzErDNaZPa31pNBDlgnE5dHgGbqZsCeW6wD01vrcoxAEjbAAAAAElFTkSuQmCC"},"images":{"fallback":{"src":"/static/fe5a4ecfb31b91ce227fdd794a4723a4/087b5/git.png","srcSet":"/static/fe5a4ecfb31b91ce227fdd794a4723a4/abaea/git.png 9w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/7ceb7/git.png 18w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/087b5/git.png 36w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/27c48/git.png 72w","sizes":"(min-width: 36px) 36px, 100vw"},"sources":[{"srcSet":"/static/fe5a4ecfb31b91ce227fdd794a4723a4/a8d60/git.webp 9w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/4f7ad/git.webp 18w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/5edbd/git.webp 36w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/8aca2/git.webp 72w","type":"image/webp","sizes":"(min-width: 36px) 36px, 100vw"}]},"width":36,"height":35}');
+
+/***/ }),
+
+/***/ "./.cache/caches/gatsby-plugin-image/335882052.json":
+/*!**********************************************************!*\
+  !*** ./.cache/caches/gatsby-plugin-image/335882052.json ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"layout":"constrained","placeholder":{"fallback":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEHElEQVR42nVUXUwcVRQeMMYHjU/GJ02sggV2dufnzi5QoFtLt0vD/swszLJLF2xpxZqUJgSBUKkrVB/UPhlSf/pQQ2JS2yakghKqRqv0wcSfkMaYhjRUiQslVWMQI+zufJ47S5ddojc5mcnMvd/57ne+cwRha5UIyWQpf2H49n7xk6GEeKX/umOif81xoS/lHDsxwY4caq+pCpZVec2HCs6V2me3LftDU1PPA0wOtcr7zFnF7IDii1myxwAPtS4KtboVshzKymr4NmP6ux6PIfFzyRyRkiIwny/xIGPhSeY2oSqGJVcFMrIYzMhSiINYsiuUljiYEoaiGhbTWqEwfYMxY8Q0L95XQG7zmkwf09xR0KG0rIQyxAJ2KEVhbUZWksO0L5zROAHNeDsHZV9fEDyecIOi6hkCym4e2A4ElRnETN/+PctZqyxieXa1NOQ5alrkfaa1YDMrctfSi0DKn94Ph9gMphlFoBLdRpUjUNoSUzl2TQcfJi1+Jl3sjPfARGeAQHz20yUFkXzlLZjRE3hixzPFTLksFYGs0nUYru9GWoTq3W2V9GPjnkZ8c2XVAXj3JHDk6Ensbey0gVOpO5i5OotQ6BjXDE5KYgNzQCqgEknAMfvylCAfO/SsWtMCqiZpkQOLx3uRWrqDlZXfsLS8Al1/ATdu3MTq6l/4/Y8/CfhrSFR91QakEINZ2d8Gx+cvzQvO93o/UutNyK5ghuuz48m9uHhpGgsLi2jY3Y719Q10dw9jfv42xscnEG/vBV+62YPHd/ogs01AHwF+PPijIF568a5tXilk8auUle/DG2+ew9ra3zh//jLS6TQOdw3h1q1fMD19DSOk5bplYSDWhzONz6Fai8AlBjLq/jicFwbGBcfk4D9yNWWRcsVwuoKoq4/h7NkP8MW1b2w23c+fwujpMSwuLmHp12WcPnMOPfUdmIufQp0WsZzOYFb1RsFGj+uCOHPyK8Ufs2lzm+ysaEJHZ7+t2dzcTwSSgt/fhafKGrGrvg01tVHa4ye7hG0NXeRD7hAis+wNdD8iSJ8NJ5RYJ68U71HuRfDi8Ar3D7xO1T6Y9x9nz4Mn5q4gMPBmIGPzb9dzrgZK1Ob4VVU2bJPaZqWNnEVZuY8AAnnf8WehBxV7bzjN+5qaYyjfKZ5as3mrU3IDgLP4n3YriFCG/2cskqLJ81jRtFE1/R3e6LzhC4Cz+SGxLUjDNEWGs3O7W4/moMz81CmhYpa43cYg6bfKN/GG59klJ40wkSYQ95qDopLGWgXZRCH2zMhomp4snFp5QNPMoXu9ZpnbHXmNKvg9sbyr7olmVX8cMjlBOUBhdlhydxeURMdUfXWL67/ACtYWZc7YV5t4lL163HR+2He5anLgpuPToQXxy+EZ6YdRPQmUFkzr/PoX49J+fmu6DoQAAAAASUVORK5CYII="},"images":{"fallback":{"src":"/static/1ec01fa2de78f7829ba561432d355252/e9fba/logo.png","srcSet":"/static/1ec01fa2de78f7829ba561432d355252/86ee2/logo.png 13w,\\n/static/1ec01fa2de78f7829ba561432d355252/88208/logo.png 25w,\\n/static/1ec01fa2de78f7829ba561432d355252/e9fba/logo.png 50w,\\n/static/1ec01fa2de78f7829ba561432d355252/15e42/logo.png 100w","sizes":"(min-width: 50px) 50px, 100vw"},"sources":[{"srcSet":"/static/1ec01fa2de78f7829ba561432d355252/68795/logo.webp 13w,\\n/static/1ec01fa2de78f7829ba561432d355252/2fa99/logo.webp 25w,\\n/static/1ec01fa2de78f7829ba561432d355252/dbc4a/logo.webp 50w,\\n/static/1ec01fa2de78f7829ba561432d355252/d8057/logo.webp 100w","type":"image/webp","sizes":"(min-width: 50px) 50px, 100vw"}]},"width":50,"height":50}');
 
 /***/ }),
 
@@ -4769,18 +4814,7 @@ module.exports = JSON.parse('{"layout":"constrained","placeholder":{"fallback":"
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"layout":"constrained","placeholder":{"fallback":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAYAAABiDJ37AAAACXBIWXMAAAsTAAALEwEAmpwYAAABkElEQVR42nXTSyiEURQH8Pv5hsljo8QGa68SWVhMjVhRJELjsVIe2RCFLCmxUcgzLKSJLLCQhURjYUGJkoWSjZoahZR343/G/07XV279Zrp3zj333McopVSM+m3VcAbL0AdDsAm7sAY+6IdB6IUeKFH/tA74glr29SLxEIBjqIQwrEMh1MMFbIPNeEs+shnYycE4cEEs+3mwARlctNEopIhz69iPJF6EEKuJrmJUmsjjyOLkZmNyOsfazYRB2DIHHE1vP5OTG4zfujg/zSxGguY44HIkyefqVbwIiZ1l0ik4YcyfYiRo1TGoExbDHmOO4AOmoRxaYAQueSTRebdwxY55fjq53OY7eOGNz0dfnrRJ+OR5RtooKyhl381k+pblEp75VL6hieMJ/PbIfNu2a3TCVLiHG8fh6gpla69QwEp9xsKKbzec7ErymDeZC9fwAANQBhX8xwT4eL3ciZkwx1LWHb53ztseVw67Q6fmBbgZLO9yCcagFVK4Cz93IX/DcZiBfRiW8/RPvBzMLzwFfwBERVosu8vrfgAAAABJRU5ErkJggg=="},"images":{"fallback":{"src":"/static/130b9fcaca70a5e70993a82cde4bead1/e2842/logo.png","srcSet":"/static/130b9fcaca70a5e70993a82cde4bead1/74ad3/logo.png 25w,\\n/static/130b9fcaca70a5e70993a82cde4bead1/961df/logo.png 50w,\\n/static/130b9fcaca70a5e70993a82cde4bead1/e2842/logo.png 100w","sizes":"(min-width: 100px) 100px, 100vw"},"sources":[{"srcSet":"/static/130b9fcaca70a5e70993a82cde4bead1/5e61e/logo.webp 25w,\\n/static/130b9fcaca70a5e70993a82cde4bead1/1d9ef/logo.webp 50w,\\n/static/130b9fcaca70a5e70993a82cde4bead1/9f21a/logo.webp 100w","type":"image/webp","sizes":"(min-width: 100px) 100px, 100vw"}]},"width":320,"height":198.4}');
-
-/***/ }),
-
-/***/ "./.cache/caches/gatsby-plugin-image/924930019.json":
-/*!**********************************************************!*\
-  !*** ./.cache/caches/gatsby-plugin-image/924930019.json ***!
-  \**********************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse('{"layout":"constrained","placeholder":{"fallback":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAYAAABiDJ37AAAACXBIWXMAAAsTAAALEwEAmpwYAAABkElEQVR42nXTSyiEURQH8Pv5hsljo8QGa68SWVhMjVhRJELjsVIe2RCFLCmxUcgzLKSJLLCQhURjYUGJkoWSjZoahZR343/G/07XV279Zrp3zj333McopVSM+m3VcAbL0AdDsAm7sAY+6IdB6IUeKFH/tA74glr29SLxEIBjqIQwrEMh1MMFbIPNeEs+shnYycE4cEEs+3mwARlctNEopIhz69iPJF6EEKuJrmJUmsjjyOLkZmNyOsfazYRB2DIHHE1vP5OTG4zfujg/zSxGguY44HIkyefqVbwIiZ1l0ik4YcyfYiRo1TGoExbDHmOO4AOmoRxaYAQueSTRebdwxY55fjq53OY7eOGNz0dfnrRJ+OR5RtooKyhl381k+pblEp75VL6hieMJ/PbIfNu2a3TCVLiHG8fh6gpla69QwEp9xsKKbzec7ErymDeZC9fwAANQBhX8xwT4eL3ciZkwx1LWHb53ztseVw67Q6fmBbgZLO9yCcagFVK4Cz93IX/DcZiBfRiW8/RPvBzMLzwFfwBERVosu8vrfgAAAABJRU5ErkJggg=="},"images":{"fallback":{"src":"/static/130b9fcaca70a5e70993a82cde4bead1/961df/logo.png","srcSet":"/static/130b9fcaca70a5e70993a82cde4bead1/885e1/logo.png 13w,\\n/static/130b9fcaca70a5e70993a82cde4bead1/74ad3/logo.png 25w,\\n/static/130b9fcaca70a5e70993a82cde4bead1/961df/logo.png 50w,\\n/static/130b9fcaca70a5e70993a82cde4bead1/e2842/logo.png 100w","sizes":"(min-width: 50px) 50px, 100vw"},"sources":[{"srcSet":"/static/130b9fcaca70a5e70993a82cde4bead1/e7324/logo.webp 13w,\\n/static/130b9fcaca70a5e70993a82cde4bead1/5e61e/logo.webp 25w,\\n/static/130b9fcaca70a5e70993a82cde4bead1/1d9ef/logo.webp 50w,\\n/static/130b9fcaca70a5e70993a82cde4bead1/9f21a/logo.webp 100w","type":"image/webp","sizes":"(min-width: 50px) 50px, 100vw"}]},"width":50,"height":31.000000000000004}');
+module.exports = JSON.parse('{"layout":"constrained","placeholder":{"fallback":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEHElEQVR42nVUXUwcVRQeMMYHjU/GJ02sggV2dufnzi5QoFtLt0vD/swszLJLF2xpxZqUJgSBUKkrVB/UPhlSf/pQQ2JS2yakghKqRqv0wcSfkMaYhjRUiQslVWMQI+zufJ47S5ddojc5mcnMvd/57ne+cwRha5UIyWQpf2H49n7xk6GEeKX/umOif81xoS/lHDsxwY4caq+pCpZVec2HCs6V2me3LftDU1PPA0wOtcr7zFnF7IDii1myxwAPtS4KtboVshzKymr4NmP6ux6PIfFzyRyRkiIwny/xIGPhSeY2oSqGJVcFMrIYzMhSiINYsiuUljiYEoaiGhbTWqEwfYMxY8Q0L95XQG7zmkwf09xR0KG0rIQyxAJ2KEVhbUZWksO0L5zROAHNeDsHZV9fEDyecIOi6hkCym4e2A4ElRnETN/+PctZqyxieXa1NOQ5alrkfaa1YDMrctfSi0DKn94Ph9gMphlFoBLdRpUjUNoSUzl2TQcfJi1+Jl3sjPfARGeAQHz20yUFkXzlLZjRE3hixzPFTLksFYGs0nUYru9GWoTq3W2V9GPjnkZ8c2XVAXj3JHDk6Ensbey0gVOpO5i5OotQ6BjXDE5KYgNzQCqgEknAMfvylCAfO/SsWtMCqiZpkQOLx3uRWrqDlZXfsLS8Al1/ATdu3MTq6l/4/Y8/CfhrSFR91QakEINZ2d8Gx+cvzQvO93o/UutNyK5ghuuz48m9uHhpGgsLi2jY3Y719Q10dw9jfv42xscnEG/vBV+62YPHd/ogs01AHwF+PPijIF568a5tXilk8auUle/DG2+ew9ra3zh//jLS6TQOdw3h1q1fMD19DSOk5bplYSDWhzONz6Fai8AlBjLq/jicFwbGBcfk4D9yNWWRcsVwuoKoq4/h7NkP8MW1b2w23c+fwujpMSwuLmHp12WcPnMOPfUdmIufQp0WsZzOYFb1RsFGj+uCOHPyK8Ufs2lzm+ysaEJHZ7+t2dzcTwSSgt/fhafKGrGrvg01tVHa4ye7hG0NXeRD7hAis+wNdD8iSJ8NJ5RYJ68U71HuRfDi8Ar3D7xO1T6Y9x9nz4Mn5q4gMPBmIGPzb9dzrgZK1Ob4VVU2bJPaZqWNnEVZuY8AAnnf8WehBxV7bzjN+5qaYyjfKZ5as3mrU3IDgLP4n3YriFCG/2cskqLJ81jRtFE1/R3e6LzhC4Cz+SGxLUjDNEWGs3O7W4/moMz81CmhYpa43cYg6bfKN/GG59klJ40wkSYQ95qDopLGWgXZRCH2zMhomp4snFp5QNPMoXu9ZpnbHXmNKvg9sbyr7olmVX8cMjlBOUBhdlhydxeURMdUfXWL67/ACtYWZc7YV5t4lL163HR+2He5anLgpuPToQXxy+EZ6YdRPQmUFkzr/PoX49J+fmu6DoQAAAAASUVORK5CYII="},"images":{"fallback":{"src":"/static/1ec01fa2de78f7829ba561432d355252/83b7b/logo.png","srcSet":"/static/1ec01fa2de78f7829ba561432d355252/1f8a1/logo.png 80w,\\n/static/1ec01fa2de78f7829ba561432d355252/e9a79/logo.png 160w,\\n/static/1ec01fa2de78f7829ba561432d355252/83b7b/logo.png 320w","sizes":"(min-width: 320px) 320px, 100vw"},"sources":[{"srcSet":"/static/1ec01fa2de78f7829ba561432d355252/61ca6/logo.webp 80w,\\n/static/1ec01fa2de78f7829ba561432d355252/60b4d/logo.webp 160w,\\n/static/1ec01fa2de78f7829ba561432d355252/c8e07/logo.webp 320w","type":"image/webp","sizes":"(min-width: 320px) 320px, 100vw"}]},"width":320,"height":321}');
 
 /***/ }),
 
