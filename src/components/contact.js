@@ -6,7 +6,7 @@ const Contact = ({ onSuccess }) => {
 
   if (state.succeeded) {
     onSuccess(true);
-    return <div className="thank-you">Thanks for Getting in touch!</div>;
+    return <div className="thank-you">Thanks for getting in touch!</div>;
   }
 
   return (

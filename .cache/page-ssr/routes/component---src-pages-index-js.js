@@ -35,6 +35,669 @@ const wrap = (min, max, v) => {
 
 /***/ }),
 
+/***/ "./node_modules/@popmotion/easing/dist/easing.es.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@popmotion/easing/dist/easing.es.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   anticipate: () => (/* binding */ anticipate),
+/* harmony export */   backIn: () => (/* binding */ backIn),
+/* harmony export */   backInOut: () => (/* binding */ backInOut),
+/* harmony export */   backOut: () => (/* binding */ backOut),
+/* harmony export */   bounceIn: () => (/* binding */ bounceIn),
+/* harmony export */   bounceInOut: () => (/* binding */ bounceInOut),
+/* harmony export */   bounceOut: () => (/* binding */ bounceOut),
+/* harmony export */   circIn: () => (/* binding */ circIn),
+/* harmony export */   circInOut: () => (/* binding */ circInOut),
+/* harmony export */   circOut: () => (/* binding */ circOut),
+/* harmony export */   createAnticipateEasing: () => (/* binding */ createAnticipateEasing),
+/* harmony export */   createBackIn: () => (/* binding */ createBackIn),
+/* harmony export */   createExpoIn: () => (/* binding */ createExpoIn),
+/* harmony export */   createMirroredEasing: () => (/* binding */ createMirroredEasing),
+/* harmony export */   createReversedEasing: () => (/* binding */ createReversedEasing),
+/* harmony export */   cubicBezier: () => (/* binding */ cubicBezier),
+/* harmony export */   easeIn: () => (/* binding */ easeIn),
+/* harmony export */   easeInOut: () => (/* binding */ easeInOut),
+/* harmony export */   easeOut: () => (/* binding */ easeOut),
+/* harmony export */   linear: () => (/* binding */ linear),
+/* harmony export */   mirrored: () => (/* binding */ mirrored),
+/* harmony export */   reversed: () => (/* binding */ reversed)
+/* harmony export */ });
+var DEFAULT_OVERSHOOT_STRENGTH = 1.525;
+var reversed = function (easing) {
+    return function (p) {
+        return 1 - easing(1 - p);
+    };
+};
+var mirrored = function (easing) {
+    return function (p) {
+        return p <= 0.5 ? easing(2 * p) / 2 : (2 - easing(2 * (1 - p))) / 2;
+    };
+};
+var createReversedEasing = reversed;
+var createMirroredEasing = mirrored;
+var createExpoIn = function (power) {
+    return function (p) {
+        return Math.pow(p, power);
+    };
+};
+var createBackIn = function (power) {
+    return function (p) {
+        return p * p * ((power + 1) * p - power);
+    };
+};
+var createAnticipateEasing = function (power) {
+    var backEasing = createBackIn(power);
+    return function (p) {
+        return (p *= 2) < 1 ? 0.5 * backEasing(p) : 0.5 * (2 - Math.pow(2, -10 * (p - 1)));
+    };
+};
+var linear = function (p) {
+    return p;
+};
+var easeIn = /*#__PURE__*/createExpoIn(2);
+var easeOut = /*#__PURE__*/reversed(easeIn);
+var easeInOut = /*#__PURE__*/mirrored(easeIn);
+var circIn = function (p) {
+    return 1 - Math.sin(Math.acos(p));
+};
+var circOut = /*#__PURE__*/reversed(circIn);
+var circInOut = /*#__PURE__*/mirrored(circOut);
+var backIn = /*#__PURE__*/createBackIn(DEFAULT_OVERSHOOT_STRENGTH);
+var backOut = /*#__PURE__*/reversed(backIn);
+var backInOut = /*#__PURE__*/mirrored(backIn);
+var anticipate = /*#__PURE__*/createAnticipateEasing(DEFAULT_OVERSHOOT_STRENGTH);
+var BOUNCE_FIRST_THRESHOLD = 4.0 / 11.0;
+var BOUNCE_SECOND_THRESHOLD = 8.0 / 11.0;
+var BOUNCE_THIRD_THRESHOLD = 9.0 / 10.0;
+var ca = 4356.0 / 361.0;
+var cb = 35442.0 / 1805.0;
+var cc = 16061.0 / 1805.0;
+var bounceOut = function (p) {
+    var p2 = p * p;
+    return p < BOUNCE_FIRST_THRESHOLD ? 7.5625 * p2 : p < BOUNCE_SECOND_THRESHOLD ? 9.075 * p2 - 9.9 * p + 3.4 : p < BOUNCE_THIRD_THRESHOLD ? ca * p2 - cb * p + cc : 10.8 * p * p - 20.52 * p + 10.72;
+};
+var bounceIn = function (p) {
+    return 1.0 - bounceOut(1.0 - p);
+};
+var bounceInOut = function (p) {
+    return p < 0.5 ? 0.5 * (1.0 - bounceOut(1.0 - p * 2.0)) : 0.5 * bounceOut(p * 2.0 - 1.0) + 0.5;
+};
+var NEWTON_ITERATIONS = 8;
+var NEWTON_MIN_SLOPE = 0.001;
+var SUBDIVISION_PRECISION = 0.0000001;
+var SUBDIVISION_MAX_ITERATIONS = 10;
+var K_SPLINE_TABLE_SIZE = 11;
+var K_SAMPLE_STEP_SIZE = 1.0 / (K_SPLINE_TABLE_SIZE - 1.0);
+var FLOAT_32_SUPPORTED = typeof Float32Array !== 'undefined';
+var a = function (a1, a2) {
+    return 1.0 - 3.0 * a2 + 3.0 * a1;
+};
+var b = function (a1, a2) {
+    return 3.0 * a2 - 6.0 * a1;
+};
+var c = function (a1) {
+    return 3.0 * a1;
+};
+var getSlope = function (t, a1, a2) {
+    return 3.0 * a(a1, a2) * t * t + 2.0 * b(a1, a2) * t + c(a1);
+};
+var calcBezier = function (t, a1, a2) {
+    return ((a(a1, a2) * t + b(a1, a2)) * t + c(a1)) * t;
+};
+function cubicBezier(mX1, mY1, mX2, mY2) {
+    var sampleValues = FLOAT_32_SUPPORTED ? new Float32Array(K_SPLINE_TABLE_SIZE) : new Array(K_SPLINE_TABLE_SIZE);
+    var binarySubdivide = function (aX, aA, aB) {
+        var i = 0;
+        var currentX;
+        var currentT;
+        do {
+            currentT = aA + (aB - aA) / 2.0;
+            currentX = calcBezier(currentT, mX1, mX2) - aX;
+            if (currentX > 0.0) {
+                aB = currentT;
+            } else {
+                aA = currentT;
+            }
+        } while (Math.abs(currentX) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
+        return currentT;
+    };
+    var newtonRaphsonIterate = function (aX, aGuessT) {
+        var i = 0;
+        var currentSlope = 0;
+        var currentX;
+        for (; i < NEWTON_ITERATIONS; ++i) {
+            currentSlope = getSlope(aGuessT, mX1, mX2);
+            if (currentSlope === 0.0) {
+                return aGuessT;
+            }
+            currentX = calcBezier(aGuessT, mX1, mX2) - aX;
+            aGuessT -= currentX / currentSlope;
+        }
+        return aGuessT;
+    };
+    var calcSampleValues = function () {
+        for (var i = 0; i < K_SPLINE_TABLE_SIZE; ++i) {
+            sampleValues[i] = calcBezier(i * K_SAMPLE_STEP_SIZE, mX1, mX2);
+        }
+    };
+    var getTForX = function (aX) {
+        var intervalStart = 0.0;
+        var currentSample = 1;
+        var lastSample = K_SPLINE_TABLE_SIZE - 1;
+        var dist = 0.0;
+        var guessForT = 0.0;
+        var initialSlope = 0.0;
+        for (; currentSample !== lastSample && sampleValues[currentSample] <= aX; ++currentSample) {
+            intervalStart += K_SAMPLE_STEP_SIZE;
+        }
+        --currentSample;
+        dist = (aX - sampleValues[currentSample]) / (sampleValues[currentSample + 1] - sampleValues[currentSample]);
+        guessForT = intervalStart + dist * K_SAMPLE_STEP_SIZE;
+        initialSlope = getSlope(guessForT, mX1, mX2);
+        if (initialSlope >= NEWTON_MIN_SLOPE) {
+            return newtonRaphsonIterate(aX, guessForT);
+        } else if (initialSlope === 0.0) {
+            return guessForT;
+        } else {
+            return binarySubdivide(aX, intervalStart, intervalStart + K_SAMPLE_STEP_SIZE);
+        }
+    };
+    calcSampleValues();
+    var resolver = function (aX) {
+        var returnValue;
+        if (mX1 === mY1 && mX2 === mY2) {
+            returnValue = aX;
+        } else if (aX === 0) {
+            returnValue = 0;
+        } else if (aX === 1) {
+            returnValue = 1;
+        } else {
+            returnValue = calcBezier(getTForX(aX), mY1, mY2);
+        }
+        return returnValue;
+    };
+    return resolver;
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@popmotion/popcorn/dist/popcorn.es.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@popmotion/popcorn/dist/popcorn.es.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   angle: () => (/* binding */ angle),
+/* harmony export */   anticipate: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.anticipate),
+/* harmony export */   applyOffset: () => (/* binding */ applyOffset),
+/* harmony export */   backIn: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.backIn),
+/* harmony export */   backInOut: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.backInOut),
+/* harmony export */   backOut: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.backOut),
+/* harmony export */   circIn: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.circIn),
+/* harmony export */   circInOut: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.circInOut),
+/* harmony export */   circOut: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.circOut),
+/* harmony export */   clamp: () => (/* binding */ clamp$1),
+/* harmony export */   conditional: () => (/* binding */ conditional),
+/* harmony export */   createAnticipateEasing: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.createAnticipateEasing),
+/* harmony export */   createBackIn: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.createBackIn),
+/* harmony export */   createExpoIn: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.createExpoIn),
+/* harmony export */   cubicBezier: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.cubicBezier),
+/* harmony export */   degreesToRadians: () => (/* binding */ degreesToRadians),
+/* harmony export */   distance: () => (/* binding */ distance),
+/* harmony export */   easeIn: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.easeIn),
+/* harmony export */   easeInOut: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.easeInOut),
+/* harmony export */   easeOut: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.easeOut),
+/* harmony export */   interpolate: () => (/* binding */ interpolate),
+/* harmony export */   isPoint: () => (/* binding */ isPoint),
+/* harmony export */   isPoint3D: () => (/* binding */ isPoint3D),
+/* harmony export */   linear: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.linear),
+/* harmony export */   mirrored: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.mirrored),
+/* harmony export */   mix: () => (/* binding */ mix),
+/* harmony export */   mixArray: () => (/* binding */ mixArray),
+/* harmony export */   mixColor: () => (/* binding */ mixColor),
+/* harmony export */   mixComplex: () => (/* binding */ mixComplex),
+/* harmony export */   mixObject: () => (/* binding */ mixObject),
+/* harmony export */   pipe: () => (/* binding */ pipe),
+/* harmony export */   pointFromVector: () => (/* binding */ pointFromVector),
+/* harmony export */   progress: () => (/* binding */ progress),
+/* harmony export */   radiansToDegrees: () => (/* binding */ radiansToDegrees),
+/* harmony export */   reversed: () => (/* reexport safe */ _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__.reversed),
+/* harmony export */   smooth: () => (/* binding */ smooth),
+/* harmony export */   smoothFrame: () => (/* binding */ smoothFrame),
+/* harmony export */   snap: () => (/* binding */ snap),
+/* harmony export */   springForce: () => (/* binding */ springForce),
+/* harmony export */   springForceExpo: () => (/* binding */ springForceExpo),
+/* harmony export */   springForceLinear: () => (/* binding */ springForceLinear),
+/* harmony export */   steps: () => (/* binding */ steps),
+/* harmony export */   toDecimal: () => (/* binding */ toDecimal),
+/* harmony export */   velocityPerFrame: () => (/* binding */ velocityPerFrame),
+/* harmony export */   velocityPerSecond: () => (/* binding */ velocityPerSecond),
+/* harmony export */   wrap: () => (/* binding */ wrap$1)
+/* harmony export */ });
+/* harmony import */ var style_value_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! style-value-types */ "./node_modules/style-value-types/dist/style-value-types.es.js");
+/* harmony import */ var hey_listen__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! hey-listen */ "./node_modules/hey-listen/dist/hey-listen.es.js");
+/* harmony import */ var framesync__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! framesync */ "./node_modules/framesync/dist/framesync.es.js");
+/* harmony import */ var _popmotion_easing__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @popmotion/easing */ "./node_modules/@popmotion/easing/dist/easing.es.js");
+
+
+
+
+
+
+var zeroPoint = {
+    x: 0,
+    y: 0,
+    z: 0
+};
+var isNum = function (v) { return typeof v === 'number'; };
+
+var radiansToDegrees = (function (radians) { return (radians * 180) / Math.PI; });
+
+var angle = (function (a, b) {
+    if (b === void 0) { b = zeroPoint; }
+    return radiansToDegrees(Math.atan2(b.y - a.y, b.x - a.x));
+});
+
+var applyOffset = (function (from, to) {
+    var hasReceivedFrom = true;
+    if (to === undefined) {
+        to = from;
+        hasReceivedFrom = false;
+    }
+    return function (v) {
+        if (hasReceivedFrom) {
+            return v - from + to;
+        }
+        else {
+            from = v;
+            hasReceivedFrom = true;
+            return to;
+        }
+    };
+});
+
+var curryRange = (function (func) { return function (min, max, v) { return (v !== undefined ? func(min, max, v) : function (cv) { return func(min, max, cv); }); }; });
+
+var clamp = function (min, max, v) {
+    return Math.min(Math.max(v, min), max);
+};
+var clamp$1 = curryRange(clamp);
+
+var conditional = (function (check, apply) { return function (v) {
+    return check(v) ? apply(v) : v;
+}; });
+
+var degreesToRadians = (function (degrees) { return (degrees * Math.PI) / 180; });
+
+var isPoint = (function (point) {
+    return point.hasOwnProperty('x') && point.hasOwnProperty('y');
+});
+
+var isPoint3D = (function (point) {
+    return isPoint(point) && point.hasOwnProperty('z');
+});
+
+var distance1D = function (a, b) { return Math.abs(a - b); };
+var distance = (function (a, b) {
+    if (b === void 0) { b = zeroPoint; }
+    if (isNum(a) && isNum(b)) {
+        return distance1D(a, b);
+    }
+    else if (isPoint(a) && isPoint(b)) {
+        var xDelta = distance1D(a.x, b.x);
+        var yDelta = distance1D(a.y, b.y);
+        var zDelta = isPoint3D(a) && isPoint3D(b) ? distance1D(a.z, b.z) : 0;
+        return Math.sqrt(Math.pow(xDelta, 2) + Math.pow(yDelta, 2) + Math.pow(zDelta, 2));
+    }
+    return 0;
+});
+
+var progress = (function (from, to, value) {
+    var toFromDifference = to - from;
+    return toFromDifference === 0 ? 1 : (value - from) / toFromDifference;
+});
+
+var mix = (function (from, to, progress) {
+    return -progress * from + progress * to + from;
+});
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+var mixLinearColor = function (from, to, v) {
+    var fromExpo = from * from;
+    var toExpo = to * to;
+    return Math.sqrt(Math.max(0, v * (toExpo - fromExpo) + fromExpo));
+};
+var colorTypes = [style_value_types__WEBPACK_IMPORTED_MODULE_0__.hex, style_value_types__WEBPACK_IMPORTED_MODULE_0__.rgba, style_value_types__WEBPACK_IMPORTED_MODULE_0__.hsla];
+var getColorType = function (v) {
+    return colorTypes.find(function (type) { return type.test(v); });
+};
+var notAnimatable = function (color$$1) {
+    return "'" + color$$1 + "' is not an animatable color. Use the equivalent color code instead.";
+};
+var mixColor = (function (from, to) {
+    var fromColorType = getColorType(from);
+    var toColorType = getColorType(to);
+    (0,hey_listen__WEBPACK_IMPORTED_MODULE_1__.invariant)(!!fromColorType, notAnimatable(from));
+    (0,hey_listen__WEBPACK_IMPORTED_MODULE_1__.invariant)(!!toColorType, notAnimatable(to));
+    (0,hey_listen__WEBPACK_IMPORTED_MODULE_1__.invariant)(fromColorType.transform === toColorType.transform, 'Both colors must be hex/RGBA, OR both must be HSLA.');
+    var fromColor = fromColorType.parse(from);
+    var toColor = toColorType.parse(to);
+    var blended = __assign({}, fromColor);
+    var mixFunc = fromColorType === style_value_types__WEBPACK_IMPORTED_MODULE_0__.hsla ? mix : mixLinearColor;
+    return function (v) {
+        for (var key in blended) {
+            if (key !== 'alpha') {
+                blended[key] = mixFunc(fromColor[key], toColor[key], v);
+            }
+        }
+        blended.alpha = mix(fromColor.alpha, toColor.alpha, v);
+        return fromColorType.transform(blended);
+    };
+});
+
+var combineFunctions = function (a, b) { return function (v) { return b(a(v)); }; };
+var pipe = (function () {
+    var transformers = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        transformers[_i] = arguments[_i];
+    }
+    return transformers.reduce(combineFunctions);
+});
+
+function getMixer(origin, target) {
+    if (isNum(origin)) {
+        return function (v) { return mix(origin, target, v); };
+    }
+    else if (style_value_types__WEBPACK_IMPORTED_MODULE_0__.color.test(origin)) {
+        return mixColor(origin, target);
+    }
+    else {
+        return mixComplex(origin, target);
+    }
+}
+var mixArray = function (from, to) {
+    var output = from.slice();
+    var numValues = output.length;
+    var blendValue = from.map(function (fromThis, i) { return getMixer(fromThis, to[i]); });
+    return function (v) {
+        for (var i = 0; i < numValues; i++) {
+            output[i] = blendValue[i](v);
+        }
+        return output;
+    };
+};
+var mixObject = function (origin, target) {
+    var output = __assign({}, origin, target);
+    var blendValue = {};
+    for (var key in output) {
+        if (origin[key] !== undefined && target[key] !== undefined) {
+            blendValue[key] = getMixer(origin[key], target[key]);
+        }
+    }
+    return function (v) {
+        for (var key in blendValue) {
+            output[key] = blendValue[key](v);
+        }
+        return output;
+    };
+};
+function analyse(value) {
+    var parsed = style_value_types__WEBPACK_IMPORTED_MODULE_0__.complex.parse(value);
+    var numValues = parsed.length;
+    var numNumbers = 0;
+    var numRGB = 0;
+    var numHSL = 0;
+    for (var i = 0; i < numValues; i++) {
+        if (numNumbers || typeof parsed[i] === 'number') {
+            numNumbers++;
+        }
+        else {
+            if (parsed[i].hue !== undefined) {
+                numHSL++;
+            }
+            else {
+                numRGB++;
+            }
+        }
+    }
+    return { parsed: parsed, numNumbers: numNumbers, numRGB: numRGB, numHSL: numHSL };
+}
+var mixComplex = function (origin, target) {
+    var template = style_value_types__WEBPACK_IMPORTED_MODULE_0__.complex.createTransformer(target);
+    var originStats = analyse(origin);
+    var targetStats = analyse(target);
+    (0,hey_listen__WEBPACK_IMPORTED_MODULE_1__.invariant)(originStats.numHSL === targetStats.numHSL &&
+        originStats.numRGB === targetStats.numRGB &&
+        originStats.numNumbers >= targetStats.numNumbers, "Complex values '" + origin + "' and '" + target + "' too different to mix. Ensure all colors are of the same type.");
+    return pipe(mixArray(originStats.parsed, targetStats.parsed), template);
+};
+
+var mixNumber = function (from, to) { return function (p) { return mix(from, to, p); }; };
+function detectMixerFactory(v) {
+    if (typeof v === 'number') {
+        return mixNumber;
+    }
+    else if (typeof v === 'string') {
+        if (style_value_types__WEBPACK_IMPORTED_MODULE_0__.color.test(v)) {
+            return mixColor;
+        }
+        else {
+            return mixComplex;
+        }
+    }
+    else if (Array.isArray(v)) {
+        return mixArray;
+    }
+    else if (typeof v === 'object') {
+        return mixObject;
+    }
+}
+function createMixers(output, ease, customMixer) {
+    var mixers = [];
+    var mixerFactory = customMixer || detectMixerFactory(output[0]);
+    var numMixers = output.length - 1;
+    for (var i = 0; i < numMixers; i++) {
+        var mixer = mixerFactory(output[i], output[i + 1]);
+        if (ease) {
+            var easingFunction = Array.isArray(ease) ? ease[i] : ease;
+            mixer = pipe(easingFunction, mixer);
+        }
+        mixers.push(mixer);
+    }
+    return mixers;
+}
+function fastInterpolate(_a, _b) {
+    var from = _a[0], to = _a[1];
+    var mixer = _b[0];
+    return function (v) { return mixer(progress(from, to, v)); };
+}
+function slowInterpolate(input, mixers) {
+    var inputLength = input.length;
+    var lastInputIndex = inputLength - 1;
+    return function (v) {
+        var mixerIndex = 0;
+        var foundMixerIndex = false;
+        if (v <= input[0]) {
+            foundMixerIndex = true;
+        }
+        else if (v >= input[lastInputIndex]) {
+            mixerIndex = lastInputIndex - 1;
+            foundMixerIndex = true;
+        }
+        if (!foundMixerIndex) {
+            var i = 1;
+            for (; i < inputLength; i++) {
+                if (input[i] > v || i === lastInputIndex) {
+                    break;
+                }
+            }
+            mixerIndex = i - 1;
+        }
+        var progressInRange = progress(input[mixerIndex], input[mixerIndex + 1], v);
+        return mixers[mixerIndex](progressInRange);
+    };
+}
+function interpolate(input, output, _a) {
+    var _b = _a === void 0 ? {} : _a, _c = _b.clamp, clamp = _c === void 0 ? true : _c, ease = _b.ease, mixer = _b.mixer;
+    var inputLength = input.length;
+    (0,hey_listen__WEBPACK_IMPORTED_MODULE_1__.invariant)(inputLength === output.length, 'Both input and output ranges must be the same length');
+    (0,hey_listen__WEBPACK_IMPORTED_MODULE_1__.invariant)(!ease || !Array.isArray(ease) || ease.length === inputLength - 1, 'Array of easing functions must be of length `input.length - 1`, as it applies to the transitions **between** the defined values.');
+    if (input[0] > input[inputLength - 1]) {
+        input = [].concat(input);
+        output = [].concat(output);
+        input.reverse();
+        output.reverse();
+    }
+    var mixers = createMixers(output, ease, mixer);
+    var interpolator = inputLength === 2
+        ? fastInterpolate(input, mixers)
+        : slowInterpolate(input, mixers);
+    return clamp
+        ? pipe(clamp$1(input[0], input[inputLength - 1]), interpolator)
+        : interpolator;
+}
+
+var pointFromVector = (function (origin, angle, distance) {
+    angle = degreesToRadians(angle);
+    return {
+        x: distance * Math.cos(angle) + origin.x,
+        y: distance * Math.sin(angle) + origin.y
+    };
+});
+
+var toDecimal = (function (num, precision) {
+    if (precision === void 0) { precision = 2; }
+    precision = Math.pow(10, precision);
+    return Math.round(num * precision) / precision;
+});
+
+var smoothFrame = (function (prevValue, nextValue, duration, smoothing) {
+    if (smoothing === void 0) { smoothing = 0; }
+    return toDecimal(prevValue +
+        (duration * (nextValue - prevValue)) / Math.max(smoothing, duration));
+});
+
+var smooth = (function (strength) {
+    if (strength === void 0) { strength = 50; }
+    var previousValue = 0;
+    var lastUpdated = 0;
+    return function (v) {
+        var currentFramestamp = (0,framesync__WEBPACK_IMPORTED_MODULE_2__.getFrameData)().timestamp;
+        var timeDelta = currentFramestamp !== lastUpdated ? currentFramestamp - lastUpdated : 0;
+        var newValue = timeDelta
+            ? smoothFrame(previousValue, v, timeDelta, strength)
+            : previousValue;
+        lastUpdated = currentFramestamp;
+        previousValue = newValue;
+        return newValue;
+    };
+});
+
+var snap = (function (points) {
+    if (typeof points === 'number') {
+        return function (v) { return Math.round(v / points) * points; };
+    }
+    else {
+        var i_1 = 0;
+        var numPoints_1 = points.length;
+        return function (v) {
+            var lastDistance = Math.abs(points[0] - v);
+            for (i_1 = 1; i_1 < numPoints_1; i_1++) {
+                var point = points[i_1];
+                var distance = Math.abs(point - v);
+                if (distance === 0)
+                    return point;
+                if (distance > lastDistance)
+                    return points[i_1 - 1];
+                if (i_1 === numPoints_1 - 1)
+                    return point;
+                lastDistance = distance;
+            }
+        };
+    }
+});
+
+var identity = function (v) { return v; };
+var springForce = function (alterDisplacement) {
+    if (alterDisplacement === void 0) { alterDisplacement = identity; }
+    return curryRange(function (constant, origin, v) {
+        var displacement = origin - v;
+        var springModifiedDisplacement = -(0 - constant + 1) * (0 - alterDisplacement(Math.abs(displacement)));
+        return displacement <= 0
+            ? origin + springModifiedDisplacement
+            : origin - springModifiedDisplacement;
+    });
+};
+var springForceLinear = springForce();
+var springForceExpo = springForce(Math.sqrt);
+
+var velocityPerFrame = (function (xps, frameDuration) {
+    return isNum(xps) ? xps / (1000 / frameDuration) : 0;
+});
+
+var velocityPerSecond = (function (velocity, frameDuration) {
+    return frameDuration ? velocity * (1000 / frameDuration) : 0;
+});
+
+var wrap = function (min, max, v) {
+    var rangeSize = max - min;
+    return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
+};
+var wrap$1 = curryRange(wrap);
+
+var clampProgress = clamp$1(0, 1);
+var steps = (function (steps, direction) {
+    if (direction === void 0) { direction = 'end'; }
+    return function (progress) {
+        progress =
+            direction === 'end' ? Math.min(progress, 0.999) : Math.max(progress, 0.001);
+        var expanded = progress * steps;
+        var rounded = direction === 'end' ? Math.floor(expanded) : Math.ceil(expanded);
+        return clampProgress(rounded / steps);
+    };
+});
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@stripe/stripe-js/pure/index.js":
 /*!******************************************************!*\
   !*** ./node_modules/@stripe/stripe-js/pure/index.js ***!
@@ -166,6 +829,157 @@ const camelCase = (input, options) => {
 module.exports = camelCase;
 // TODO: Remove this for the next major release
 module.exports["default"] = camelCase;
+
+
+/***/ }),
+
+/***/ "./node_modules/framesync/dist/framesync.es.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/framesync/dist/framesync.es.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cancelSync: () => (/* binding */ cancelSync),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   getFrameData: () => (/* binding */ getFrameData)
+/* harmony export */ });
+/* harmony import */ var hey_listen__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hey-listen */ "./node_modules/hey-listen/dist/hey-listen.es.js");
+
+
+var prevTime = 0;
+var onNextFrame = typeof window !== 'undefined' && window.requestAnimationFrame !== undefined ? function (callback) {
+    return window.requestAnimationFrame(callback);
+} : function (callback) {
+    var timestamp = Date.now();
+    var timeToCall = Math.max(0, 16.7 - (timestamp - prevTime));
+    prevTime = timestamp + timeToCall;
+    setTimeout(function () {
+        return callback(prevTime);
+    }, timeToCall);
+};
+
+var createStep = function (setRunNextFrame) {
+    var processToRun = [];
+    var processToRunNextFrame = [];
+    var numThisFrame = 0;
+    var isProcessing = false;
+    var i = 0;
+    var cancelled = new WeakSet();
+    var toKeepAlive = new WeakSet();
+    var renderStep = {
+        cancel: function (process) {
+            var indexOfCallback = processToRunNextFrame.indexOf(process);
+            cancelled.add(process);
+            if (indexOfCallback !== -1) {
+                processToRunNextFrame.splice(indexOfCallback, 1);
+            }
+        },
+        process: function (frame) {
+            var _a;
+            isProcessing = true;
+            _a = [processToRunNextFrame, processToRun], processToRun = _a[0], processToRunNextFrame = _a[1];
+            processToRunNextFrame.length = 0;
+            numThisFrame = processToRun.length;
+            if (numThisFrame) {
+                var process_1;
+                for (i = 0; i < numThisFrame; i++) {
+                    process_1 = processToRun[i];
+                    process_1(frame);
+                    if (toKeepAlive.has(process_1) === true && !cancelled.has(process_1)) {
+                        renderStep.schedule(process_1);
+                        setRunNextFrame(true);
+                    }
+                }
+            }
+            isProcessing = false;
+        },
+        schedule: function (process, keepAlive, immediate) {
+            if (keepAlive === void 0) {
+                keepAlive = false;
+            }
+            if (immediate === void 0) {
+                immediate = false;
+            }
+            (0,hey_listen__WEBPACK_IMPORTED_MODULE_0__.invariant)(typeof process === "function", "Argument must be a function");
+            var addToCurrentBuffer = immediate && isProcessing;
+            var buffer = addToCurrentBuffer ? processToRun : processToRunNextFrame;
+            cancelled.delete(process);
+            if (keepAlive) toKeepAlive.add(process);
+            if (buffer.indexOf(process) === -1) {
+                buffer.push(process);
+                if (addToCurrentBuffer) numThisFrame = processToRun.length;
+            }
+        }
+    };
+    return renderStep;
+};
+
+var maxElapsed = 40;
+var defaultElapsed = 1 / 60 * 1000;
+var useDefaultElapsed = true;
+var willRunNextFrame = false;
+var isProcessing = false;
+var frame = {
+    delta: 0,
+    timestamp: 0
+};
+var stepsOrder = ["read", "update", "preRender", "render", "postRender"];
+var setWillRunNextFrame = function (willRun) {
+    return willRunNextFrame = willRun;
+};
+var steps = /*#__PURE__*/stepsOrder.reduce(function (acc, key) {
+    acc[key] = createStep(setWillRunNextFrame);
+    return acc;
+}, {});
+var sync = /*#__PURE__*/stepsOrder.reduce(function (acc, key) {
+    var step = steps[key];
+    acc[key] = function (process, keepAlive, immediate) {
+        if (keepAlive === void 0) {
+            keepAlive = false;
+        }
+        if (immediate === void 0) {
+            immediate = false;
+        }
+        if (!willRunNextFrame) startLoop();
+        step.schedule(process, keepAlive, immediate);
+        return process;
+    };
+    return acc;
+}, {});
+var cancelSync = /*#__PURE__*/stepsOrder.reduce(function (acc, key) {
+    acc[key] = steps[key].cancel;
+    return acc;
+}, {});
+var processStep = function (stepId) {
+    return steps[stepId].process(frame);
+};
+var processFrame = function (timestamp) {
+    willRunNextFrame = false;
+    frame.delta = useDefaultElapsed ? defaultElapsed : Math.max(Math.min(timestamp - frame.timestamp, maxElapsed), 1);
+    if (!useDefaultElapsed) defaultElapsed = frame.delta;
+    frame.timestamp = timestamp;
+    isProcessing = true;
+    stepsOrder.forEach(processStep);
+    isProcessing = false;
+    if (willRunNextFrame) {
+        useDefaultElapsed = false;
+        onNextFrame(processFrame);
+    }
+};
+var startLoop = function () {
+    willRunNextFrame = true;
+    useDefaultElapsed = true;
+    if (!isProcessing) onNextFrame(processFrame);
+};
+var getFrameData = function () {
+    return frame;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (sync);
+
 
 
 /***/ }),
@@ -2894,13 +3708,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _formspree_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @formspree/react */ "./node_modules/@formspree/react/dist/index.mjs");
 
 
-const Contact = () => {
+const Contact = ({
+  onSuccess
+}) => {
   const [state, handleSubmit] = (0,_formspree_react__WEBPACK_IMPORTED_MODULE_1__.useForm)("mnnpvzyq");
   if (state.succeeded) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Thanks for joining!");
+    onSuccess(true);
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "thank-you"
+    }, "Thanks for getting in touch!");
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "contact-form"
+    className: `contact-form` + (state.submitting ? " loading" : "") + (state.succeeded ? " success" : "")
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Request CV"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     name: "contact",
     onSubmit: handleSubmit
@@ -3139,9 +3958,9 @@ const SidePanel = () => {
     onClick: () => handleClick("about"),
     className: "nav-item"
   }, "About"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    onClick: () => handleClick("portfolio"),
+    onClick: () => handleClick("experience"),
     className: "nav-item"
-  }, "Portfolio"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "Experience"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     onClick: () => handleClick("contact"),
     className: "nav-item"
   }, "Contact")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby__WEBPACK_IMPORTED_MODULE_1__.Link, {
@@ -3156,6 +3975,180 @@ const SidePanel = () => {
   })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SidePanel);
+
+/***/ }),
+
+/***/ "./src/components/slider.js":
+/*!**********************************!*\
+  !*** ./src/components/slider.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs");
+/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs");
+/* harmony import */ var _popmotion_popcorn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @popmotion/popcorn */ "./node_modules/@popmotion/popcorn/dist/popcorn.es.js");
+/* harmony import */ var _styles_slider_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../styles/slider.scss */ "./src/styles/slider.scss");
+/* harmony import */ var _styles_slider_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_styles_slider_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _sliderImages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sliderImages */ "./src/components/sliderImages.js");
+
+
+
+
+
+const sliderVariants = {
+  incoming: direction => ({
+    x: direction > 0 ? "100%" : "-100%",
+    scale: 1.2,
+    opacity: 0
+  }),
+  active: {
+    x: 0,
+    scale: 1,
+    opacity: 1
+  },
+  exit: direction => ({
+    x: direction > 0 ? "-100%" : "100%",
+    scale: 1,
+    opacity: 0.2
+  })
+};
+const sliderTransition = {
+  duration: 1,
+  ease: [0.56, 0.03, 0.12, 1.04]
+};
+const Slider = () => {
+  const {
+    0: [imageCount, direction],
+    1: setImageCount
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([0, 0]);
+  const activeImageIndex = (0,_popmotion_popcorn__WEBPACK_IMPORTED_MODULE_1__.wrap)(0, _sliderImages__WEBPACK_IMPORTED_MODULE_3__.IMAGES.length, imageCount);
+  const swipeToImage = swipeDirection => {
+    setImageCount([imageCount + swipeDirection, swipeDirection]);
+  };
+  const dragEndHandler = dragInfo => {
+    const draggedDistance = dragInfo.offset.x;
+    const swipeThreshold = 50;
+    if (draggedDistance > swipeThreshold) {
+      swipeToImage(-1);
+    } else if (draggedDistance < -swipeThreshold) {
+      swipeToImage(1);
+    }
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "slider-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "slider-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "slider"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_4__.AnimatePresence, {
+    initial: false,
+    custom: direction
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_5__.motion.div, {
+    key: imageCount,
+    custom: direction,
+    variants: sliderVariants,
+    initial: "incoming",
+    animate: "active",
+    exit: "exit",
+    transition: sliderTransition,
+    drag: "x",
+    dragConstraints: {
+      left: 0,
+      right: 0
+    },
+    dragElastic: 1,
+    onDragEnd: (_, dragInfo) => dragEndHandler(dragInfo),
+    className: "image",
+    style: {
+      overflow: "hidden"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_5__.motion.div, {
+    style: {
+      overflow: "auto",
+      height: "fit-content"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: _sliderImages__WEBPACK_IMPORTED_MODULE_3__.IMAGES[activeImageIndex].imageSrc,
+    alt: "slider"
+  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "buttons"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "button button--prev",
+    onClick: () => swipeToImage(-1)
+  }, "PREV"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "button button--next",
+    onClick: () => swipeToImage(1)
+  }, "NEXT"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_4__.AnimatePresence, {
+    exitBeforeEnter: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_5__.motion.div, {
+    key: activeImageIndex,
+    initial: {
+      opacity: 0,
+      x: -20
+    },
+    animate: {
+      opacity: 1,
+      x: 0
+    },
+    exit: {
+      opacity: 0
+    },
+    transition: {
+      duration: 0.5
+    },
+    className: "slider-description",
+    dangerouslySetInnerHTML: {
+      __html: _sliderImages__WEBPACK_IMPORTED_MODULE_3__.IMAGES[activeImageIndex].description
+    }
+  })));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Slider);
+
+/***/ }),
+
+/***/ "./src/components/sliderImages.js":
+/*!****************************************!*\
+  !*** ./src/components/sliderImages.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   IMAGES: () => (/* binding */ IMAGES)
+/* harmony export */ });
+const IMAGES = [{
+  id: 0,
+  imageSrc: "./1.png",
+  description: "<p>Customer-facing portal <b>(SaaS)</b>, leveraging <b>React</b> and <b>Figma</b> to deliver a seamless and intuitive user interface.</p><div><span>React</span><span>Figma</span><span>Typescript</span><span>Git</span></div>"
+}, {
+  id: 1,
+  imageSrc: "./2.png",
+  description: "<p>Branding and Labeling for a local company</p><div><span>Adobe Suite</span></div>"
+}, {
+  id: 2,
+  imageSrc: "https://images.pexels.com/photos/3430143/pexels-photo-3430143.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+  description: "<p><b>Mobile App</b>, initially leveraging <b>Ionic - AngularJS</b> then eventually moving to <b>Flutter</b> for a more native ux and Figma.</p><div><span>Ionic</span><span>AngularJS</span><span>Flutter</span><span>Sketch</span><span>Figma</span></div>"
+}, {
+  id: 3,
+  imageSrc: "https://images.pexels.com/photos/2231756/pexels-photo-2231756.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+  description: "<p>Website using <b>Laravel PHP</b>, with of an SEO strategy, significantly improving Clever First Aids online visibility and web enquiry conversions.</p><div><span>Laravel</span><span>PHP</span><span>SEO</span><span>Google Analytics</span></div>"
+}, {
+  id: 4,
+  imageSrc: "https://images.pexels.com/photos/1813157/pexels-photo-1813157.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+  description: "<p>Email platform, to assist in creation of email flows, using <b>NextJs</b></p><div><span>NextJs</span><span>React</span><span>NodeJs</span><span>SendGrid</span></div>"
+}, {
+  id: 5,
+  imageSrc: "https://images.pexels.com/photos/1813157/pexels-photo-1813157.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+  description: "<p>Multiple years working for various web agencies as a Frontend Developer</p><div><span>Wordpress</span><span>Shopify</span><span>Laravel PHP</span><span>Sketch</span><span>React</span></div>"
+}];
 
 /***/ }),
 
@@ -3281,15 +4274,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! gatsby-plugin-image */ "./node_modules/gatsby-plugin-image/dist/gatsby-image.module.js");
-/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-scroll.mjs");
-/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/render/components/motion/proxy.mjs");
-/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-transform.mjs");
+/* harmony import */ var gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! gatsby-plugin-image */ "./node_modules/gatsby-plugin-image/dist/gatsby-image.module.js");
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-scroll.mjs");
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/render/components/motion/proxy.mjs");
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-transform.mjs");
 /* harmony import */ var _components_layout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/layout */ "./src/components/layout.js");
 /* harmony import */ var _components_SEO__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/SEO */ "./src/components/SEO.js");
 /* harmony import */ var _components_customCursor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/customCursor */ "./src/components/customCursor.js");
 /* harmony import */ var _components_velocity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/velocity */ "./src/components/velocity.js");
 /* harmony import */ var _components_contact__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/contact */ "./src/components/contact.js");
+/* harmony import */ var _components_slider__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/slider */ "./src/components/slider.js");
+
 
 
 
@@ -3301,16 +4296,16 @@ __webpack_require__.r(__webpack_exports__);
 const Section = ({
   title,
   children,
-  color = "#ffffff",
+  color = `#ffffff`,
   id
 }) => {
   const ref = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   const {
     scrollYProgress
-  } = (0,motion_react__WEBPACK_IMPORTED_MODULE_6__.useScroll)({
+  } = (0,motion_react__WEBPACK_IMPORTED_MODULE_7__.useScroll)({
     target: ref
   });
-  const y = (0,_components_velocity__WEBPACK_IMPORTED_MODULE_4__.useParallax)(scrollYProgress, 300);
+  const y = (0,_components_velocity__WEBPACK_IMPORTED_MODULE_4__.useParallax)(scrollYProgress, 200);
   const isDarkColor = color => {
     const c = color.substring(1); // strip #
     const rgb = parseInt(c, 16); // convert rrggbb to decimal
@@ -3329,14 +4324,15 @@ const Section = ({
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "container",
     ref: ref
-  }, children), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_7__.motion.div, {
+  }, children), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_8__.motion.div, {
     initial: {
-      visibility: "hidden",
-      opacity: "0"
+      opacity: 0
     },
     animate: {
-      visibility: "visible",
-      opacity: "1"
+      opacity: 1
+    },
+    exit: {
+      opacity: 0
     },
     style: {
       y
@@ -3347,8 +4343,12 @@ const Section = ({
 const IndexPage = () => {
   const {
     scrollY
-  } = (0,motion_react__WEBPACK_IMPORTED_MODULE_6__.useScroll)();
-  const motionObject = (0,motion_react__WEBPACK_IMPORTED_MODULE_8__.useTransform)(scrollY, [100, 0], [0, 100]);
+  } = (0,motion_react__WEBPACK_IMPORTED_MODULE_7__.useScroll)();
+  const motionObject = (0,motion_react__WEBPACK_IMPORTED_MODULE_9__.useTransform)(scrollY, [100, 0], [0, 100]);
+  const {
+    0: formSucceeded,
+    1: setFormSucceeded
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_layout__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_customCursor__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "bar header",
     id: "top"
@@ -3366,12 +4366,12 @@ const IndexPage = () => {
     className: "counter"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
     className: "name"
-  }, "George Bottomley")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_7__.motion.div, {
+  }, "George Bottomley")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_8__.motion.div, {
     className: "headshot-container",
     style: {
       opacity: motionObject
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_9__.StaticImage, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_10__.StaticImage, {
     className: "headshot",
     src: "../images/headshot.png",
     alt: "",
@@ -3386,27 +4386,57 @@ const IndexPage = () => {
     id: "about"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "block"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "With a diverse background spanning web development, software development, app, UI/UX, graphic design, animation, marketing, and branding, I possess a unique blend of", " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, "technical and creative skills.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "My journey through these disciplines has provided me with a comprehensive understanding of the entire", " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, "product development lifecycle"), ", from initial concept to final execution. This perspective allows me to identify opportunities for improvement at every stage, ensuring that products resonate with their target audience and drive business growth.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "velocity-container velcoity-container--about"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.ParallaxText, {
-    baseVelocity: 0.3
-  }, "React. NextJS/Gatsby. AngularJS. Flutter. Typescript. PHP. Wordpress/Shopify. NodeJS. Express. MySQL. GraphQL. HTML/CSS/SASS."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.ParallaxText, {
-    baseVelocity: -1
-  }, "UI/UX Design. Figma. Adobe Creative Suite."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Section, {
-    title: "Portfolio",
-    id: "portfolio"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "contact info goes here")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Section, {
+  }, "contact info goes here")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Section, {
+    title: "Experience",
+    id: "experience"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "flex-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_slider__WEBPACK_IMPORTED_MODULE_6__["default"], null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Section, {
     title: "Contact",
     color: `#30314f`,
     id: "contact"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "block block--contact"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_contact__WEBPACK_IMPORTED_MODULE_5__["default"], null))));
+    className: `block block--contact ${formSucceeded ? "succeeded" : ""}`
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_contact__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    onSuccess: setFormSucceeded
+  }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (IndexPage);
 const Head = () => {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_SEO__WEBPACK_IMPORTED_MODULE_2__.SEO, null);
 };
+
+/***/ }),
+
+/***/ "./node_modules/hey-listen/dist/hey-listen.es.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/hey-listen/dist/hey-listen.es.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   invariant: () => (/* binding */ invariant),
+/* harmony export */   warning: () => (/* binding */ warning)
+/* harmony export */ });
+var warning = function () { };
+var invariant = function () { };
+if (true) {
+    warning = function (check, message) {
+        if (!check && typeof console !== 'undefined') {
+            console.warn(message);
+        }
+    };
+    invariant = function (check, message) {
+        if (!check) {
+            throw new Error(message);
+        }
+    };
+}
+
+
+
 
 /***/ }),
 
@@ -6056,6 +7086,16 @@ function instanceOfHashable(object) {
 
 /***/ }),
 
+/***/ "./src/styles/slider.scss":
+/*!********************************!*\
+  !*** ./src/styles/slider.scss ***!
+  \********************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
 /***/ "./node_modules/react-favicon/dist/index.js":
 /*!**************************************************!*\
   !*** ./node_modules/react-favicon/dist/index.js ***!
@@ -8251,6 +9291,505 @@ exports.jsxs = jsxs;
 
 if (false) {} else {
   module.exports = __webpack_require__(/*! ./cjs/react-jsx-runtime.development.js */ "./node_modules/react/cjs/react-jsx-runtime.development.js");
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/style-value-types/dist/style-value-types.es.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/style-value-types/dist/style-value-types.es.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   alpha: () => (/* binding */ alpha),
+/* harmony export */   color: () => (/* binding */ color),
+/* harmony export */   complex: () => (/* binding */ complex),
+/* harmony export */   degrees: () => (/* binding */ degrees),
+/* harmony export */   hex: () => (/* binding */ hex),
+/* harmony export */   hsla: () => (/* binding */ hsla),
+/* harmony export */   number: () => (/* binding */ number),
+/* harmony export */   percent: () => (/* binding */ percent),
+/* harmony export */   progressPercentage: () => (/* binding */ progressPercentage),
+/* harmony export */   px: () => (/* binding */ px),
+/* harmony export */   rgbUnit: () => (/* binding */ rgbUnit),
+/* harmony export */   rgba: () => (/* binding */ rgba),
+/* harmony export */   scale: () => (/* binding */ scale),
+/* harmony export */   vh: () => (/* binding */ vh),
+/* harmony export */   vw: () => (/* binding */ vw)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/style-value-types/node_modules/tslib/tslib.es6.js");
+
+
+var clamp = function (min, max) { return function (v) {
+    return Math.max(Math.min(v, max), min);
+}; };
+var sanitize = function (v) { return (v % 1 ? Number(v.toFixed(5)) : v); };
+var floatRegex = /(-)?(\d[\d\.]*)/g;
+var colorRegex = /(#[0-9a-f]{6}|#[0-9a-f]{3}|#(?:[0-9a-f]{2}){2,4}|(rgb|hsl)a?\((-?[\d\.]+%?[,\s]+){2,3}\s*\/*\s*[\d\.]+%?\))/gi;
+var singleColorRegex = /^(#[0-9a-f]{3}|#(?:[0-9a-f]{2}){2,4}|(rgb|hsl)a?\((-?[\d\.]+%?[,\s]+){2,3}\s*\/*\s*[\d\.]+%?\))$/i;
+
+var number = {
+    test: function (v) { return typeof v === 'number'; },
+    parse: parseFloat,
+    transform: function (v) { return v; }
+};
+var alpha = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, number), { transform: clamp(0, 1) });
+var scale = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, number), { default: 1 });
+
+var createUnitType = function (unit) { return ({
+    test: function (v) {
+        return typeof v === 'string' && v.endsWith(unit) && v.split(' ').length === 1;
+    },
+    parse: parseFloat,
+    transform: function (v) { return "" + v + unit; }
+}); };
+var degrees = createUnitType('deg');
+var percent = createUnitType('%');
+var px = createUnitType('px');
+var vh = createUnitType('vh');
+var vw = createUnitType('vw');
+var progressPercentage = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, percent), { parse: function (v) { return percent.parse(v) / 100; }, transform: function (v) { return percent.transform(v * 100); } });
+
+var getValueFromFunctionString = function (value) {
+    return value.substring(value.indexOf('(') + 1, value.lastIndexOf(')'));
+};
+var clampRgbUnit = clamp(0, 255);
+var isRgba = function (v) { return v.red !== undefined; };
+var isHsla = function (v) { return v.hue !== undefined; };
+function getValuesAsArray(value) {
+    return getValueFromFunctionString(value)
+        .replace(/(,|\/)/g, ' ')
+        .split(/ \s*/);
+}
+var splitColorValues = function (terms) {
+    return function (v) {
+        if (typeof v !== 'string')
+            return v;
+        var values = {};
+        var valuesArray = getValuesAsArray(v);
+        for (var i = 0; i < 4; i++) {
+            values[terms[i]] =
+                valuesArray[i] !== undefined ? parseFloat(valuesArray[i]) : 1;
+        }
+        return values;
+    };
+};
+var rgbaTemplate = function (_a) {
+    var red = _a.red, green = _a.green, blue = _a.blue, _b = _a.alpha, alpha = _b === void 0 ? 1 : _b;
+    return "rgba(" + red + ", " + green + ", " + blue + ", " + alpha + ")";
+};
+var hslaTemplate = function (_a) {
+    var hue = _a.hue, saturation = _a.saturation, lightness = _a.lightness, _b = _a.alpha, alpha = _b === void 0 ? 1 : _b;
+    return "hsla(" + hue + ", " + saturation + ", " + lightness + ", " + alpha + ")";
+};
+var rgbUnit = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, number), { transform: function (v) { return Math.round(clampRgbUnit(v)); } });
+function isColorString(color, colorType) {
+    return color.startsWith(colorType) && singleColorRegex.test(color);
+}
+var rgba = {
+    test: function (v) { return (typeof v === 'string' ? isColorString(v, 'rgb') : isRgba(v)); },
+    parse: splitColorValues(['red', 'green', 'blue', 'alpha']),
+    transform: function (_a) {
+        var red = _a.red, green = _a.green, blue = _a.blue, _b = _a.alpha, alpha$1 = _b === void 0 ? 1 : _b;
+        return rgbaTemplate({
+            red: rgbUnit.transform(red),
+            green: rgbUnit.transform(green),
+            blue: rgbUnit.transform(blue),
+            alpha: sanitize(alpha.transform(alpha$1))
+        });
+    }
+};
+var hsla = {
+    test: function (v) { return (typeof v === 'string' ? isColorString(v, 'hsl') : isHsla(v)); },
+    parse: splitColorValues(['hue', 'saturation', 'lightness', 'alpha']),
+    transform: function (_a) {
+        var hue = _a.hue, saturation = _a.saturation, lightness = _a.lightness, _b = _a.alpha, alpha$1 = _b === void 0 ? 1 : _b;
+        return hslaTemplate({
+            hue: Math.round(hue),
+            saturation: percent.transform(sanitize(saturation)),
+            lightness: percent.transform(sanitize(lightness)),
+            alpha: sanitize(alpha.transform(alpha$1))
+        });
+    }
+};
+var hex = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, rgba), { test: function (v) { return typeof v === 'string' && isColorString(v, '#'); }, parse: function (v) {
+        var r = '';
+        var g = '';
+        var b = '';
+        if (v.length > 4) {
+            r = v.substr(1, 2);
+            g = v.substr(3, 2);
+            b = v.substr(5, 2);
+        }
+        else {
+            r = v.substr(1, 1);
+            g = v.substr(2, 1);
+            b = v.substr(3, 1);
+            r += r;
+            g += g;
+            b += b;
+        }
+        return {
+            red: parseInt(r, 16),
+            green: parseInt(g, 16),
+            blue: parseInt(b, 16),
+            alpha: 1
+        };
+    } });
+var color = {
+    test: function (v) {
+        return (typeof v === 'string' && singleColorRegex.test(v)) ||
+            isRgba(v) ||
+            isHsla(v);
+    },
+    parse: function (v) {
+        if (rgba.test(v)) {
+            return rgba.parse(v);
+        }
+        else if (hsla.test(v)) {
+            return hsla.parse(v);
+        }
+        else if (hex.test(v)) {
+            return hex.parse(v);
+        }
+        return v;
+    },
+    transform: function (v) {
+        if (isRgba(v)) {
+            return rgba.transform(v);
+        }
+        else if (isHsla(v)) {
+            return hsla.transform(v);
+        }
+        return v;
+    }
+};
+
+var COLOR_TOKEN = '${c}';
+var NUMBER_TOKEN = '${n}';
+var convertNumbersToZero = function (v) {
+    return typeof v === 'number' ? 0 : v;
+};
+var complex = {
+    test: function (v) {
+        if (typeof v !== 'string' || !isNaN(v))
+            return false;
+        var numValues = 0;
+        var foundNumbers = v.match(floatRegex);
+        var foundColors = v.match(colorRegex);
+        if (foundNumbers)
+            numValues += foundNumbers.length;
+        if (foundColors)
+            numValues += foundColors.length;
+        return numValues > 0;
+    },
+    parse: function (v) {
+        var input = v;
+        var parsed = [];
+        var foundColors = input.match(colorRegex);
+        if (foundColors) {
+            input = input.replace(colorRegex, COLOR_TOKEN);
+            parsed.push.apply(parsed, foundColors.map(color.parse));
+        }
+        var foundNumbers = input.match(floatRegex);
+        if (foundNumbers) {
+            parsed.push.apply(parsed, foundNumbers.map(number.parse));
+        }
+        return parsed;
+    },
+    createTransformer: function (prop) {
+        var template = prop;
+        var token = 0;
+        var foundColors = prop.match(colorRegex);
+        var numColors = foundColors ? foundColors.length : 0;
+        if (foundColors) {
+            for (var i = 0; i < numColors; i++) {
+                template = template.replace(foundColors[i], COLOR_TOKEN);
+                token++;
+            }
+        }
+        var foundNumbers = template.match(floatRegex);
+        var numNumbers = foundNumbers ? foundNumbers.length : 0;
+        if (foundNumbers) {
+            for (var i = 0; i < numNumbers; i++) {
+                template = template.replace(foundNumbers[i], NUMBER_TOKEN);
+                token++;
+            }
+        }
+        return function (v) {
+            var output = template;
+            for (var i = 0; i < token; i++) {
+                output = output.replace(i < numColors ? COLOR_TOKEN : NUMBER_TOKEN, i < numColors ? color.transform(v[i]) : sanitize(v[i]));
+            }
+            return output;
+        };
+    },
+    getAnimatableNone: function (target) {
+        var parsedTarget = complex.parse(target);
+        var targetTransformer = complex.createTransformer(target);
+        return targetTransformer(parsedTarget.map(convertNumbersToZero));
+    }
+};
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/style-value-types/node_modules/tslib/tslib.es6.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/style-value-types/node_modules/tslib/tslib.es6.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __assign: () => (/* binding */ __assign),
+/* harmony export */   __asyncDelegator: () => (/* binding */ __asyncDelegator),
+/* harmony export */   __asyncGenerator: () => (/* binding */ __asyncGenerator),
+/* harmony export */   __asyncValues: () => (/* binding */ __asyncValues),
+/* harmony export */   __await: () => (/* binding */ __await),
+/* harmony export */   __awaiter: () => (/* binding */ __awaiter),
+/* harmony export */   __classPrivateFieldGet: () => (/* binding */ __classPrivateFieldGet),
+/* harmony export */   __classPrivateFieldSet: () => (/* binding */ __classPrivateFieldSet),
+/* harmony export */   __createBinding: () => (/* binding */ __createBinding),
+/* harmony export */   __decorate: () => (/* binding */ __decorate),
+/* harmony export */   __exportStar: () => (/* binding */ __exportStar),
+/* harmony export */   __extends: () => (/* binding */ __extends),
+/* harmony export */   __generator: () => (/* binding */ __generator),
+/* harmony export */   __importDefault: () => (/* binding */ __importDefault),
+/* harmony export */   __importStar: () => (/* binding */ __importStar),
+/* harmony export */   __makeTemplateObject: () => (/* binding */ __makeTemplateObject),
+/* harmony export */   __metadata: () => (/* binding */ __metadata),
+/* harmony export */   __param: () => (/* binding */ __param),
+/* harmony export */   __read: () => (/* binding */ __read),
+/* harmony export */   __rest: () => (/* binding */ __rest),
+/* harmony export */   __spread: () => (/* binding */ __spread),
+/* harmony export */   __spreadArrays: () => (/* binding */ __spreadArrays),
+/* harmony export */   __values: () => (/* binding */ __values)
+/* harmony export */ });
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    }
+    return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+function __createBinding(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}
+
+function __exportStar(m, exports) {
+    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result.default = mod;
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+function __classPrivateFieldGet(receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, privateMap, value) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to set private field on non-instance");
+    }
+    privateMap.set(receiver, value);
+    return value;
 }
 
 
@@ -14238,6 +15777,376 @@ function isTransitionDefined({ when, delay: _delay, delayChildren, staggerChildr
 
 /***/ }),
 
+/***/ "./node_modules/framer-motion/dist/es/components/AnimatePresence/PopChild.mjs":
+/*!************************************************************************************!*\
+  !*** ./node_modules/framer-motion/dist/es/components/AnimatePresence/PopChild.mjs ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PopChild: () => (/* binding */ PopChild)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var _context_MotionConfigContext_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../context/MotionConfigContext.mjs */ "./node_modules/framer-motion/dist/es/context/MotionConfigContext.mjs");
+"use client";
+
+
+
+
+
+/**
+ * Measurement functionality has to be within a separate component
+ * to leverage snapshot lifecycle.
+ */
+class PopChildMeasure extends react__WEBPACK_IMPORTED_MODULE_1__.Component {
+    getSnapshotBeforeUpdate(prevProps) {
+        const element = this.props.childRef.current;
+        if (element && prevProps.isPresent && !this.props.isPresent) {
+            const parent = element.offsetParent;
+            const parentWidth = parent instanceof HTMLElement ? parent.offsetWidth || 0 : 0;
+            const size = this.props.sizeRef.current;
+            size.height = element.offsetHeight || 0;
+            size.width = element.offsetWidth || 0;
+            size.top = element.offsetTop;
+            size.left = element.offsetLeft;
+            size.right = parentWidth - size.width - size.left;
+        }
+        return null;
+    }
+    /**
+     * Required with getSnapshotBeforeUpdate to stop React complaining.
+     */
+    componentDidUpdate() { }
+    render() {
+        return this.props.children;
+    }
+}
+function PopChild({ children, isPresent, anchorX }) {
+    const id = (0,react__WEBPACK_IMPORTED_MODULE_1__.useId)();
+    const ref = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+    const size = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)({
+        width: 0,
+        height: 0,
+        top: 0,
+        left: 0,
+        right: 0,
+    });
+    const { nonce } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_MotionConfigContext_mjs__WEBPACK_IMPORTED_MODULE_2__.MotionConfigContext);
+    /**
+     * We create and inject a style block so we can apply this explicit
+     * sizing in a non-destructive manner by just deleting the style block.
+     *
+     * We can't apply size via render as the measurement happens
+     * in getSnapshotBeforeUpdate (post-render), likewise if we apply the
+     * styles directly on the DOM node, we might be overwriting
+     * styles set via the style prop.
+     */
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useInsertionEffect)(() => {
+        const { width, height, top, left, right } = size.current;
+        if (isPresent || !ref.current || !width || !height)
+            return;
+        const x = anchorX === "left" ? `left: ${left}` : `right: ${right}`;
+        ref.current.dataset.motionPopId = id;
+        const style = document.createElement("style");
+        if (nonce)
+            style.nonce = nonce;
+        document.head.appendChild(style);
+        if (style.sheet) {
+            style.sheet.insertRule(`
+          [data-motion-pop-id="${id}"] {
+            position: absolute !important;
+            width: ${width}px !important;
+            height: ${height}px !important;
+            ${x}px !important;
+            top: ${top}px !important;
+          }
+        `);
+        }
+        return () => {
+            document.head.removeChild(style);
+        };
+    }, [isPresent]);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PopChildMeasure, { isPresent: isPresent, childRef: ref, sizeRef: size, children: react__WEBPACK_IMPORTED_MODULE_1__.cloneElement(children, { ref }) }));
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PresenceChild: () => (/* binding */ PresenceChild)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var _context_PresenceContext_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../context/PresenceContext.mjs */ "./node_modules/framer-motion/dist/es/context/PresenceContext.mjs");
+/* harmony import */ var _utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/use-constant.mjs */ "./node_modules/framer-motion/dist/es/utils/use-constant.mjs");
+/* harmony import */ var _PopChild_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PopChild.mjs */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/PopChild.mjs");
+"use client";
+
+
+
+
+
+
+
+const PresenceChild = ({ children, initial, isPresent, onExitComplete, custom, presenceAffectsLayout, mode, anchorX, }) => {
+    const presenceChildren = (0,_utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_2__.useConstant)(newChildrenMap);
+    const id = (0,react__WEBPACK_IMPORTED_MODULE_1__.useId)();
+    const memoizedOnExitComplete = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((childId) => {
+        presenceChildren.set(childId, true);
+        for (const isComplete of presenceChildren.values()) {
+            if (!isComplete)
+                return; // can stop searching when any is incomplete
+        }
+        onExitComplete && onExitComplete();
+    }, [presenceChildren, onExitComplete]);
+    const context = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => ({
+        id,
+        initial,
+        isPresent,
+        custom,
+        onExitComplete: memoizedOnExitComplete,
+        register: (childId) => {
+            presenceChildren.set(childId, false);
+            return () => presenceChildren.delete(childId);
+        },
+    }), 
+    /**
+     * If the presence of a child affects the layout of the components around it,
+     * we want to make a new context value to ensure they get re-rendered
+     * so they can detect that layout change.
+     */
+    presenceAffectsLayout
+        ? [Math.random(), memoizedOnExitComplete]
+        : [isPresent, memoizedOnExitComplete]);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
+        presenceChildren.forEach((_, key) => presenceChildren.set(key, false));
+    }, [isPresent]);
+    /**
+     * If there's no `motion` components to fire exit animations, we want to remove this
+     * component immediately.
+     */
+    react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+        !isPresent &&
+            !presenceChildren.size &&
+            onExitComplete &&
+            onExitComplete();
+    }, [isPresent]);
+    if (mode === "popLayout") {
+        children = ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_PopChild_mjs__WEBPACK_IMPORTED_MODULE_3__.PopChild, { isPresent: isPresent, anchorX: anchorX, children: children }));
+    }
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_context_PresenceContext_mjs__WEBPACK_IMPORTED_MODULE_4__.PresenceContext.Provider, { value: context, children: children }));
+};
+function newChildrenMap() {
+    return new Map();
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AnimatePresence: () => (/* binding */ AnimatePresence)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var _context_LayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../context/LayoutGroupContext.mjs */ "./node_modules/framer-motion/dist/es/context/LayoutGroupContext.mjs");
+/* harmony import */ var _utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/use-constant.mjs */ "./node_modules/framer-motion/dist/es/utils/use-constant.mjs");
+/* harmony import */ var _utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/use-isomorphic-effect.mjs */ "./node_modules/framer-motion/dist/es/utils/use-isomorphic-effect.mjs");
+/* harmony import */ var _PresenceChild_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PresenceChild.mjs */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs");
+/* harmony import */ var _use_presence_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./use-presence.mjs */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs");
+/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils.mjs */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/utils.mjs");
+"use client";
+
+
+
+
+
+
+
+
+
+/**
+ * `AnimatePresence` enables the animation of components that have been removed from the tree.
+ *
+ * When adding/removing more than a single child, every child **must** be given a unique `key` prop.
+ *
+ * Any `motion` components that have an `exit` property defined will animate out when removed from
+ * the tree.
+ *
+ * ```jsx
+ * import { motion, AnimatePresence } from 'framer-motion'
+ *
+ * export const Items = ({ items }) => (
+ *   <AnimatePresence>
+ *     {items.map(item => (
+ *       <motion.div
+ *         key={item.id}
+ *         initial={{ opacity: 0 }}
+ *         animate={{ opacity: 1 }}
+ *         exit={{ opacity: 0 }}
+ *       />
+ *     ))}
+ *   </AnimatePresence>
+ * )
+ * ```
+ *
+ * You can sequence exit animations throughout a tree using variants.
+ *
+ * If a child contains multiple `motion` components with `exit` props, it will only unmount the child
+ * once all `motion` components have finished animating out. Likewise, any components using
+ * `usePresence` all need to call `safeToRemove`.
+ *
+ * @public
+ */
+const AnimatePresence = ({ children, custom, initial = true, onExitComplete, presenceAffectsLayout = true, mode = "sync", propagate = false, anchorX = "left", }) => {
+    const [isParentPresent, safeToRemove] = (0,_use_presence_mjs__WEBPACK_IMPORTED_MODULE_2__.usePresence)(propagate);
+    /**
+     * Filter any children that aren't ReactElements. We can only track components
+     * between renders with a props.key.
+     */
+    const presentChildren = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.onlyElements)(children), [children]);
+    /**
+     * Track the keys of the currently rendered children. This is used to
+     * determine which children are exiting.
+     */
+    const presentKeys = propagate && !isParentPresent ? [] : presentChildren.map(_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey);
+    /**
+     * If `initial={false}` we only want to pass this to components in the first render.
+     */
+    const isInitialRender = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(true);
+    /**
+     * A ref containing the currently present children. When all exit animations
+     * are complete, we use this to re-render the component with the latest children
+     * *committed* rather than the latest children *rendered*.
+     */
+    const pendingPresentChildren = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(presentChildren);
+    /**
+     * Track which exiting children have finished animating out.
+     */
+    const exitComplete = (0,_utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_4__.useConstant)(() => new Map());
+    /**
+     * Save children to render as React state. To ensure this component is concurrent-safe,
+     * we check for exiting children via an effect.
+     */
+    const [diffedChildren, setDiffedChildren] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(presentChildren);
+    const [renderedChildren, setRenderedChildren] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(presentChildren);
+    (0,_utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_5__.useIsomorphicLayoutEffect)(() => {
+        isInitialRender.current = false;
+        pendingPresentChildren.current = presentChildren;
+        /**
+         * Update complete status of exiting children.
+         */
+        for (let i = 0; i < renderedChildren.length; i++) {
+            const key = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey)(renderedChildren[i]);
+            if (!presentKeys.includes(key)) {
+                if (exitComplete.get(key) !== true) {
+                    exitComplete.set(key, false);
+                }
+            }
+            else {
+                exitComplete.delete(key);
+            }
+        }
+    }, [renderedChildren, presentKeys.length, presentKeys.join("-")]);
+    const exitingChildren = [];
+    if (presentChildren !== diffedChildren) {
+        let nextChildren = [...presentChildren];
+        /**
+         * Loop through all the currently rendered components and decide which
+         * are exiting.
+         */
+        for (let i = 0; i < renderedChildren.length; i++) {
+            const child = renderedChildren[i];
+            const key = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey)(child);
+            if (!presentKeys.includes(key)) {
+                nextChildren.splice(i, 0, child);
+                exitingChildren.push(child);
+            }
+        }
+        /**
+         * If we're in "wait" mode, and we have exiting children, we want to
+         * only render these until they've all exited.
+         */
+        if (mode === "wait" && exitingChildren.length) {
+            nextChildren = exitingChildren;
+        }
+        setRenderedChildren((0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.onlyElements)(nextChildren));
+        setDiffedChildren(presentChildren);
+        /**
+         * Early return to ensure once we've set state with the latest diffed
+         * children, we can immediately re-render.
+         */
+        return null;
+    }
+    if ( true &&
+        mode === "wait" &&
+        renderedChildren.length > 1) {
+        console.warn(`You're attempting to animate multiple children within AnimatePresence, but its mode is set to "wait". This will lead to odd visual behaviour.`);
+    }
+    /**
+     * If we've been provided a forceRender function by the LayoutGroupContext,
+     * we can use it to force a re-render amongst all surrounding components once
+     * all components have finished animating out.
+     */
+    const { forceRender } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_LayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_6__.LayoutGroupContext);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: renderedChildren.map((child) => {
+            const key = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey)(child);
+            const isPresent = propagate && !isParentPresent
+                ? false
+                : presentChildren === renderedChildren ||
+                    presentKeys.includes(key);
+            const onExit = () => {
+                if (exitComplete.has(key)) {
+                    exitComplete.set(key, true);
+                }
+                else {
+                    return;
+                }
+                let isEveryExitComplete = true;
+                exitComplete.forEach((isExitComplete) => {
+                    if (!isExitComplete)
+                        isEveryExitComplete = false;
+                });
+                if (isEveryExitComplete) {
+                    forceRender === null || forceRender === void 0 ? void 0 : forceRender();
+                    setRenderedChildren(pendingPresentChildren.current);
+                    propagate && (safeToRemove === null || safeToRemove === void 0 ? void 0 : safeToRemove());
+                    onExitComplete && onExitComplete();
+                }
+            };
+            return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_PresenceChild_mjs__WEBPACK_IMPORTED_MODULE_7__.PresenceChild, { isPresent: isPresent, initial: !isInitialRender.current || initial
+                    ? undefined
+                    : false, custom: custom, presenceAffectsLayout: presenceAffectsLayout, mode: mode, onExitComplete: isPresent ? undefined : onExit, anchorX: anchorX, children: child }, key));
+        }) }));
+};
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs":
 /*!****************************************************************************************!*\
   !*** ./node_modules/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs ***!
@@ -14320,6 +16229,37 @@ function useIsPresent() {
 }
 function isPresent(context) {
     return context === null ? true : context.isPresent;
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/framer-motion/dist/es/components/AnimatePresence/utils.mjs":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/framer-motion/dist/es/components/AnimatePresence/utils.mjs ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getChildKey: () => (/* binding */ getChildKey),
+/* harmony export */   onlyElements: () => (/* binding */ onlyElements)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+
+
+const getChildKey = (child) => child.key || "";
+function onlyElements(children) {
+    const filtered = [];
+    // We use forEach here instead of map as map mutates the component key by preprending `.$`
+    react__WEBPACK_IMPORTED_MODULE_0__.Children.forEach(children, (child) => {
+        if ((0,react__WEBPACK_IMPORTED_MODULE_0__.isValidElement)(child))
+            filtered.push(child);
+    });
+    return filtered;
 }
 
 

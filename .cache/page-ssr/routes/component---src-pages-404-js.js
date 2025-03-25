@@ -2882,9 +2882,9 @@ const SidePanel = () => {
     onClick: () => handleClick("about"),
     className: "nav-item"
   }, "About"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    onClick: () => handleClick("portfolio"),
+    onClick: () => handleClick("experience"),
     className: "nav-item"
-  }, "Portfolio"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "Experience"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     onClick: () => handleClick("contact"),
     className: "nav-item"
   }, "Contact")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby__WEBPACK_IMPORTED_MODULE_1__.Link, {

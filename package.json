@@ -16,6 +16,7 @@
   "dependencies": {
     "@formspree/react": "^3.0.0",
     "@motionone/utils": "^10.18.0",
+    "@popmotion/popcorn": "^0.4.4",
     "framer-motion": "^12.5.0",
     "gatsby": "^5.14.1",
     "gatsby-plugin-image": "^3.14.0",

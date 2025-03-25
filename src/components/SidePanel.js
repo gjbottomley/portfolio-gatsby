@@ -55,8 +55,8 @@ const SidePanel = () => {
         <div onClick={() => handleClick("about")} className="nav-item">
           About
         </div>
-        <div onClick={() => handleClick("portfolio")} className="nav-item">
-          Portfolio
+        <div onClick={() => handleClick("experience")} className="nav-item">
+          Experience
         </div>
         <div onClick={() => handleClick("contact")} className="nav-item">
           Contact

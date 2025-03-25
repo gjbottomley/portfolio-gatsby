@@ -7,12 +7,13 @@ import { SEO } from "../components/SEO";
 import CustomCursor from "../components/customCursor";
 import { ParallaxText, useParallax } from "../components/velocity";
 import Contact from "../components/contact";
+import Slider from "../components/slider";
 
 const Section = ({ title, children, color = `#ffffff`, id }) => {
   const ref = useRef(null);
 
   const { scrollYProgress } = useScroll({ target: ref });
-  const y = useParallax(scrollYProgress, 300);
+  const y = useParallax(scrollYProgress, 200);
 
   const isDarkColor = (color) => {
     const c = color.substring(1); // strip #
@@ -34,8 +35,9 @@ const Section = ({ title, children, color = `#ffffff`, id }) => {
         {children}
       </div>
       <motion.div
-        initial={{ visibility: "hidden", opacity: "0" }}
-        animate={{ visibility: "visible", opacity: "1" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         style={{ y }}
         className="title"
       >
@@ -83,8 +85,10 @@ const IndexPage = () => {
       <Section title="About" color={`#f5f5f5`} id="about">
         <div className="block">contact info goes here</div>
       </Section>
-      <Section title="Portfolio" id="portfolio">
-        <div>contact info goes here</div>
+      <Section title="Experience" id="experience">
+        <div className="flex-wrapper">
+          <Slider />
+        </div>
       </Section>
       <Section title="Contact" color={`#30314f`} id="contact">
         <div
