@@ -20,8 +20,7 @@ export const IMAGES = [
   },
   {
     id: 3,
-    imageSrc:
-      "https://images.pexels.com/photos/2231756/pexels-photo-2231756.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    imageSrc: "./1.png",
     description:
       "<p>Website using <b>Laravel PHP</b>, with of an SEO strategy, significantly improving Clever First Aids online visibility and web enquiry conversions.</p><div><span>Laravel</span><span>PHP</span><span>SEO</span><span>Google Analytics</span></div>",
   },

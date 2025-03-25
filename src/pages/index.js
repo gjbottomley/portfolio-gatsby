@@ -57,7 +57,7 @@ const IndexPage = () => {
       <CustomCursor />
       <section className="bar header" id="top">
         <div className="velocity-container">
-          <ParallaxText baseVelocity={-2}>Software Developer</ParallaxText>
+          <ParallaxText baseVelocity={-1}>Software Developer</ParallaxText>
           <ParallaxText baseVelocity={2}>UI/UX Designer</ParallaxText>
         </div>
         <div className="head">
