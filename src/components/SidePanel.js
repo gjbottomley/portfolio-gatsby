@@ -62,15 +62,32 @@ const SidePanel = () => {
           Contact
         </div>
       </div>
-
-      <Link to="" className="icon">
-        <StaticImage
-          src="../images/git.png"
-          alt="Github George Bottomley"
-          placeholder="blurred"
-          width={36}
-        />
-      </Link>
+      <div className="social">
+        <Link
+          to="https://www.linkedin.com/in/gjbottomley "
+          className="icon"
+          target="_blank"
+        >
+          <StaticImage
+            src="../images/linkedin.png"
+            alt="Linkedin George Bottomley"
+            placeholder="blurred"
+            width={32}
+          />
+        </Link>
+        <Link
+          to="https://github.com/gjbottomley"
+          className="icon"
+          target="_blank"
+        >
+          <StaticImage
+            src="../images/git.png"
+            alt="Github George Bottomley"
+            placeholder="blurred"
+            width={32}
+          />
+        </Link>
+      </div>
     </div>
   );
 };

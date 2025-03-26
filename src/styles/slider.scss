@@ -5,15 +5,10 @@
 
     .slider {
         position: relative;
-        height: 500px;
-        width: 350px;
+        height: 598px;
+        width: 450px;
         overflow: hidden;
         border-radius: 6px;
-
-        @media only screen and (max-width: 375px) {
-            height: 400px;
-            width: 300px;
-        }
 
         .image {
             position: absolute;
@@ -72,7 +67,7 @@
     align-items: center;
     justify-content: center;
     gap: 40px;
-    width: 350px;
+    width: 450px;
 }
 
 .slider-description {

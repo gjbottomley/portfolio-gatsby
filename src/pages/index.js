@@ -1,6 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { StaticImage } from "gatsby-plugin-image";
-import { motion, useScroll, useTransform } from "motion/react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+  useInView,
+} from "motion/react";
 
 import Layout from "../components/layout";
 import { SEO } from "../components/SEO";
@@ -52,6 +58,15 @@ const IndexPage = () => {
   const motionObject = useTransform(scrollY, [100, 0], [0, 100]);
   const [formSucceeded, setFormSucceeded] = useState(false);
 
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setShow(true);
+  }, [isInView]);
+
   return (
     <Layout>
       <CustomCursor />
@@ -83,12 +98,43 @@ const IndexPage = () => {
         </div>
       </section>
       <Section title="About" color={`#f5f5f5`} id="about">
-        <div className="block">contact info goes here</div>
+        <div className="block">
+          <strong>Peronsal</strong>
+          <p>
+            Hi, I'm George, originally hailing from sunny England. I've been
+            lucky enough to call beautiful New Zealand home for over seven years
+            now. When I'm not around, you'll likely find me enjoying the great
+            outdoors or spending quality time with my family.
+          </p>
+          <strong>Work</strong>
+          <p>
+            With a diverse background spanning web development, software
+            development, app, UI/UX, graphic design, animation, marketing, and
+            branding, I possess a unique blend of technical and creative skills
+            My journey through these disciplines has provided me with a
+            comprehensive understanding of the entire product development
+            lifecycle, from initial concept to final execution.
+          </p>
+        </div>
+        <motion.div
+          initial={{ x: 100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1, transition: { delay: 1 } }}
+          className="experience-counter"
+        >
+          <h3>I'm Looking for work!</h3>
+        </motion.div>
       </Section>
-      <Section title="Experience" id="experience">
+      <Section title="Experience" id="experience" ref={ref}>
         <div className="flex-wrapper">
           <Slider />
         </div>
+        <motion.div
+          initial={{ x: 100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1, transition: { delay: 1 } }}
+          className="experience-counter"
+        >
+          <h3>Over 15 Years</h3>
+        </motion.div>
       </Section>
       <Section title="Contact" color={`#30314f`} id="contact">
         <div
@@ -96,6 +142,13 @@ const IndexPage = () => {
         >
           <Contact onSuccess={setFormSucceeded} />
         </div>
+        <motion.div
+          initial={{ x: 100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1, transition: { delay: 1 } }}
+          className="experience-counter"
+        >
+          <h3>Id love to hear from you!</h3>
+        </motion.div>
       </Section>
     </Layout>
   );

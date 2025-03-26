@@ -4126,28 +4126,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const IMAGES = [{
   id: 0,
-  imageSrc: "./1.png",
+  imageSrc: "./portal.png",
   description: "<p>Customer-facing portal <b>(SaaS)</b>, leveraging <b>React</b> and <b>Figma</b> to deliver a seamless and intuitive user interface.</p><div><span>React</span><span>Figma</span><span>Typescript</span><span>Git</span></div>"
 }, {
   id: 1,
-  imageSrc: "./2.png",
-  description: "<p>Branding and Labeling for a local company</p><div><span>Adobe Suite</span></div>"
+  imageSrc: "./gin.png",
+  description: "<p>Concepting Branding and Labeling for a local company I've Been Pickled</p><div><span>Adobe Suite</span></div>"
 }, {
   id: 2,
-  imageSrc: "https://images.pexels.com/photos/3430143/pexels-photo-3430143.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+  imageSrc: "./app.png",
   description: "<p><b>Mobile App</b>, initially leveraging <b>Ionic - AngularJS</b> then eventually moving to <b>Flutter</b> for a more native ux and Figma.</p><div><span>Ionic</span><span>AngularJS</span><span>Flutter</span><span>Sketch</span><span>Figma</span></div>"
 }, {
   id: 3,
-  imageSrc: "https://images.pexels.com/photos/2231756/pexels-photo-2231756.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+  imageSrc: "./website.png",
   description: "<p>Website using <b>Laravel PHP</b>, with of an SEO strategy, significantly improving Clever First Aids online visibility and web enquiry conversions.</p><div><span>Laravel</span><span>PHP</span><span>SEO</span><span>Google Analytics</span></div>"
 }, {
   id: 4,
-  imageSrc: "https://images.pexels.com/photos/1813157/pexels-photo-1813157.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-  description: "<p>Email platform, to assist in creation of email flows, using <b>NextJs</b></p><div><span>NextJs</span><span>React</span><span>NodeJs</span><span>SendGrid</span></div>"
+  imageSrc: "./email.png",
+  description: "<p>I successfully built a scalable and maintainable email platform with over 50 dynamic internal and client-facing email flows by leveraging React Email 2's component-based architecture and Resend's delivery infrastructure to seamlessly integrate API data into reusable email templates.</p><div><span>NextJs</span><span>React</span><span>NodeJs</span><span>SendGrid</span></div>"
 }, {
   id: 5,
-  imageSrc: "https://images.pexels.com/photos/1813157/pexels-photo-1813157.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-  description: "<p>Multiple years working for various web agencies as a Frontend Developer</p><div><span>Wordpress</span><span>Shopify</span><span>Laravel PHP</span><span>Sketch</span><span>React</span></div>"
+  imageSrc: "./wordpress.png",
+  description: "<p>As a Frontend Developer, I spent multiple years at various web agencies building websites and e-commerce platforms.</p><div><span>Wordpress</span><span>Shopify</span><span>Laravel PHP</span><span>Sketch</span><span>React</span></div>"
 }];
 
 /***/ }),
@@ -4274,10 +4274,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! gatsby-plugin-image */ "./node_modules/gatsby-plugin-image/dist/gatsby-image.module.js");
+/* harmony import */ var gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! gatsby-plugin-image */ "./node_modules/gatsby-plugin-image/dist/gatsby-image.module.js");
 /* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-scroll.mjs");
 /* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/render/components/motion/proxy.mjs");
 /* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-transform.mjs");
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-in-view.mjs");
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/index.mjs");
 /* harmony import */ var _components_layout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/layout */ "./src/components/layout.js");
 /* harmony import */ var _components_SEO__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/SEO */ "./src/components/SEO.js");
 /* harmony import */ var _components_customCursor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/customCursor */ "./src/components/customCursor.js");
@@ -4349,13 +4351,20 @@ const IndexPage = () => {
     0: formSucceeded,
     1: setFormSucceeded
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const {
+    0: show,
+    1: setShow
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setShow(motion_react__WEBPACK_IMPORTED_MODULE_10__.useInView);
+  }, [motion_react__WEBPACK_IMPORTED_MODULE_10__.useInView]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_layout__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_customCursor__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "bar header",
     id: "top"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "velocity-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.ParallaxText, {
-    baseVelocity: -2
+    baseVelocity: -1
   }, "Software Developer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.ParallaxText, {
     baseVelocity: 2
   }, "UI/UX Designer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -4371,7 +4380,7 @@ const IndexPage = () => {
     style: {
       opacity: motionObject
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_10__.StaticImage, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_11__.StaticImage, {
     className: "headshot",
     src: "../images/headshot.png",
     alt: "",
@@ -4391,7 +4400,23 @@ const IndexPage = () => {
     id: "experience"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "flex-wrapper"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_slider__WEBPACK_IMPORTED_MODULE_6__["default"], null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Section, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_slider__WEBPACK_IMPORTED_MODULE_6__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_12__.AnimatePresence, null, show && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_8__.motion.div, {
+    initial: {
+      x: 100,
+      opacity: 0
+    },
+    animate: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        delay: 0.5
+      }
+    },
+    exit: {
+      opacity: 0
+    },
+    className: "experience-counter"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "+15 Years")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Section, {
     title: "Contact",
     color: `#30314f`,
     id: "contact"
@@ -32737,6 +32762,376 @@ function isTransitionDefined({ when, delay: _delay, delayChildren, staggerChildr
 
 /***/ }),
 
+/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PopChild.mjs":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PopChild.mjs ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PopChild: () => (/* binding */ PopChild)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var _context_MotionConfigContext_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../context/MotionConfigContext.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/context/MotionConfigContext.mjs");
+"use client";
+
+
+
+
+
+/**
+ * Measurement functionality has to be within a separate component
+ * to leverage snapshot lifecycle.
+ */
+class PopChildMeasure extends react__WEBPACK_IMPORTED_MODULE_1__.Component {
+    getSnapshotBeforeUpdate(prevProps) {
+        const element = this.props.childRef.current;
+        if (element && prevProps.isPresent && !this.props.isPresent) {
+            const parent = element.offsetParent;
+            const parentWidth = parent instanceof HTMLElement ? parent.offsetWidth || 0 : 0;
+            const size = this.props.sizeRef.current;
+            size.height = element.offsetHeight || 0;
+            size.width = element.offsetWidth || 0;
+            size.top = element.offsetTop;
+            size.left = element.offsetLeft;
+            size.right = parentWidth - size.width - size.left;
+        }
+        return null;
+    }
+    /**
+     * Required with getSnapshotBeforeUpdate to stop React complaining.
+     */
+    componentDidUpdate() { }
+    render() {
+        return this.props.children;
+    }
+}
+function PopChild({ children, isPresent, anchorX }) {
+    const id = (0,react__WEBPACK_IMPORTED_MODULE_1__.useId)();
+    const ref = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+    const size = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)({
+        width: 0,
+        height: 0,
+        top: 0,
+        left: 0,
+        right: 0,
+    });
+    const { nonce } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_MotionConfigContext_mjs__WEBPACK_IMPORTED_MODULE_2__.MotionConfigContext);
+    /**
+     * We create and inject a style block so we can apply this explicit
+     * sizing in a non-destructive manner by just deleting the style block.
+     *
+     * We can't apply size via render as the measurement happens
+     * in getSnapshotBeforeUpdate (post-render), likewise if we apply the
+     * styles directly on the DOM node, we might be overwriting
+     * styles set via the style prop.
+     */
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useInsertionEffect)(() => {
+        const { width, height, top, left, right } = size.current;
+        if (isPresent || !ref.current || !width || !height)
+            return;
+        const x = anchorX === "left" ? `left: ${left}` : `right: ${right}`;
+        ref.current.dataset.motionPopId = id;
+        const style = document.createElement("style");
+        if (nonce)
+            style.nonce = nonce;
+        document.head.appendChild(style);
+        if (style.sheet) {
+            style.sheet.insertRule(`
+          [data-motion-pop-id="${id}"] {
+            position: absolute !important;
+            width: ${width}px !important;
+            height: ${height}px !important;
+            ${x}px !important;
+            top: ${top}px !important;
+          }
+        `);
+        }
+        return () => {
+            document.head.removeChild(style);
+        };
+    }, [isPresent]);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PopChildMeasure, { isPresent: isPresent, childRef: ref, sizeRef: size, children: react__WEBPACK_IMPORTED_MODULE_1__.cloneElement(children, { ref }) }));
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs ***!
+  \********************************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PresenceChild: () => (/* binding */ PresenceChild)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var _context_PresenceContext_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../context/PresenceContext.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/context/PresenceContext.mjs");
+/* harmony import */ var _utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/use-constant.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-constant.mjs");
+/* harmony import */ var _PopChild_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PopChild.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PopChild.mjs");
+"use client";
+
+
+
+
+
+
+
+const PresenceChild = ({ children, initial, isPresent, onExitComplete, custom, presenceAffectsLayout, mode, anchorX, }) => {
+    const presenceChildren = (0,_utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_2__.useConstant)(newChildrenMap);
+    const id = (0,react__WEBPACK_IMPORTED_MODULE_1__.useId)();
+    const memoizedOnExitComplete = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((childId) => {
+        presenceChildren.set(childId, true);
+        for (const isComplete of presenceChildren.values()) {
+            if (!isComplete)
+                return; // can stop searching when any is incomplete
+        }
+        onExitComplete && onExitComplete();
+    }, [presenceChildren, onExitComplete]);
+    const context = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => ({
+        id,
+        initial,
+        isPresent,
+        custom,
+        onExitComplete: memoizedOnExitComplete,
+        register: (childId) => {
+            presenceChildren.set(childId, false);
+            return () => presenceChildren.delete(childId);
+        },
+    }), 
+    /**
+     * If the presence of a child affects the layout of the components around it,
+     * we want to make a new context value to ensure they get re-rendered
+     * so they can detect that layout change.
+     */
+    presenceAffectsLayout
+        ? [Math.random(), memoizedOnExitComplete]
+        : [isPresent, memoizedOnExitComplete]);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
+        presenceChildren.forEach((_, key) => presenceChildren.set(key, false));
+    }, [isPresent]);
+    /**
+     * If there's no `motion` components to fire exit animations, we want to remove this
+     * component immediately.
+     */
+    react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+        !isPresent &&
+            !presenceChildren.size &&
+            onExitComplete &&
+            onExitComplete();
+    }, [isPresent]);
+    if (mode === "popLayout") {
+        children = ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_PopChild_mjs__WEBPACK_IMPORTED_MODULE_3__.PopChild, { isPresent: isPresent, anchorX: anchorX, children: children }));
+    }
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_context_PresenceContext_mjs__WEBPACK_IMPORTED_MODULE_4__.PresenceContext.Provider, { value: context, children: children }));
+};
+function newChildrenMap() {
+    return new Map();
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/index.mjs":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/index.mjs ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AnimatePresence: () => (/* binding */ AnimatePresence)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var _context_LayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../context/LayoutGroupContext.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/context/LayoutGroupContext.mjs");
+/* harmony import */ var _utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/use-constant.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-constant.mjs");
+/* harmony import */ var _PresenceChild_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PresenceChild.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs");
+/* harmony import */ var _use_presence_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./use-presence.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs");
+/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/utils.mjs");
+/* harmony import */ var _utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/use-isomorphic-effect.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-isomorphic-effect.mjs");
+"use client";
+
+
+
+
+
+
+
+
+
+/**
+ * `AnimatePresence` enables the animation of components that have been removed from the tree.
+ *
+ * When adding/removing more than a single child, every child **must** be given a unique `key` prop.
+ *
+ * Any `motion` components that have an `exit` property defined will animate out when removed from
+ * the tree.
+ *
+ * ```jsx
+ * import { motion, AnimatePresence } from 'framer-motion'
+ *
+ * export const Items = ({ items }) => (
+ *   <AnimatePresence>
+ *     {items.map(item => (
+ *       <motion.div
+ *         key={item.id}
+ *         initial={{ opacity: 0 }}
+ *         animate={{ opacity: 1 }}
+ *         exit={{ opacity: 0 }}
+ *       />
+ *     ))}
+ *   </AnimatePresence>
+ * )
+ * ```
+ *
+ * You can sequence exit animations throughout a tree using variants.
+ *
+ * If a child contains multiple `motion` components with `exit` props, it will only unmount the child
+ * once all `motion` components have finished animating out. Likewise, any components using
+ * `usePresence` all need to call `safeToRemove`.
+ *
+ * @public
+ */
+const AnimatePresence = ({ children, custom, initial = true, onExitComplete, presenceAffectsLayout = true, mode = "sync", propagate = false, anchorX = "left", }) => {
+    const [isParentPresent, safeToRemove] = (0,_use_presence_mjs__WEBPACK_IMPORTED_MODULE_2__.usePresence)(propagate);
+    /**
+     * Filter any children that aren't ReactElements. We can only track components
+     * between renders with a props.key.
+     */
+    const presentChildren = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.onlyElements)(children), [children]);
+    /**
+     * Track the keys of the currently rendered children. This is used to
+     * determine which children are exiting.
+     */
+    const presentKeys = propagate && !isParentPresent ? [] : presentChildren.map(_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey);
+    /**
+     * If `initial={false}` we only want to pass this to components in the first render.
+     */
+    const isInitialRender = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(true);
+    /**
+     * A ref containing the currently present children. When all exit animations
+     * are complete, we use this to re-render the component with the latest children
+     * *committed* rather than the latest children *rendered*.
+     */
+    const pendingPresentChildren = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(presentChildren);
+    /**
+     * Track which exiting children have finished animating out.
+     */
+    const exitComplete = (0,_utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_4__.useConstant)(() => new Map());
+    /**
+     * Save children to render as React state. To ensure this component is concurrent-safe,
+     * we check for exiting children via an effect.
+     */
+    const [diffedChildren, setDiffedChildren] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(presentChildren);
+    const [renderedChildren, setRenderedChildren] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(presentChildren);
+    (0,_utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_5__.useIsomorphicLayoutEffect)(() => {
+        isInitialRender.current = false;
+        pendingPresentChildren.current = presentChildren;
+        /**
+         * Update complete status of exiting children.
+         */
+        for (let i = 0; i < renderedChildren.length; i++) {
+            const key = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey)(renderedChildren[i]);
+            if (!presentKeys.includes(key)) {
+                if (exitComplete.get(key) !== true) {
+                    exitComplete.set(key, false);
+                }
+            }
+            else {
+                exitComplete.delete(key);
+            }
+        }
+    }, [renderedChildren, presentKeys.length, presentKeys.join("-")]);
+    const exitingChildren = [];
+    if (presentChildren !== diffedChildren) {
+        let nextChildren = [...presentChildren];
+        /**
+         * Loop through all the currently rendered components and decide which
+         * are exiting.
+         */
+        for (let i = 0; i < renderedChildren.length; i++) {
+            const child = renderedChildren[i];
+            const key = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey)(child);
+            if (!presentKeys.includes(key)) {
+                nextChildren.splice(i, 0, child);
+                exitingChildren.push(child);
+            }
+        }
+        /**
+         * If we're in "wait" mode, and we have exiting children, we want to
+         * only render these until they've all exited.
+         */
+        if (mode === "wait" && exitingChildren.length) {
+            nextChildren = exitingChildren;
+        }
+        setRenderedChildren((0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.onlyElements)(nextChildren));
+        setDiffedChildren(presentChildren);
+        /**
+         * Early return to ensure once we've set state with the latest diffed
+         * children, we can immediately re-render.
+         */
+        return null;
+    }
+    if ( true &&
+        mode === "wait" &&
+        renderedChildren.length > 1) {
+        console.warn(`You're attempting to animate multiple children within AnimatePresence, but its mode is set to "wait". This will lead to odd visual behaviour.`);
+    }
+    /**
+     * If we've been provided a forceRender function by the LayoutGroupContext,
+     * we can use it to force a re-render amongst all surrounding components once
+     * all components have finished animating out.
+     */
+    const { forceRender } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_LayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_6__.LayoutGroupContext);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: renderedChildren.map((child) => {
+            const key = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey)(child);
+            const isPresent = propagate && !isParentPresent
+                ? false
+                : presentChildren === renderedChildren ||
+                    presentKeys.includes(key);
+            const onExit = () => {
+                if (exitComplete.has(key)) {
+                    exitComplete.set(key, true);
+                }
+                else {
+                    return;
+                }
+                let isEveryExitComplete = true;
+                exitComplete.forEach((isExitComplete) => {
+                    if (!isExitComplete)
+                        isEveryExitComplete = false;
+                });
+                if (isEveryExitComplete) {
+                    forceRender === null || forceRender === void 0 ? void 0 : forceRender();
+                    setRenderedChildren(pendingPresentChildren.current);
+                    propagate && (safeToRemove === null || safeToRemove === void 0 ? void 0 : safeToRemove());
+                    onExitComplete && onExitComplete();
+                }
+            };
+            return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_PresenceChild_mjs__WEBPACK_IMPORTED_MODULE_7__.PresenceChild, { isPresent: isPresent, initial: !isInitialRender.current || initial
+                    ? undefined
+                    : false, custom: custom, presenceAffectsLayout: presenceAffectsLayout, mode: mode, onExitComplete: isPresent ? undefined : onExit, anchorX: anchorX, children: child }, key));
+        }) }));
+};
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs":
 /*!*******************************************************************************************************!*\
   !*** ./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs ***!
@@ -32819,6 +33214,37 @@ function useIsPresent() {
 }
 function isPresent(context) {
     return context === null ? true : context.isPresent;
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/utils.mjs":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/utils.mjs ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getChildKey: () => (/* binding */ getChildKey),
+/* harmony export */   onlyElements: () => (/* binding */ onlyElements)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+
+
+const getChildKey = (child) => child.key || "";
+function onlyElements(children) {
+    const filtered = [];
+    // We use forEach here instead of map as map mutates the component key by preprending `.$`
+    react__WEBPACK_IMPORTED_MODULE_0__.Children.forEach(children, (child) => {
+        if ((0,react__WEBPACK_IMPORTED_MODULE_0__.isValidElement)(child))
+            filtered.push(child);
+    });
+    return filtered;
 }
 
 
@@ -41395,6 +41821,66 @@ const int = {
 
 /***/ }),
 
+/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/render/dom/viewport/index.mjs":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/render/dom/viewport/index.mjs ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   inView: () => (/* binding */ inView)
+/* harmony export */ });
+/* harmony import */ var _motion_dom_dist_es_utils_resolve_elements_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../motion-dom/dist/es/utils/resolve-elements.mjs */ "./node_modules/motion/dist/es/motion-dom/dist/es/utils/resolve-elements.mjs");
+
+
+
+const thresholds = {
+    some: 0,
+    all: 1,
+};
+function inView(elementOrSelector, onStart, { root, margin: rootMargin, amount = "some" } = {}) {
+    const elements = (0,_motion_dom_dist_es_utils_resolve_elements_mjs__WEBPACK_IMPORTED_MODULE_0__.resolveElements)(elementOrSelector);
+    const activeIntersections = new WeakMap();
+    const onIntersectionChange = (entries) => {
+        entries.forEach((entry) => {
+            const onEnd = activeIntersections.get(entry.target);
+            /**
+             * If there's no change to the intersection, we don't need to
+             * do anything here.
+             */
+            if (entry.isIntersecting === Boolean(onEnd))
+                return;
+            if (entry.isIntersecting) {
+                const newOnEnd = onStart(entry.target, entry);
+                if (typeof newOnEnd === "function") {
+                    activeIntersections.set(entry.target, newOnEnd);
+                }
+                else {
+                    observer.unobserve(entry.target);
+                }
+            }
+            else if (typeof onEnd === "function") {
+                onEnd(entry);
+                activeIntersections.delete(entry.target);
+            }
+        });
+    };
+    const observer = new IntersectionObserver(onIntersectionChange, {
+        root,
+        rootMargin,
+        threshold: typeof amount === "number" ? amount : thresholds[amount],
+    });
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+}
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/motion/dist/es/framer-motion/dist/es/render/html/HTMLVisualElement.mjs":
 /*!*********************************************************************************************!*\
   !*** ./node_modules/motion/dist/es/framer-motion/dist/es/render/html/HTMLVisualElement.mjs ***!
@@ -44610,6 +45096,46 @@ function useConstant(init) {
         ref.current = init();
     }
     return ref.current;
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-in-view.mjs":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-in-view.mjs ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useInView: () => (/* binding */ useInView)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var _render_dom_viewport_index_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../render/dom/viewport/index.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/render/dom/viewport/index.mjs");
+
+
+
+function useInView(ref, { root, margin, amount, once = false, initial = false, } = {}) {
+    const [isInView, setInView] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initial);
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+        if (!ref.current || (once && isInView))
+            return;
+        const onEnter = () => {
+            setInView(true);
+            return once ? undefined : () => setInView(false);
+        };
+        const options = {
+            root: (root && root.current) || undefined,
+            margin,
+            amount,
+        };
+        return (0,_render_dom_viewport_index_mjs__WEBPACK_IMPORTED_MODULE_1__.inView)(ref.current, onEnter, options);
+    }, [root, ref, margin, once, amount]);
+    return isInView;
 }
 
 

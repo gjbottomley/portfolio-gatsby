@@ -19,28 +19,52 @@ const Contact = ({ onSuccess }) => {
     >
       <h3>Request CV</h3>
       <form name="contact" onSubmit={handleSubmit}>
-        <input type="hidden" name="form-name" value="contact" />
+        <input
+          type="hidden"
+          name="form-name"
+          value="contact"
+          disabled={state.submitting}
+        />
         <div>
           <label htmlFor="name">Name</label>
-          <input type="text" name="name" id="name" required />
+          <input
+            type="text"
+            name="name"
+            id="name"
+            required
+            disabled={state.submitting}
+          />
         </div>
         <div>
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" required />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            required
+            disabled={state.submitting}
+          />
         </div>
         <ValidationError prefix="Email" field="email" errors={state.errors} />
         <div>
           <label htmlFor="message">Message</label>
-          <textarea name="message" id="message" required />
+          <textarea
+            name="message"
+            id="message"
+            required
+            disabled={state.submitting}
+          />
         </div>
         <ValidationError
           prefix="Message"
           field="message"
           errors={state.errors}
         />
-        <button type="submit" disabled={state.submitting} className="button">
-          Send me a message
-        </button>
+        <button
+          type="submit"
+          disabled={state.submitting}
+          className={`button ${state.submitting ? "loading" : ""}`}
+        />
       </form>
     </div>
   );
