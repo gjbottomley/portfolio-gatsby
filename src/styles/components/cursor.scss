@@ -1,0 +1,24 @@
+.mouse-gradient {
+    position: fixed;
+    width: 740px;
+    height: 740px;
+    background-image: radial-gradient(44.49% 39.31% at 48.43% 50%, rgba($pink, 0.2) 0%, rgba($white, 0) 100%);
+    transform: translate(-50%, -50%);
+    border-radius: "50%";
+    z-index: 1;
+    transition: opacity 0.2s ease-in-out;
+
+    &.active {
+        opacity: 0.6;
+    }
+}
+.custom-cursor {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba($black,0.5);
+    position: fixed;
+    //pointer-events: none;
+    z-index: 9999;
+
+}

@@ -1,0 +1,44 @@
+.tile {
+    background: $white;
+    width: 120px;
+    height: 100px;
+    border-radius: 6px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+
+    position: relative;
+
+
+    .tile-title {
+        position: absolute;
+        bottom: calc(100% - 10px);
+        //left: 0;
+        background: rgba($black, 0.6);
+        font-size: 22px;
+        color: $white;
+        padding: 14px;
+        border-radius: 6px;
+        text-transform: capitalize;
+        font-weight: 400;
+        letter-spacing: 0;
+
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; 
+            height: 0; 
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            
+            border-top: 10px solid rgba($black, 0.6);
+        }
+
+    }
+}

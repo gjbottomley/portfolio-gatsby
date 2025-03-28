@@ -1,16 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Bentham&family=Poppins:wght@300;400;600&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 $font-family: "Poppins", serif;
+$font-family-alt: "Poppins", serif;
 
 //Colors
-$coffee: #8A8075;
-$coffee-light: #B3A79B;
-$secondary: #E3D9CE;
-$cream: #F5F6EC;
 $white: #ffffff;
+$black: #222;
+$grey: #ddd;
+
+$pink: #e35d82;
+$blue: #30314f;
+$green: #2abd79;
 
 
-$background: $cream;
+$background: $white;
 $font-color-light: $white;
-$font-color-dark: $coffee;
+$font-color-dark: $blue;

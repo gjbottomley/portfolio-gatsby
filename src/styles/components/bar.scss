@@ -1,0 +1,33 @@
+
+.bar {
+    position: relative;
+
+    &.dark {
+        h2, h3 {
+            color: $white;
+        }
+    }
+}
+
+.bar--grey {
+    background: #f1f1f1;
+}
+
+.bar {
+    &.contact, &.about {
+        .title, .sub-title {
+            right: auto;
+            left: 120px;
+        }
+
+        .container {
+            justify-content: flex-end;
+        }
+    }
+
+    &.portfolio {
+        .container {
+            justify-content: center;
+        }
+    }
+}

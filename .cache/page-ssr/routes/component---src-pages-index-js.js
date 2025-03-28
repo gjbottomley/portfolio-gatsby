@@ -3726,21 +3726,24 @@ const Contact = ({
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "hidden",
     name: "form-name",
-    value: "contact"
+    value: "contact",
+    disabled: state.submitting
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "name"
   }, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     name: "name",
     id: "name",
-    required: true
+    required: true,
+    disabled: state.submitting
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "email"
   }, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "email",
     name: "email",
     id: "email",
-    required: true
+    required: true,
+    disabled: state.submitting
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_formspree_react__WEBPACK_IMPORTED_MODULE_1__.ValidationError, {
     prefix: "Email",
     field: "email",
@@ -3750,7 +3753,8 @@ const Contact = ({
   }, "Message"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
     name: "message",
     id: "message",
-    required: true
+    required: true,
+    disabled: state.submitting
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_formspree_react__WEBPACK_IMPORTED_MODULE_1__.ValidationError, {
     prefix: "Message",
     field: "message",
@@ -3758,8 +3762,8 @@ const Contact = ({
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit",
     disabled: state.submitting,
-    className: "button"
-  }, "Send me a message")));
+    className: `button ${state.submitting ? "loading" : ""}`
+  })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Contact);
 
@@ -3851,6 +3855,47 @@ const CustomCursor = () => {
 
 /***/ }),
 
+/***/ "./src/components/gradient-box.js":
+/*!****************************************!*\
+  !*** ./src/components/gradient-box.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/render/components/motion/proxy.mjs");
+
+
+const GradientBox = ({
+  color,
+  location
+}) => {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_1__.motion.div, {
+    className: `gradient-box ${color} ${location}`,
+    initial: {
+      x: -600,
+      opacity: 0,
+      rotate: "30deg",
+      transition: {
+        delay: 1
+      }
+    },
+    whileInView: {
+      x: -200,
+      opacity: 1,
+      rotate: "45deg"
+    }
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GradientBox);
+
+/***/ }),
+
 /***/ "./src/components/layout.js":
 /*!**********************************!*\
   !*** ./src/components/layout.js ***!
@@ -3887,6 +3932,80 @@ function Layout({
 
 /***/ }),
 
+/***/ "./src/components/section.js":
+/*!***********************************!*\
+  !*** ./src/components/section.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-transform.mjs");
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-scroll.mjs");
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/render/components/motion/proxy.mjs");
+
+
+const useParallax = (value, distance) => {
+  return (0,motion_react__WEBPACK_IMPORTED_MODULE_1__.useTransform)(value, [0, 1], [-distance, distance]);
+};
+const Section = ({
+  title,
+  children,
+  color = `#ffffff`,
+  valign = `center`,
+  id
+}) => {
+  const ref = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  const {
+    scrollYProgress
+  } = (0,motion_react__WEBPACK_IMPORTED_MODULE_2__.useScroll)({
+    target: ref
+  });
+  const y = useParallax(scrollYProgress, 200);
+  const isDarkColor = color => {
+    const c = color.substring(1); // strip #
+    const rgb = parseInt(c, 16); // convert rrggbb to decimal
+    const r = rgb >> 16 & 0xff; // extract red
+    const g = rgb >> 8 & 0xff; // extract green
+    const b = rgb >> 0 & 0xff; // extract blue
+    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+    return luma < 128;
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    className: `bar ${isDarkColor(color) ? "dark" : ""} ${id}`,
+    style: {
+      backgroundColor: `${color}`,
+      alignItems: `${valign}`
+    },
+    id: id
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "container"
+  }, children), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_3__.motion.div, {
+    initial: {
+      opacity: 0
+    },
+    whileInView: {
+      opacity: 1,
+      transition: {
+        delay: 0.2
+      }
+    },
+    style: {
+      y: y
+    },
+    className: "title",
+    ref: ref
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, title)));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Section);
+
+/***/ }),
+
 /***/ "./src/components/sidePanel.js":
 /*!*************************************!*\
   !*** ./src/components/sidePanel.js ***!
@@ -3905,6 +4024,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const logo = __webpack_require__(/*! ../images/logo.png */ "./src/images/logo.png");
 const SidePanel = () => {
   const {
     0: isDarkSection,
@@ -3951,28 +4071,46 @@ const SidePanel = () => {
     alt: "George Bottomley",
     placeholder: "blurred",
     width: 50,
-    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/335882052.json */ "./.cache/caches/gatsby-plugin-image/335882052.json")
+    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/4255985376.json */ "./.cache/caches/gatsby-plugin-image/4255985376.json")
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "nav"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     onClick: () => handleClick("about"),
     className: "nav-item"
   }, "About"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    onClick: () => handleClick("experience"),
+    onClick: () => handleClick("skills"),
     className: "nav-item"
-  }, "Experience"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "Skills"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    onClick: () => handleClick("portfolio"),
+    className: "nav-item"
+  }, "Portfolio"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     onClick: () => handleClick("contact"),
     className: "nav-item"
-  }, "Contact")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby__WEBPACK_IMPORTED_MODULE_1__.Link, {
-    to: "",
-    className: "icon"
+  }, "Contact")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "social"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    to: "https://www.linkedin.com/in/gjbottomley",
+    className: "icon",
+    target: "_blank"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_2__.StaticImage, {
+    src: "../images/linkedin.png",
+    alt: "Linkedin George Bottomley",
+    placeholder: "blurred",
+    width: 32,
+    layout: "fixed",
+    quality: 100,
+    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/4271398794.json */ "./.cache/caches/gatsby-plugin-image/4271398794.json")
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    to: "https://github.com/gjbottomley",
+    className: "icon",
+    target: "_blank"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_2__.StaticImage, {
     src: "../images/git.png",
     alt: "Github George Bottomley",
     placeholder: "blurred",
-    width: 36,
-    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/2481344115.json */ "./.cache/caches/gatsby-plugin-image/2481344115.json")
-  })));
+    width: 32,
+    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/4135978391.json */ "./.cache/caches/gatsby-plugin-image/4135978391.json")
+  }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SidePanel);
 
@@ -3991,13 +4129,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs");
-/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs");
+/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs");
+/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs");
 /* harmony import */ var _popmotion_popcorn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @popmotion/popcorn */ "./node_modules/@popmotion/popcorn/dist/popcorn.es.js");
-/* harmony import */ var _styles_slider_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../styles/slider.scss */ "./src/styles/slider.scss");
-/* harmony import */ var _styles_slider_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_styles_slider_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _sliderImages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sliderImages */ "./src/components/sliderImages.js");
-
+/* harmony import */ var _sliderImages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sliderImages */ "./src/components/sliderImages.js");
 
 
 
@@ -4028,7 +4163,7 @@ const Slider = () => {
     0: [imageCount, direction],
     1: setImageCount
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([0, 0]);
-  const activeImageIndex = (0,_popmotion_popcorn__WEBPACK_IMPORTED_MODULE_1__.wrap)(0, _sliderImages__WEBPACK_IMPORTED_MODULE_3__.IMAGES.length, imageCount);
+  const activeImageIndex = (0,_popmotion_popcorn__WEBPACK_IMPORTED_MODULE_1__.wrap)(0, _sliderImages__WEBPACK_IMPORTED_MODULE_2__.IMAGES.length, imageCount);
   const swipeToImage = swipeDirection => {
     setImageCount([imageCount + swipeDirection, swipeDirection]);
   };
@@ -4047,10 +4182,10 @@ const Slider = () => {
     className: "slider-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "slider"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_4__.AnimatePresence, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_3__.AnimatePresence, {
     initial: false,
     custom: direction
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_5__.motion.div, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_4__.motion.div, {
     key: imageCount,
     custom: direction,
     variants: sliderVariants,
@@ -4069,13 +4204,13 @@ const Slider = () => {
     style: {
       overflow: "hidden"
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_5__.motion.div, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_4__.motion.div, {
     style: {
       overflow: "auto",
       height: "fit-content"
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: _sliderImages__WEBPACK_IMPORTED_MODULE_3__.IMAGES[activeImageIndex].imageSrc,
+    src: _sliderImages__WEBPACK_IMPORTED_MODULE_2__.IMAGES[activeImageIndex].imageSrc,
     alt: "slider"
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "buttons"
@@ -4085,9 +4220,9 @@ const Slider = () => {
   }, "PREV"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "button button--next",
     onClick: () => swipeToImage(1)
-  }, "NEXT"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_4__.AnimatePresence, {
+  }, "NEXT"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_3__.AnimatePresence, {
     exitBeforeEnter: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_5__.motion.div, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(framer_motion__WEBPACK_IMPORTED_MODULE_4__.motion.div, {
     key: activeImageIndex,
     initial: {
       opacity: 0,
@@ -4105,7 +4240,7 @@ const Slider = () => {
     },
     className: "slider-description",
     dangerouslySetInnerHTML: {
-      __html: _sliderImages__WEBPACK_IMPORTED_MODULE_3__.IMAGES[activeImageIndex].description
+      __html: _sliderImages__WEBPACK_IMPORTED_MODULE_2__.IMAGES[activeImageIndex].description
     }
   })));
 };
@@ -4162,7 +4297,7 @@ const IMAGES = [{
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ParallaxText: () => (/* binding */ ParallaxText),
-/* harmony export */   useParallax: () => (/* binding */ useParallax)
+/* harmony export */   Tile: () => (/* binding */ Tile)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -4233,8 +4368,12 @@ const ParallaxText = ({
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " ")));
 };
-const useParallax = (value, distance) => {
-  return (0,motion_react__WEBPACK_IMPORTED_MODULE_5__.useTransform)(value, [0, 1], [-distance, distance]);
+const Tile = ({
+  children
+}) => {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "tile"
+  }, children);
 };
 
 
@@ -4274,18 +4413,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! gatsby-plugin-image */ "./node_modules/gatsby-plugin-image/dist/gatsby-image.module.js");
-/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-scroll.mjs");
-/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/render/components/motion/proxy.mjs");
-/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-transform.mjs");
-/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-in-view.mjs");
-/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/index.mjs");
+/* harmony import */ var gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! gatsby-plugin-image */ "./node_modules/gatsby-plugin-image/dist/gatsby-image.module.js");
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-scroll.mjs");
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/value/use-transform.mjs");
+/* harmony import */ var motion_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! motion/react */ "./node_modules/motion/dist/es/framer-motion/dist/es/render/components/motion/proxy.mjs");
 /* harmony import */ var _components_layout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/layout */ "./src/components/layout.js");
 /* harmony import */ var _components_SEO__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/SEO */ "./src/components/SEO.js");
 /* harmony import */ var _components_customCursor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/customCursor */ "./src/components/customCursor.js");
 /* harmony import */ var _components_velocity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/velocity */ "./src/components/velocity.js");
 /* harmony import */ var _components_contact__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/contact */ "./src/components/contact.js");
 /* harmony import */ var _components_slider__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/slider */ "./src/components/slider.js");
+/* harmony import */ var _components_section__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/section */ "./src/components/section.js");
+/* harmony import */ var _components_gradient_box__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/gradient-box */ "./src/components/gradient-box.js");
 
 
 
@@ -4295,69 +4434,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const Section = ({
-  title,
-  children,
-  color = `#ffffff`,
-  id
-}) => {
-  const ref = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
-  const {
-    scrollYProgress
-  } = (0,motion_react__WEBPACK_IMPORTED_MODULE_7__.useScroll)({
-    target: ref
-  });
-  const y = (0,_components_velocity__WEBPACK_IMPORTED_MODULE_4__.useParallax)(scrollYProgress, 200);
-  const isDarkColor = color => {
-    const c = color.substring(1); // strip #
-    const rgb = parseInt(c, 16); // convert rrggbb to decimal
-    const r = rgb >> 16 & 0xff; // extract red
-    const g = rgb >> 8 & 0xff; // extract green
-    const b = rgb >> 0 & 0xff; // extract blue
-    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-    return luma < 128;
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
-    className: `bar ${isDarkColor(color) ? "dark" : ""}`,
-    style: {
-      backgroundColor: `${color}`
-    },
-    id: id
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "container",
-    ref: ref
-  }, children), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_8__.motion.div, {
-    initial: {
-      opacity: 0
-    },
-    animate: {
-      opacity: 1
-    },
-    exit: {
-      opacity: 0
-    },
-    style: {
-      y
-    },
-    className: "title"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, title)));
-};
+
+
 const IndexPage = () => {
   const {
     scrollY
-  } = (0,motion_react__WEBPACK_IMPORTED_MODULE_7__.useScroll)();
-  const motionObject = (0,motion_react__WEBPACK_IMPORTED_MODULE_9__.useTransform)(scrollY, [100, 0], [0, 100]);
+  } = (0,motion_react__WEBPACK_IMPORTED_MODULE_9__.useScroll)();
+  const motionObject = (0,motion_react__WEBPACK_IMPORTED_MODULE_10__.useTransform)(scrollY, [100, 0], [0, 100]);
   const {
     0: formSucceeded,
     1: setFormSucceeded
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const {
-    0: show,
-    1: setShow
-  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    setShow(motion_react__WEBPACK_IMPORTED_MODULE_10__.useInView);
-  }, [motion_react__WEBPACK_IMPORTED_MODULE_10__.useInView]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_layout__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_customCursor__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "bar header",
     id: "top"
@@ -4371,16 +4458,14 @@ const IndexPage = () => {
     className: "head"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "counter"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
     className: "name"
-  }, "George Bottomley")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_8__.motion.div, {
+  }, "George Bottomley"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_11__.motion.div, {
     className: "headshot-container",
     style: {
       opacity: motionObject
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_11__.StaticImage, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(gatsby_plugin_image__WEBPACK_IMPORTED_MODULE_12__.StaticImage, {
     className: "headshot",
     src: "../images/headshot.png",
     alt: "",
@@ -4388,39 +4473,92 @@ const IndexPage = () => {
     layout: "fixed",
     quality: 100,
     placeholder: "none",
-    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/1816811864.json */ "./.cache/caches/gatsby-plugin-image/1816811864.json")
-  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Section, {
+    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/2186952514.json */ "./.cache/caches/gatsby-plugin-image/2186952514.json")
+  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_section__WEBPACK_IMPORTED_MODULE_7__["default"], {
     title: "About",
     color: `#f5f5f5`,
-    id: "about"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "block"
-  }, "contact info goes here")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Section, {
-    title: "Experience",
-    id: "experience"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "flex-wrapper"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_slider__WEBPACK_IMPORTED_MODULE_6__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_12__.AnimatePresence, null, show && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_8__.motion.div, {
+    id: "about",
+    valign: "flex-start"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_gradient_box__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    color: "green"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "block block--about"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Peronsal"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Hi, I'm George, originally hailing from sunny England. I've been lucky enough to call beautiful New Zealand home for over seven years now. When I'm not around, you'll likely find me enjoying the great outdoors or spending quality time with my family."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Work"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "With a diverse background spanning web development, software development, app, UI/UX, graphic design, animation, marketing, and branding, I possess a unique blend of technical and creative skills My journey through these disciplines has provided me with a comprehensive understanding of the entire product development lifecycle, from initial concept to final execution.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_11__.motion.div, {
+    initial: {
+      x: -100,
+      opacity: 0
+    },
+    whileInView: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        delay: 1
+      }
+    },
+    className: "sub-title"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "I'm Looking for work"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_section__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    title: "Skills & Experience",
+    color: `#30314f`,
+    id: "skills",
+    valign: "flex-start"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_gradient_box__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    color: "pink"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_11__.motion.div, {
+    initial: {
+      x: -100,
+      opacity: 0
+    },
+    whileInView: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        delay: 1
+      }
+    },
+    className: "sub-title"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Over 15 Years")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.ParallaxText, {
+    baseVelocity: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_section__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    title: "Portfolio",
+    id: "portfolio"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_11__.motion.div, {
     initial: {
       x: 100,
       opacity: 0
     },
-    animate: {
+    whileInView: {
       x: 0,
       opacity: 1,
       transition: {
-        delay: 0.5
+        delay: 1
       }
     },
-    exit: {
-      opacity: 0
-    },
-    className: "experience-counter"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "+15 Years")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Section, {
+    className: "sub-title"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "A short overview")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_gradient_box__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    color: "green",
+    location: "top"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "flex-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_slider__WEBPACK_IMPORTED_MODULE_6__["default"], null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_section__WEBPACK_IMPORTED_MODULE_7__["default"], {
     title: "Contact",
     color: `#30314f`,
     id: "contact"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_gradient_box__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    color: "pink"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_11__.motion.div, {
+    initial: {
+      x: -100,
+      opacity: 0
+    },
+    whileInView: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        delay: 1
+      }
+    },
+    className: "sub-title"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Id love to hear from you")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: `block block--contact ${formSucceeded ? "succeeded" : ""}`
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_contact__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onSuccess: setFormSucceeded
@@ -7105,16 +7243,6 @@ function instanceOfHashable(object) {
 /*!******************************!*\
   !*** ./src/styles/main.scss ***!
   \******************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./src/styles/slider.scss":
-/*!********************************!*\
-  !*** ./src/styles/slider.scss ***!
-  \********************************/
 /***/ (() => {
 
 
@@ -10036,6 +10164,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/static/favicon-fb38a93223151da73904a2b0ed20a4e4.png");
+
+/***/ }),
+
+/***/ "./src/images/logo.png":
+/*!*****************************!*\
+  !*** ./src/images/logo.png ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/static/logo-fb38a93223151da73904a2b0ed20a4e4.png");
 
 /***/ }),
 
@@ -32762,376 +32905,6 @@ function isTransitionDefined({ when, delay: _delay, delayChildren, staggerChildr
 
 /***/ }),
 
-/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PopChild.mjs":
-/*!***************************************************************************************************!*\
-  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PopChild.mjs ***!
-  \***************************************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   PopChild: () => (/* binding */ PopChild)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _context_MotionConfigContext_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../context/MotionConfigContext.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/context/MotionConfigContext.mjs");
-"use client";
-
-
-
-
-
-/**
- * Measurement functionality has to be within a separate component
- * to leverage snapshot lifecycle.
- */
-class PopChildMeasure extends react__WEBPACK_IMPORTED_MODULE_1__.Component {
-    getSnapshotBeforeUpdate(prevProps) {
-        const element = this.props.childRef.current;
-        if (element && prevProps.isPresent && !this.props.isPresent) {
-            const parent = element.offsetParent;
-            const parentWidth = parent instanceof HTMLElement ? parent.offsetWidth || 0 : 0;
-            const size = this.props.sizeRef.current;
-            size.height = element.offsetHeight || 0;
-            size.width = element.offsetWidth || 0;
-            size.top = element.offsetTop;
-            size.left = element.offsetLeft;
-            size.right = parentWidth - size.width - size.left;
-        }
-        return null;
-    }
-    /**
-     * Required with getSnapshotBeforeUpdate to stop React complaining.
-     */
-    componentDidUpdate() { }
-    render() {
-        return this.props.children;
-    }
-}
-function PopChild({ children, isPresent, anchorX }) {
-    const id = (0,react__WEBPACK_IMPORTED_MODULE_1__.useId)();
-    const ref = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
-    const size = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)({
-        width: 0,
-        height: 0,
-        top: 0,
-        left: 0,
-        right: 0,
-    });
-    const { nonce } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_MotionConfigContext_mjs__WEBPACK_IMPORTED_MODULE_2__.MotionConfigContext);
-    /**
-     * We create and inject a style block so we can apply this explicit
-     * sizing in a non-destructive manner by just deleting the style block.
-     *
-     * We can't apply size via render as the measurement happens
-     * in getSnapshotBeforeUpdate (post-render), likewise if we apply the
-     * styles directly on the DOM node, we might be overwriting
-     * styles set via the style prop.
-     */
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useInsertionEffect)(() => {
-        const { width, height, top, left, right } = size.current;
-        if (isPresent || !ref.current || !width || !height)
-            return;
-        const x = anchorX === "left" ? `left: ${left}` : `right: ${right}`;
-        ref.current.dataset.motionPopId = id;
-        const style = document.createElement("style");
-        if (nonce)
-            style.nonce = nonce;
-        document.head.appendChild(style);
-        if (style.sheet) {
-            style.sheet.insertRule(`
-          [data-motion-pop-id="${id}"] {
-            position: absolute !important;
-            width: ${width}px !important;
-            height: ${height}px !important;
-            ${x}px !important;
-            top: ${top}px !important;
-          }
-        `);
-        }
-        return () => {
-            document.head.removeChild(style);
-        };
-    }, [isPresent]);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PopChildMeasure, { isPresent: isPresent, childRef: ref, sizeRef: size, children: react__WEBPACK_IMPORTED_MODULE_1__.cloneElement(children, { ref }) }));
-}
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs":
-/*!********************************************************************************************************!*\
-  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs ***!
-  \********************************************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   PresenceChild: () => (/* binding */ PresenceChild)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _context_PresenceContext_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../context/PresenceContext.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/context/PresenceContext.mjs");
-/* harmony import */ var _utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/use-constant.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-constant.mjs");
-/* harmony import */ var _PopChild_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PopChild.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PopChild.mjs");
-"use client";
-
-
-
-
-
-
-
-const PresenceChild = ({ children, initial, isPresent, onExitComplete, custom, presenceAffectsLayout, mode, anchorX, }) => {
-    const presenceChildren = (0,_utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_2__.useConstant)(newChildrenMap);
-    const id = (0,react__WEBPACK_IMPORTED_MODULE_1__.useId)();
-    const memoizedOnExitComplete = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((childId) => {
-        presenceChildren.set(childId, true);
-        for (const isComplete of presenceChildren.values()) {
-            if (!isComplete)
-                return; // can stop searching when any is incomplete
-        }
-        onExitComplete && onExitComplete();
-    }, [presenceChildren, onExitComplete]);
-    const context = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => ({
-        id,
-        initial,
-        isPresent,
-        custom,
-        onExitComplete: memoizedOnExitComplete,
-        register: (childId) => {
-            presenceChildren.set(childId, false);
-            return () => presenceChildren.delete(childId);
-        },
-    }), 
-    /**
-     * If the presence of a child affects the layout of the components around it,
-     * we want to make a new context value to ensure they get re-rendered
-     * so they can detect that layout change.
-     */
-    presenceAffectsLayout
-        ? [Math.random(), memoizedOnExitComplete]
-        : [isPresent, memoizedOnExitComplete]);
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
-        presenceChildren.forEach((_, key) => presenceChildren.set(key, false));
-    }, [isPresent]);
-    /**
-     * If there's no `motion` components to fire exit animations, we want to remove this
-     * component immediately.
-     */
-    react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
-        !isPresent &&
-            !presenceChildren.size &&
-            onExitComplete &&
-            onExitComplete();
-    }, [isPresent]);
-    if (mode === "popLayout") {
-        children = ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_PopChild_mjs__WEBPACK_IMPORTED_MODULE_3__.PopChild, { isPresent: isPresent, anchorX: anchorX, children: children }));
-    }
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_context_PresenceContext_mjs__WEBPACK_IMPORTED_MODULE_4__.PresenceContext.Provider, { value: context, children: children }));
-};
-function newChildrenMap() {
-    return new Map();
-}
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/index.mjs":
-/*!************************************************************************************************!*\
-  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/index.mjs ***!
-  \************************************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   AnimatePresence: () => (/* binding */ AnimatePresence)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _context_LayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../context/LayoutGroupContext.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/context/LayoutGroupContext.mjs");
-/* harmony import */ var _utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/use-constant.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-constant.mjs");
-/* harmony import */ var _PresenceChild_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PresenceChild.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs");
-/* harmony import */ var _use_presence_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./use-presence.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs");
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/utils.mjs");
-/* harmony import */ var _utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/use-isomorphic-effect.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-isomorphic-effect.mjs");
-"use client";
-
-
-
-
-
-
-
-
-
-/**
- * `AnimatePresence` enables the animation of components that have been removed from the tree.
- *
- * When adding/removing more than a single child, every child **must** be given a unique `key` prop.
- *
- * Any `motion` components that have an `exit` property defined will animate out when removed from
- * the tree.
- *
- * ```jsx
- * import { motion, AnimatePresence } from 'framer-motion'
- *
- * export const Items = ({ items }) => (
- *   <AnimatePresence>
- *     {items.map(item => (
- *       <motion.div
- *         key={item.id}
- *         initial={{ opacity: 0 }}
- *         animate={{ opacity: 1 }}
- *         exit={{ opacity: 0 }}
- *       />
- *     ))}
- *   </AnimatePresence>
- * )
- * ```
- *
- * You can sequence exit animations throughout a tree using variants.
- *
- * If a child contains multiple `motion` components with `exit` props, it will only unmount the child
- * once all `motion` components have finished animating out. Likewise, any components using
- * `usePresence` all need to call `safeToRemove`.
- *
- * @public
- */
-const AnimatePresence = ({ children, custom, initial = true, onExitComplete, presenceAffectsLayout = true, mode = "sync", propagate = false, anchorX = "left", }) => {
-    const [isParentPresent, safeToRemove] = (0,_use_presence_mjs__WEBPACK_IMPORTED_MODULE_2__.usePresence)(propagate);
-    /**
-     * Filter any children that aren't ReactElements. We can only track components
-     * between renders with a props.key.
-     */
-    const presentChildren = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.onlyElements)(children), [children]);
-    /**
-     * Track the keys of the currently rendered children. This is used to
-     * determine which children are exiting.
-     */
-    const presentKeys = propagate && !isParentPresent ? [] : presentChildren.map(_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey);
-    /**
-     * If `initial={false}` we only want to pass this to components in the first render.
-     */
-    const isInitialRender = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(true);
-    /**
-     * A ref containing the currently present children. When all exit animations
-     * are complete, we use this to re-render the component with the latest children
-     * *committed* rather than the latest children *rendered*.
-     */
-    const pendingPresentChildren = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(presentChildren);
-    /**
-     * Track which exiting children have finished animating out.
-     */
-    const exitComplete = (0,_utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_4__.useConstant)(() => new Map());
-    /**
-     * Save children to render as React state. To ensure this component is concurrent-safe,
-     * we check for exiting children via an effect.
-     */
-    const [diffedChildren, setDiffedChildren] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(presentChildren);
-    const [renderedChildren, setRenderedChildren] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(presentChildren);
-    (0,_utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_5__.useIsomorphicLayoutEffect)(() => {
-        isInitialRender.current = false;
-        pendingPresentChildren.current = presentChildren;
-        /**
-         * Update complete status of exiting children.
-         */
-        for (let i = 0; i < renderedChildren.length; i++) {
-            const key = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey)(renderedChildren[i]);
-            if (!presentKeys.includes(key)) {
-                if (exitComplete.get(key) !== true) {
-                    exitComplete.set(key, false);
-                }
-            }
-            else {
-                exitComplete.delete(key);
-            }
-        }
-    }, [renderedChildren, presentKeys.length, presentKeys.join("-")]);
-    const exitingChildren = [];
-    if (presentChildren !== diffedChildren) {
-        let nextChildren = [...presentChildren];
-        /**
-         * Loop through all the currently rendered components and decide which
-         * are exiting.
-         */
-        for (let i = 0; i < renderedChildren.length; i++) {
-            const child = renderedChildren[i];
-            const key = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey)(child);
-            if (!presentKeys.includes(key)) {
-                nextChildren.splice(i, 0, child);
-                exitingChildren.push(child);
-            }
-        }
-        /**
-         * If we're in "wait" mode, and we have exiting children, we want to
-         * only render these until they've all exited.
-         */
-        if (mode === "wait" && exitingChildren.length) {
-            nextChildren = exitingChildren;
-        }
-        setRenderedChildren((0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.onlyElements)(nextChildren));
-        setDiffedChildren(presentChildren);
-        /**
-         * Early return to ensure once we've set state with the latest diffed
-         * children, we can immediately re-render.
-         */
-        return null;
-    }
-    if ( true &&
-        mode === "wait" &&
-        renderedChildren.length > 1) {
-        console.warn(`You're attempting to animate multiple children within AnimatePresence, but its mode is set to "wait". This will lead to odd visual behaviour.`);
-    }
-    /**
-     * If we've been provided a forceRender function by the LayoutGroupContext,
-     * we can use it to force a re-render amongst all surrounding components once
-     * all components have finished animating out.
-     */
-    const { forceRender } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_LayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_6__.LayoutGroupContext);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: renderedChildren.map((child) => {
-            const key = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getChildKey)(child);
-            const isPresent = propagate && !isParentPresent
-                ? false
-                : presentChildren === renderedChildren ||
-                    presentKeys.includes(key);
-            const onExit = () => {
-                if (exitComplete.has(key)) {
-                    exitComplete.set(key, true);
-                }
-                else {
-                    return;
-                }
-                let isEveryExitComplete = true;
-                exitComplete.forEach((isExitComplete) => {
-                    if (!isExitComplete)
-                        isEveryExitComplete = false;
-                });
-                if (isEveryExitComplete) {
-                    forceRender === null || forceRender === void 0 ? void 0 : forceRender();
-                    setRenderedChildren(pendingPresentChildren.current);
-                    propagate && (safeToRemove === null || safeToRemove === void 0 ? void 0 : safeToRemove());
-                    onExitComplete && onExitComplete();
-                }
-            };
-            return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_PresenceChild_mjs__WEBPACK_IMPORTED_MODULE_7__.PresenceChild, { isPresent: isPresent, initial: !isInitialRender.current || initial
-                    ? undefined
-                    : false, custom: custom, presenceAffectsLayout: presenceAffectsLayout, mode: mode, onExitComplete: isPresent ? undefined : onExit, anchorX: anchorX, children: child }, key));
-        }) }));
-};
-
-
-
-
-/***/ }),
-
 /***/ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs":
 /*!*******************************************************************************************************!*\
   !*** ./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs ***!
@@ -33214,37 +32987,6 @@ function useIsPresent() {
 }
 function isPresent(context) {
     return context === null ? true : context.isPresent;
-}
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/utils.mjs":
-/*!************************************************************************************************!*\
-  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/components/AnimatePresence/utils.mjs ***!
-  \************************************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getChildKey: () => (/* binding */ getChildKey),
-/* harmony export */   onlyElements: () => (/* binding */ onlyElements)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-
-
-const getChildKey = (child) => child.key || "";
-function onlyElements(children) {
-    const filtered = [];
-    // We use forEach here instead of map as map mutates the component key by preprending `.$`
-    react__WEBPACK_IMPORTED_MODULE_0__.Children.forEach(children, (child) => {
-        if ((0,react__WEBPACK_IMPORTED_MODULE_0__.isValidElement)(child))
-            filtered.push(child);
-    });
-    return filtered;
 }
 
 
@@ -41821,66 +41563,6 @@ const int = {
 
 /***/ }),
 
-/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/render/dom/viewport/index.mjs":
-/*!*****************************************************************************************!*\
-  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/render/dom/viewport/index.mjs ***!
-  \*****************************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   inView: () => (/* binding */ inView)
-/* harmony export */ });
-/* harmony import */ var _motion_dom_dist_es_utils_resolve_elements_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../motion-dom/dist/es/utils/resolve-elements.mjs */ "./node_modules/motion/dist/es/motion-dom/dist/es/utils/resolve-elements.mjs");
-
-
-
-const thresholds = {
-    some: 0,
-    all: 1,
-};
-function inView(elementOrSelector, onStart, { root, margin: rootMargin, amount = "some" } = {}) {
-    const elements = (0,_motion_dom_dist_es_utils_resolve_elements_mjs__WEBPACK_IMPORTED_MODULE_0__.resolveElements)(elementOrSelector);
-    const activeIntersections = new WeakMap();
-    const onIntersectionChange = (entries) => {
-        entries.forEach((entry) => {
-            const onEnd = activeIntersections.get(entry.target);
-            /**
-             * If there's no change to the intersection, we don't need to
-             * do anything here.
-             */
-            if (entry.isIntersecting === Boolean(onEnd))
-                return;
-            if (entry.isIntersecting) {
-                const newOnEnd = onStart(entry.target, entry);
-                if (typeof newOnEnd === "function") {
-                    activeIntersections.set(entry.target, newOnEnd);
-                }
-                else {
-                    observer.unobserve(entry.target);
-                }
-            }
-            else if (typeof onEnd === "function") {
-                onEnd(entry);
-                activeIntersections.delete(entry.target);
-            }
-        });
-    };
-    const observer = new IntersectionObserver(onIntersectionChange, {
-        root,
-        rootMargin,
-        threshold: typeof amount === "number" ? amount : thresholds[amount],
-    });
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-}
-
-
-
-
-/***/ }),
-
 /***/ "./node_modules/motion/dist/es/framer-motion/dist/es/render/html/HTMLVisualElement.mjs":
 /*!*********************************************************************************************!*\
   !*** ./node_modules/motion/dist/es/framer-motion/dist/es/render/html/HTMLVisualElement.mjs ***!
@@ -45103,46 +44785,6 @@ function useConstant(init) {
 
 /***/ }),
 
-/***/ "./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-in-view.mjs":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-in-view.mjs ***!
-  \*********************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   useInView: () => (/* binding */ useInView)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _render_dom_viewport_index_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../render/dom/viewport/index.mjs */ "./node_modules/motion/dist/es/framer-motion/dist/es/render/dom/viewport/index.mjs");
-
-
-
-function useInView(ref, { root, margin, amount, once = false, initial = false, } = {}) {
-    const [isInView, setInView] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initial);
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-        if (!ref.current || (once && isInView))
-            return;
-        const onEnter = () => {
-            setInView(true);
-            return once ? undefined : () => setInView(false);
-        };
-        const options = {
-            root: (root && root.current) || undefined,
-            margin,
-            amount,
-        };
-        return (0,_render_dom_viewport_index_mjs__WEBPACK_IMPORTED_MODULE_1__.inView)(ref.current, onEnter, options);
-    }, [root, ref, margin, once, amount]);
-    return isInView;
-}
-
-
-
-
-/***/ }),
-
 /***/ "./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-instant-transition-state.mjs":
 /*!**************************************************************************************************!*\
   !*** ./node_modules/motion/dist/es/framer-motion/dist/es/utils/use-instant-transition-state.mjs ***!
@@ -47771,9 +47413,9 @@ const millisecondsToSeconds = (milliseconds) => milliseconds / 1000;
 
 /***/ }),
 
-/***/ "./.cache/caches/gatsby-plugin-image/1816811864.json":
+/***/ "./.cache/caches/gatsby-plugin-image/2186952514.json":
 /*!***********************************************************!*\
-  !*** ./.cache/caches/gatsby-plugin-image/1816811864.json ***!
+  !*** ./.cache/caches/gatsby-plugin-image/2186952514.json ***!
   \***********************************************************/
 /***/ ((module) => {
 
@@ -47782,25 +47424,36 @@ module.exports = JSON.parse('{"layout":"fixed","images":{"fallback":{"src":"/sta
 
 /***/ }),
 
-/***/ "./.cache/caches/gatsby-plugin-image/2481344115.json":
+/***/ "./.cache/caches/gatsby-plugin-image/4135978391.json":
 /*!***********************************************************!*\
-  !*** ./.cache/caches/gatsby-plugin-image/2481344115.json ***!
+  !*** ./.cache/caches/gatsby-plugin-image/4135978391.json ***!
   \***********************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"layout":"constrained","placeholder":{"fallback":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAATCAYAAACQjC21AAAACXBIWXMAABYlAAAWJQFJUiTwAAABy0lEQVR42pWUSyiFQRTHx73kkQ0WRJGNZEFkYWfDVtnYkAVbO4pSpESKlCJKWSiPLJDHmoVXUawolLAReYV73Xtd/qP/4TQ+ytSvb+a85syc840x38MHYjivBHPgEgRAFLyBJ3AMRkCx8vMZZ4ggCyyBdwaJcq4Rmd1gFCQ7Mb4m+eBMGQdBGEQcwtRFaLsLMtyg6eCEBvfg2snGK8MbcMf5jsr0c0woh37KWpnxHlgA82AbXIAO4Aftym9IghWBEI9iFU2Ux4JE58Jt0ZKos6OOPhEWz16b6aUwwG8HjeNVEJ/TBaJrok+Q307DY0jatyBbBYoxP4eWp4BT5b9phY/qohfdav0x5NiDqlgPhgu5v1ka+f8RsMeJYV5Uhlv/CBjH77Tq3WfDtpCU7S6FKqhXYC3PZD/KHe4b9o9dXHGHQ1CgCuBVFDtywRp9X/kdtopyLo5AFThQFRsACU523WCDm7+rh8POK8RwlYIVviLnXE96HHOMuhADyT+9ro9RwqfJKhpBGigFqeqYUtUWJ2CU8zLjVLRGGS6DGVCvbGLVPy5/lhy1we0OmVTzBRHDPtVzErDNaZPa31pNBDlgnE5dHgGbqZsCeW6wD01vrcoxAEjbAAAAAElFTkSuQmCC"},"images":{"fallback":{"src":"/static/fe5a4ecfb31b91ce227fdd794a4723a4/087b5/git.png","srcSet":"/static/fe5a4ecfb31b91ce227fdd794a4723a4/abaea/git.png 9w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/7ceb7/git.png 18w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/087b5/git.png 36w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/27c48/git.png 72w","sizes":"(min-width: 36px) 36px, 100vw"},"sources":[{"srcSet":"/static/fe5a4ecfb31b91ce227fdd794a4723a4/a8d60/git.webp 9w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/4f7ad/git.webp 18w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/5edbd/git.webp 36w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/8aca2/git.webp 72w","type":"image/webp","sizes":"(min-width: 36px) 36px, 100vw"}]},"width":36,"height":35}');
+module.exports = JSON.parse('{"layout":"constrained","placeholder":{"fallback":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAATCAYAAACQjC21AAAACXBIWXMAABYlAAAWJQFJUiTwAAAByElEQVR42p2UTSiEURSGP0ahbGwsKOyw8jMbOxvZWVhYkZLtLIkFkiRKFIlssEKJLFhTYhaUrJSUn1JK/v/GmBnvmd7DmduncOvp3nvuOe937r3nu5733dJBGsd1YBlcgjcQBzHwDE7AFKjyiUsRk1YANkCCInGOLdY2A3Icja9BCTijo2QTAR8kSnQeoY/47oE8V1QMx3R4ADc+2bgZ3oJ7jsMm02SbNQEjtHWCU2awClbALrgAvSAAuk3cuIpVmO3IQoj2DJDlHLiMs7kmrdkc0SsoE+MQja/se+ic6QhZYV0LMeaNfZ/H/WvacnaF7gH7NBXPZRlp/I7HS9CDXvuFmGeORNqYuSy5pOQkyn6JToE/CA46Gt6LyTD8jwwXzMXIn+Ttm5TlK+UmwC/TgLHng2tzhgdinODkCjyBI1DqHL7fhRSBTcZG2E/KQg0nIlQPDjmXIh5l3dnsBsA2t5cwD4eMa9VRHwTpg+Cc83mfbU5z7Z1C+kNs2W1UgkcutLG+gux1m3oJHeZW9UUS8WrPKZFG8+V1llCL8VHBLvN36FZb3XLTQQO4M47D5sZdwRhLrumn2lVDMZhjUL+PYDvXFvmGpoh9Arv/regRI0vVAAAAAElFTkSuQmCC"},"images":{"fallback":{"src":"/static/fe5a4ecfb31b91ce227fdd794a4723a4/ff896/git.png","srcSet":"/static/fe5a4ecfb31b91ce227fdd794a4723a4/22867/git.png 8w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/fbc98/git.png 16w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/ff896/git.png 32w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/609f3/git.png 64w","sizes":"(min-width: 32px) 32px, 100vw"},"sources":[{"srcSet":"/static/fe5a4ecfb31b91ce227fdd794a4723a4/5d252/git.webp 8w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/e789a/git.webp 16w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/c9eb6/git.webp 32w,\\n/static/fe5a4ecfb31b91ce227fdd794a4723a4/3ea93/git.webp 64w","type":"image/webp","sizes":"(min-width: 32px) 32px, 100vw"}]},"width":32,"height":31}');
 
 /***/ }),
 
-/***/ "./.cache/caches/gatsby-plugin-image/335882052.json":
-/*!**********************************************************!*\
-  !*** ./.cache/caches/gatsby-plugin-image/335882052.json ***!
-  \**********************************************************/
+/***/ "./.cache/caches/gatsby-plugin-image/4255985376.json":
+/*!***********************************************************!*\
+  !*** ./.cache/caches/gatsby-plugin-image/4255985376.json ***!
+  \***********************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"layout":"constrained","placeholder":{"fallback":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEHElEQVR42nVUXUwcVRQeMMYHjU/GJ02sggV2dufnzi5QoFtLt0vD/swszLJLF2xpxZqUJgSBUKkrVB/UPhlSf/pQQ2JS2yakghKqRqv0wcSfkMaYhjRUiQslVWMQI+zufJ47S5ddojc5mcnMvd/57ne+cwRha5UIyWQpf2H49n7xk6GEeKX/umOif81xoS/lHDsxwY4caq+pCpZVec2HCs6V2me3LftDU1PPA0wOtcr7zFnF7IDii1myxwAPtS4KtboVshzKymr4NmP6ux6PIfFzyRyRkiIwny/xIGPhSeY2oSqGJVcFMrIYzMhSiINYsiuUljiYEoaiGhbTWqEwfYMxY8Q0L95XQG7zmkwf09xR0KG0rIQyxAJ2KEVhbUZWksO0L5zROAHNeDsHZV9fEDyecIOi6hkCym4e2A4ElRnETN/+PctZqyxieXa1NOQ5alrkfaa1YDMrctfSi0DKn94Ph9gMphlFoBLdRpUjUNoSUzl2TQcfJi1+Jl3sjPfARGeAQHz20yUFkXzlLZjRE3hixzPFTLksFYGs0nUYru9GWoTq3W2V9GPjnkZ8c2XVAXj3JHDk6Ensbey0gVOpO5i5OotQ6BjXDE5KYgNzQCqgEknAMfvylCAfO/SsWtMCqiZpkQOLx3uRWrqDlZXfsLS8Al1/ATdu3MTq6l/4/Y8/CfhrSFR91QakEINZ2d8Gx+cvzQvO93o/UutNyK5ghuuz48m9uHhpGgsLi2jY3Y719Q10dw9jfv42xscnEG/vBV+62YPHd/ogs01AHwF+PPijIF568a5tXilk8auUle/DG2+ew9ra3zh//jLS6TQOdw3h1q1fMD19DSOk5bplYSDWhzONz6Fai8AlBjLq/jicFwbGBcfk4D9yNWWRcsVwuoKoq4/h7NkP8MW1b2w23c+fwujpMSwuLmHp12WcPnMOPfUdmIufQp0WsZzOYFb1RsFGj+uCOHPyK8Ufs2lzm+ysaEJHZ7+t2dzcTwSSgt/fhafKGrGrvg01tVHa4ye7hG0NXeRD7hAis+wNdD8iSJ8NJ5RYJ68U71HuRfDi8Ar3D7xO1T6Y9x9nz4Mn5q4gMPBmIGPzb9dzrgZK1Ob4VVU2bJPaZqWNnEVZuY8AAnnf8WehBxV7bzjN+5qaYyjfKZ5as3mrU3IDgLP4n3YriFCG/2cskqLJ81jRtFE1/R3e6LzhC4Cz+SGxLUjDNEWGs3O7W4/moMz81CmhYpa43cYg6bfKN/GG59klJ40wkSYQ95qDopLGWgXZRCH2zMhomp4snFp5QNPMoXu9ZpnbHXmNKvg9sbyr7olmVX8cMjlBOUBhdlhydxeURMdUfXWL67/ACtYWZc7YV5t4lL163HR+2He5anLgpuPToQXxy+EZ6YdRPQmUFkzr/PoX49J+fmu6DoQAAAAASUVORK5CYII="},"images":{"fallback":{"src":"/static/1ec01fa2de78f7829ba561432d355252/e9fba/logo.png","srcSet":"/static/1ec01fa2de78f7829ba561432d355252/86ee2/logo.png 13w,\\n/static/1ec01fa2de78f7829ba561432d355252/88208/logo.png 25w,\\n/static/1ec01fa2de78f7829ba561432d355252/e9fba/logo.png 50w,\\n/static/1ec01fa2de78f7829ba561432d355252/15e42/logo.png 100w","sizes":"(min-width: 50px) 50px, 100vw"},"sources":[{"srcSet":"/static/1ec01fa2de78f7829ba561432d355252/68795/logo.webp 13w,\\n/static/1ec01fa2de78f7829ba561432d355252/2fa99/logo.webp 25w,\\n/static/1ec01fa2de78f7829ba561432d355252/dbc4a/logo.webp 50w,\\n/static/1ec01fa2de78f7829ba561432d355252/d8057/logo.webp 100w","type":"image/webp","sizes":"(min-width: 50px) 50px, 100vw"}]},"width":50,"height":50}');
+module.exports = JSON.parse('{"layout":"constrained","placeholder":{"fallback":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEKElEQVR42n2UXUwcVRTHBzQmGuObPulDPyhlP+/cmV1AdrsWCqxld3Z2l9ldCou6KDRRok0LAiluS6KJNj6oNTb4YnkwpG1QW6HWj8QivpjYxiaNmko1UCm1fiWttcDs/L337i7ZGtpJzp7ZmTO/e+65/3Mk6ZYLZfzXhiP3OKYG2h0f9s/YJ/pu2Md3LzgP9k4oT6Z3VJNYRcAw7i/5qFxa4+Kg8hrDuFeVY0nSYMzIRhpyU8oi1VFwo74EaHUchGimTPWfFSU6WlMTpfzjQCBwd4GxCpNCodB9lOofKZ5WUDlmEVvYIo5wjrg0ELdmEadmMp8jVIdMo5aitjKvL1FVzxqGcVcJMCtSVhT9bdWTgJtoy0SOmIRGwPztzGJxJo/zeBNQVf1QHpVnSR5PbAtVojkWwM1aC6KoMVBF//9zFq/lqBKDx5/YslpAVY0f5ltwk8hKMZhth0GiwvP/myqbYXe0CHAp1C1rpiKzxVIdkwIWDLY/wGoyx6ywYkRk4nKHUbm5mXlN3O/b/xaSqRewfkMDe88XKkC5rwrl5EwGzjMjrZJcrVcRElku1oZnVGV7HIGtHejqGkR9fRoVmxqxsHAFp059hbDWI4BOtojIngNtIVOOdcAxM3xCkndm0rQmzk8yJyu6xWGJ5POYv3QZV3/7A5d+XYQW2Ylz537AtWvX8edff2Ny6ku4GZDKHMiMqyGYhP2LoQuSc3TXceozQFxhk9ds3fp6HD16EhcvzqPOl8LS0jKe6d6LCz/9grGxD5Bq2wV+6cZzeJhlTpQCsJEBJ188LzmO7fmdeKNCa5QBN1Zsw2sH3sU/N/7Fe4cnYJoryGQGMDs7h6mp09iXfQNLloX+1G683tCNanZILkfIpE1tcI73j0n2EwM3RTew4vOaOF1hPFqXxDuH3sf09Dcim+6eYXYob2J+fgGXFxax/8Aoen1pfNc2jDo1Zjmd4RwNMD2+8qwmOT4ZmpabUyJtXuzKzUF0PtHPavYjzpw9jzkGaQ52Mdk0wedvQ01tAjb79rw2WQIuwmpPxalf8RlPPSi5P3upXU518pPK8RNjWhSy6Xp6CHv6XkXgsXahP3GyLHtuRW26hDI0kwubvf+6MGBQRlvaPqckJkQqxEo0kdGGjdsErAhYy3gzqB4Dqrd1cLVTPLXxEO8UkgdaxU65Eyhv+e2yDBf9/sgjt0wbNhwOlrTfzbzX+JCwhHi5PIqm6uyZtsRjqBKH1xvPlA6awqDIlrMhMcBqcT0/mmKia9zOsOm2h1eIPWQSe9hkbbZCqlpMSnhm0ZyqxrK3GbR5ut/fsY4FjbCMvyVK5CrdmszR4A7IwRTk7cwSnRbp6QJNp4/7vIbtTlP7lpSZ/MoaazseUl7ubXWO9x2xfdz/ve3TwVnH6b0n3WdH9CxQXtxZKeI/2Gt7SQ9ksqcAAAAASUVORK5CYII="},"images":{"fallback":{"src":"/static/1ec01fa2de78f7829ba561432d355252/e9fba/logo.png","srcSet":"/static/1ec01fa2de78f7829ba561432d355252/86ee2/logo.png 13w,\\n/static/1ec01fa2de78f7829ba561432d355252/88208/logo.png 25w,\\n/static/1ec01fa2de78f7829ba561432d355252/e9fba/logo.png 50w,\\n/static/1ec01fa2de78f7829ba561432d355252/15e42/logo.png 100w","sizes":"(min-width: 50px) 50px, 100vw"},"sources":[{"srcSet":"/static/1ec01fa2de78f7829ba561432d355252/68795/logo.webp 13w,\\n/static/1ec01fa2de78f7829ba561432d355252/2fa99/logo.webp 25w,\\n/static/1ec01fa2de78f7829ba561432d355252/dbc4a/logo.webp 50w,\\n/static/1ec01fa2de78f7829ba561432d355252/d8057/logo.webp 100w","type":"image/webp","sizes":"(min-width: 50px) 50px, 100vw"}]},"width":50,"height":50}');
+
+/***/ }),
+
+/***/ "./.cache/caches/gatsby-plugin-image/4271398794.json":
+/*!***********************************************************!*\
+  !*** ./.cache/caches/gatsby-plugin-image/4271398794.json ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"layout":"fixed","placeholder":{"fallback":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAXCAYAAAALHW+jAAAACXBIWXMAAAsTAAALEwEAmpwYAAABUUlEQVR42mNgYGAwAuKrQPwfiNcAsQADBDAykAnOQw37CaV7oeLM5Br4B4h/AfFvqIH7oOJM5Bp4EM2FlZS6UBGI1wPxTSBuBWJWpDBkRsMMSJaxIGGyfcOEJ7LgctZAHAbEvkAcDsTKUAUgl7oBcSAQ+wOxDxCzAzEXECcB8VwgXgTELUBsgBzu+6Bh9wNKF0IlQcnnCVQMhF8DsQsQ34Dy/0Lpf1C6A+bUHVCBr1A6FyrOD8QPkDS/B+LHSIb8hkbkb2hKAYn7gTTuQnNhHpKBj9FcA8PfkQz5j5Tk1hFrIEzze2iYguS0kTIFzMD7xBr4C0o3QuXYoXQQmoXfiTUQ5gIvpBQAAnpIkQKjSfKyDVSOBUqrIuUwsgy0RXOhGlJwUOTCUQNRDdyNZmA+pZEiC8RaQKwOTf2CSCWHChBrArEGlOZEq2/YoPo0kPAgBwDxDsbfqzyDzwAAAABJRU5ErkJggg=="},"images":{"fallback":{"src":"/static/ef41c2d671390e9d9c684656c3609cdd/e3675/linkedin.png","srcSet":"/static/ef41c2d671390e9d9c684656c3609cdd/e3675/linkedin.png 32w,\\n/static/ef41c2d671390e9d9c684656c3609cdd/95821/linkedin.png 64w","sizes":"32px"},"sources":[{"srcSet":"/static/ef41c2d671390e9d9c684656c3609cdd/15cd7/linkedin.webp 32w,\\n/static/ef41c2d671390e9d9c684656c3609cdd/2d384/linkedin.webp 64w","type":"image/webp","sizes":"32px"}]},"width":32,"height":37}');
 
 /***/ }),
 

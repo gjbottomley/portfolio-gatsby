@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { wrap } from "@popmotion/popcorn";
 
-import "../styles/slider.scss";
-
 import { IMAGES } from "./sliderImages";
 
 const sliderVariants = {

@@ -1,71 +1,24 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, {  useState } from "react";
 import { StaticImage } from "gatsby-plugin-image";
 import {
   motion,
   useScroll,
   useTransform,
-  AnimatePresence,
-  useInView,
 } from "motion/react";
 
 import Layout from "../components/layout";
 import { SEO } from "../components/SEO";
 import CustomCursor from "../components/customCursor";
-import { ParallaxText, useParallax } from "../components/velocity";
+import { ParallaxText, Tile } from "../components/velocity";
 import Contact from "../components/contact";
 import Slider from "../components/slider";
-
-const Section = ({ title, children, color = `#ffffff`, id }) => {
-  const ref = useRef(null);
-
-  const { scrollYProgress } = useScroll({ target: ref });
-  const y = useParallax(scrollYProgress, 200);
-
-  const isDarkColor = (color) => {
-    const c = color.substring(1); // strip #
-    const rgb = parseInt(c, 16); // convert rrggbb to decimal
-    const r = (rgb >> 16) & 0xff; // extract red
-    const g = (rgb >> 8) & 0xff; // extract green
-    const b = (rgb >> 0) & 0xff; // extract blue
-    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-    return luma < 128;
-  };
-
-  return (
-    <section
-      className={`bar ${isDarkColor(color) ? "dark" : ""}`}
-      style={{ backgroundColor: `${color}` }}
-      id={id}
-    >
-      <div className="container" ref={ref}>
-        {children}
-      </div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        style={{ y }}
-        className="title"
-      >
-        <h2>{title}</h2>
-      </motion.div>
-    </section>
-  );
-};
+import Section from "../components/section";
+import GradientBox from "../components/gradient-box";
 
 const IndexPage = () => {
   const { scrollY } = useScroll();
   const motionObject = useTransform(scrollY, [100, 0], [0, 100]);
   const [formSucceeded, setFormSucceeded] = useState(false);
-
-  const ref = useRef(null);
-  const isInView = useInView(ref);
-
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    setShow(true);
-  }, [isInView]);
 
   return (
     <Layout>
@@ -77,9 +30,7 @@ const IndexPage = () => {
         </div>
         <div className="head">
           <div className="content">
-            <div className="counter">
               <h1 className="name">George Bottomley</h1>
-            </div>
             <motion.div
               className="headshot-container"
               style={{ opacity: motionObject }}
@@ -97,8 +48,9 @@ const IndexPage = () => {
           </div>
         </div>
       </section>
-      <Section title="About" color={`#f5f5f5`} id="about">
-        <div className="block">
+      <Section title="About" color={`#f5f5f5`} id="about" valign="flex-start">
+        <GradientBox color="green" />
+        <div className="block block--about">
           <strong>Peronsal</strong>
           <p>
             Hi, I'm George, originally hailing from sunny England. I've been
@@ -117,38 +69,65 @@ const IndexPage = () => {
           </p>
         </div>
         <motion.div
-          initial={{ x: 100, opacity: 0 }}
+          initial={{ x: -100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1, transition: { delay: 1 } }}
-          className="experience-counter"
+          className="sub-title"
         >
-          <h3>I'm Looking for work!</h3>
+          <h3>I'm Looking for work</h3>
         </motion.div>
       </Section>
-      <Section title="Experience" id="experience" ref={ref}>
-        <div className="flex-wrapper">
-          <Slider />
+      <Section title="Skills & Experience" color={`#30314f`} id="skills" valign="flex-start">
+        <GradientBox color="pink" />
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1, transition: { delay: 1 } }}
+          className="sub-title"
+        >
+          <h3>Over 15 Years</h3>
+          
+        </motion.div>
+        <div className="skills-parallax"><h3>Knowledge in</h3>
+        <ParallaxText baseVelocity={0.4}>
+          <Tile skill="react" />
+          <Tile skill="angular" />
+          <Tile skill="typescript" />
+          <Tile skill="flutter" />
+          <Tile skill="php" />
+          <Tile skill="laravel" />
+          <Tile skill="git" />
+          <Tile skill="html" />
+          <Tile skill="css" />
+          <Tile skill="javascript" />
+        </ParallaxText>
         </div>
+      </Section>
+      <Section title="Portfolio" id="portfolio">
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1, transition: { delay: 1 } }}
-          className="experience-counter"
+          className="sub-title"
         >
-          <h3>Over 15 Years</h3>
+          <h3>A short overview</h3>
         </motion.div>
+        <GradientBox color="green" location="top" />
+        <div className="flex-wrapper">
+          <Slider />
+        </div>
       </Section>
       <Section title="Contact" color={`#30314f`} id="contact">
+      <GradientBox color="pink" />
+      <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1, transition: { delay: 1 } }}
+          className="sub-title"
+        >
+          <h3>Id love to hear from you</h3>
+        </motion.div>
         <div
           className={`block block--contact ${formSucceeded ? "succeeded" : ""}`}
         >
           <Contact onSuccess={setFormSucceeded} />
         </div>
-        <motion.div
-          initial={{ x: 100, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1, transition: { delay: 1 } }}
-          className="experience-counter"
-        >
-          <h3>Id love to hear from you!</h3>
-        </motion.div>
       </Section>
     </Layout>
   );

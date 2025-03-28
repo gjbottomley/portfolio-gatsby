@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { StaticImage } from "gatsby-plugin-image";
 import {
   motion,
   useScroll,
@@ -72,8 +73,20 @@ const ParallaxText = ({ children, baseVelocity = 100 }) => {
   );
 };
 
-const useParallax = (value, distance) => {
-  return useTransform(value, [0, 1], [-distance, distance]);
-};
+const Tile = ({ skill }) => {
+  
+  const hoverMotion = {
+    rest: { y: 0, opacity: 0 },
+    hover: {
+      y: -14,
+      opacity: 1,
+    }
+  };
 
-export { ParallaxText, useParallax };
+  return <motion.div className="tile" initial="rest" whileHover="hover" animate="rest">
+    <motion.div className="tile-title" variants={hoverMotion}>{skill}</motion.div>
+      <img src={`./skills/${skill}.png`} alt={skill} height={60} layout="fixed" quality={100} placeholder="none" />
+    </motion.div>;
+}
+
+export { ParallaxText, Tile };

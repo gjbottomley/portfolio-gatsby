@@ -1,6 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { StaticImage } from "gatsby-plugin-image";
 import { Link } from "gatsby";
+
+const logo = require("../images/logo.png");
 
 const SidePanel = () => {
   const [isDarkSection, setIsDarkSection] = useState(false);
@@ -55,8 +57,11 @@ const SidePanel = () => {
         <div onClick={() => handleClick("about")} className="nav-item">
           About
         </div>
-        <div onClick={() => handleClick("experience")} className="nav-item">
-          Experience
+        <div onClick={() => handleClick("skills")} className="nav-item">
+          Skills
+        </div>
+        <div onClick={() => handleClick("portfolio")} className="nav-item">
+          Portfolio
         </div>
         <div onClick={() => handleClick("contact")} className="nav-item">
           Contact
@@ -64,7 +69,7 @@ const SidePanel = () => {
       </div>
       <div className="social">
         <Link
-          to="https://www.linkedin.com/in/gjbottomley "
+          to="https://www.linkedin.com/in/gjbottomley"
           className="icon"
           target="_blank"
         >
@@ -73,6 +78,8 @@ const SidePanel = () => {
             alt="Linkedin George Bottomley"
             placeholder="blurred"
             width={32}
+            layout="fixed"
+            quality={100}
           />
         </Link>
         <Link
