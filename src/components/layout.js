@@ -9,9 +9,10 @@ import Modal from "./modal";
 
 export default function Layout({ children }) {
 
-    useEffect(() => {
-      document.body.classList.add('snap');
-    }, []);
+  useEffect(() => {
+    document.body.classList.add('snap');
+  }, []);
+
   return (
     <>
       <Favicon url={icon} />
