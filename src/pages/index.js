@@ -148,7 +148,7 @@ const IndexPage = () => {
           <Contact onSuccess={setFormSucceeded} />
         </div>
       </Section>
-      <Section title="Built with" color={`#202137`} id="built">
+      <Section title="Built with" color={`#292a45`} id="built">
       <ul className="built">
         <li>React</li>
         <li><Link to="https://www.gatsbyjs.com/" target="_blank" title="gatsby">Gatsby</Link></li>
