@@ -1,3 +1,4 @@
+@use "../variables" as *;
 
 .button {
     position: relative;
@@ -19,6 +20,15 @@
         transform: scale(1.07);
         
     }
+
+    &.center {
+        margin: 0 auto;
+    }
+}
+
+.button--pink {
+    background: $pink;
+    
 }
 
 .button--next, .button--prev {
@@ -26,9 +36,6 @@
     font-size: 0 !important;
     border-radius: 50px;
     padding: 16px !important;
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
     &::before {
         content:'';
         display: block;
@@ -41,9 +48,22 @@
 }
 
 .button--prev {
-    right: 50%;
-    left: auto;
     &::before {
         transform: rotate(180deg);
+    }
+}
+
+.info-button {
+    border: 2px solid $blue;
+    border-radius: 50px;
+    display: flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    @media all and (min-width:$tablet) { 
+        display: none;
     }
 }

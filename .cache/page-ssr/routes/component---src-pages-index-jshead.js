@@ -4312,6 +4312,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const ParallaxText = ({
   children,
   baseVelocity = 100
@@ -4369,11 +4370,34 @@ const ParallaxText = ({
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, children, " ")));
 };
 const Tile = ({
-  children
+  skill
 }) => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "tile"
-  }, children);
+  const hoverMotion = {
+    rest: {
+      y: 0,
+      opacity: 0
+    },
+    hover: {
+      y: -14,
+      opacity: 1
+    }
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_8__.motion.div, {
+    className: "tile",
+    initial: "rest",
+    whileHover: "hover",
+    animate: "rest"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_8__.motion.div, {
+    className: "tile-title",
+    variants: hoverMotion
+  }, skill), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: `./skills/${skill}.png`,
+    alt: skill,
+    height: 60,
+    layout: "fixed",
+    quality: 100,
+    placeholder: "none"
+  }));
 };
 
 
@@ -4470,10 +4494,10 @@ const IndexPage = () => {
     src: "../images/headshot.png",
     alt: "",
     width: 600,
-    layout: "fixed",
+    layout: "constrained",
     quality: 100,
     placeholder: "none",
-    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/2186952514.json */ "./.cache/caches/gatsby-plugin-image/2186952514.json")
+    __imageData: __webpack_require__(/*! ./.cache/caches/gatsby-plugin-image/3915499624.json */ "./.cache/caches/gatsby-plugin-image/3915499624.json")
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_section__WEBPACK_IMPORTED_MODULE_7__["default"], {
     title: "About",
     color: `#f5f5f5`,
@@ -4516,9 +4540,31 @@ const IndexPage = () => {
       }
     },
     className: "sub-title"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Over 15 Years")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.ParallaxText, {
-    baseVelocity: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_section__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Over 15 Years")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "velocity-container velocity-container--skills"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Knowledge in"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.ParallaxText, {
+    baseVelocity: 0.4
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, {
+    skill: "react"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, {
+    skill: "angular"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, {
+    skill: "typescript"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, {
+    skill: "flutter"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, {
+    skill: "php"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, {
+    skill: "laravel"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, {
+    skill: "git"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, {
+    skill: "html"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, {
+    skill: "css"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_velocity__WEBPACK_IMPORTED_MODULE_4__.Tile, {
+    skill: "javascript"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_section__WEBPACK_IMPORTED_MODULE_7__["default"], {
     title: "Portfolio",
     id: "portfolio"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(motion_react__WEBPACK_IMPORTED_MODULE_11__.motion.div, {
@@ -47413,14 +47459,14 @@ const millisecondsToSeconds = (milliseconds) => milliseconds / 1000;
 
 /***/ }),
 
-/***/ "./.cache/caches/gatsby-plugin-image/2186952514.json":
+/***/ "./.cache/caches/gatsby-plugin-image/3915499624.json":
 /*!***********************************************************!*\
-  !*** ./.cache/caches/gatsby-plugin-image/2186952514.json ***!
+  !*** ./.cache/caches/gatsby-plugin-image/3915499624.json ***!
   \***********************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"layout":"fixed","images":{"fallback":{"src":"/static/4298033cc6a14de401d013211c38ede8/a6860/headshot.png","srcSet":"/static/4298033cc6a14de401d013211c38ede8/a6860/headshot.png 600w,\\n/static/4298033cc6a14de401d013211c38ede8/70441/headshot.png 1200w","sizes":"600px"},"sources":[{"srcSet":"/static/4298033cc6a14de401d013211c38ede8/6d02a/headshot.webp 600w,\\n/static/4298033cc6a14de401d013211c38ede8/18f43/headshot.webp 1200w","type":"image/webp","sizes":"600px"}]},"width":600,"height":756}');
+module.exports = JSON.parse('{"layout":"constrained","images":{"fallback":{"src":"/static/4298033cc6a14de401d013211c38ede8/a6860/headshot.png","srcSet":"/static/4298033cc6a14de401d013211c38ede8/0a64c/headshot.png 150w,\\n/static/4298033cc6a14de401d013211c38ede8/9fe98/headshot.png 300w,\\n/static/4298033cc6a14de401d013211c38ede8/a6860/headshot.png 600w,\\n/static/4298033cc6a14de401d013211c38ede8/70441/headshot.png 1200w","sizes":"(min-width: 600px) 600px, 100vw"},"sources":[{"srcSet":"/static/4298033cc6a14de401d013211c38ede8/8d853/headshot.webp 150w,\\n/static/4298033cc6a14de401d013211c38ede8/cdea7/headshot.webp 300w,\\n/static/4298033cc6a14de401d013211c38ede8/6d02a/headshot.webp 600w,\\n/static/4298033cc6a14de401d013211c38ede8/18f43/headshot.webp 1200w","type":"image/webp","sizes":"(min-width: 600px) 600px, 100vw"}]},"width":600,"height":756}');
 
 /***/ }),
 

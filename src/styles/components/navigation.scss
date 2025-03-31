@@ -1,3 +1,89 @@
+@use "../variables" as *;
+
+.hamburger {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 9999;
+
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 10px;
+
+    @media all and (min-width: $tablet) {
+        display: none;
+    }
+
+    span {
+        height: 3px;
+        width: 100%;
+        background: $black;
+        opacity: 1;
+    }
+
+    &:before, &:after {
+        content: "";
+        display: block;
+        height: 3px;
+        width: 100%;
+        right: 10px;
+        left: 10px;
+        background: $black;
+        position: absolute;
+        transition: 0.1s ease;
+    }
+
+    &::before
+    {
+        top: 5px;
+        transform: rotate(0deg);
+    }
+    &::after
+    {
+        bottom: 5px;
+        transform: rotate(0deg);
+    }
+
+    &.dark {
+        span {
+            background: $white;
+        }
+
+        &:before, &:after {
+            background: $white;
+        }
+    }
+
+    &.active {
+
+        span {
+            opacity: 0;
+            background: $black;
+        }
+
+        &:after {
+            transform-origin: bottom;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            background: $black;
+            
+        }
+
+        &:before {
+            top: 50%;
+            left: 50%;
+            transform-origin: top;
+            transform: translate(-50%, -50%) rotate(45deg);
+            background: $black;
+        }
+    }
+}
+
 .side-panel {
     position: fixed;
     top: 0;
@@ -8,7 +94,51 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    z-index: 9999;
+    z-index: 9998;
+
+   &.open {
+    display: flex;
+   } 
+    &.dark {
+        .nav-item {
+            color: $white;
+            
+            @media all and (max-width: $tablet) {
+                color: $blue;   
+            }
+        }
+
+        .icon img, .logo {
+            filter: invert(1);
+
+            @media all and (max-width: $tablet) {
+                filter: none;
+            }
+        }
+    }
+
+    .social {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+    }
+
+    @media all and (max-width: $tablet) {
+        display: none;
+        background: $white;
+        right: 0;
+
+        .nav-item {
+            transform: rotate(0deg);
+            opacity: 1;
+            font-size: 20px;
+        }
+
+        .social {
+            flex-direction: row;
+        }
+        
+    }
 
     &:hover {
         .nav-item {
@@ -19,22 +149,6 @@
                 opacity: 0.6;
             }
         }
-    }
-
-    &.dark {
-        .nav-item {
-            color: $white;
-        }
-
-        .icon img, .logo {
-            filter: invert(1);
-        }
-    }
-
-    .social {
-        display: flex;
-        gap: 20px;
-        flex-direction: column;
     }
 }
 

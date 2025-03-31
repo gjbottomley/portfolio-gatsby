@@ -17,7 +17,6 @@ const Contact = ({ onSuccess }) => {
         (state.succeeded ? " success" : "")
       }
     >
-      <h3>Request CV</h3>
       <form name="contact" onSubmit={handleSubmit}>
         <input
           type="hidden"

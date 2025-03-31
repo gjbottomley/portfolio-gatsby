@@ -1,3 +1,5 @@
+@use "../variables" as *;
+
 .slider-container {
     display: inline-block;
     margin: 25px 0;
@@ -9,6 +11,11 @@
         width: 450px;
         overflow: hidden;
         border-radius: 6px;
+
+        @media all and (max-width:$tablet) { 
+            width: 400px;
+            height: 544px;
+        }
 
         .image {
             position: absolute;
@@ -39,7 +46,10 @@
     }
 
     .buttons {
-        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
 
         button {
             outline: none;
@@ -50,10 +60,6 @@
             font-size: inherit;
             color: white;
             transition: .07s ease-out transform;
-
-            &:first-of-type {
-                margin-right: 15px;
-            }
 
             &:hover {
                 cursor: pointer;
@@ -73,10 +79,11 @@
 .slider-description {
     position: absolute;
     left: 100%;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     font-size: 14px;
     margin-left: 40px;
- div {
+    div {
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
@@ -89,6 +96,22 @@
         color: white;  
         padding: 6px 15px;
         border-radius: 20px;
+    }
+
+    @media all and (max-width:$tablet) { 
+        left: auto;
+        background: rgba($blue, 1);
+        color: $white;
+        padding: 10px;
+        border-radius: 6px 6px 6px 24px;
+        bottom: 80px;
+        font-size: 14px;
+        margin: 0 auto;
+        display: none;
+
+        &.show {
+            display: block;
+        }
     }
     
 }

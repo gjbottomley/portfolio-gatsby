@@ -25,11 +25,16 @@ const sliderTransition = {
 
 const Slider = () => {
   const [[imageCount, direction], setImageCount] = useState([0, 0]);
+  const [infoShow, setInfoShow] = useState(false);
 
   const activeImageIndex = wrap(0, IMAGES.length, imageCount);
 
   const swipeToImage = (swipeDirection) => {
     setImageCount([imageCount + swipeDirection, swipeDirection]);
+  };
+
+  const handleInfoClick = () => {
+    setInfoShow(!infoShow);
   };
 
   const dragEndHandler = (dragInfo) => {
@@ -82,6 +87,7 @@ const Slider = () => {
           >
             NEXT
           </button>
+          <div className="info-button" onClick={handleInfoClick}>i</div>
         </div>
       </div>
 
@@ -92,7 +98,9 @@ const Slider = () => {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="slider-description"
+          className={`slider-description ${
+            infoShow ? "show" : ""
+          }`}
           dangerouslySetInnerHTML={{
             __html: IMAGES[activeImageIndex].description,
           }}

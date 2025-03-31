@@ -6,10 +6,12 @@ const logo = require("../images/logo.png");
 
 const SidePanel = () => {
   const [isDarkSection, setIsDarkSection] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = (sectionId) => {
     const section = document.getElementById(sectionId);
     section?.scrollIntoView({ behavior: "smooth" });
+    setIsOpen(!isOpen);
 
     if (section && section.classList.contains("dark")) {
       setIsDarkSection(true);
@@ -17,6 +19,10 @@ const SidePanel = () => {
       setIsDarkSection(false);
     }
   };
+
+  const handleHamburger = () => {
+    setIsOpen(!isOpen);
+  }
 
   const checkCurrentSection = () => {
     const sections = document.querySelectorAll("section");
@@ -44,7 +50,9 @@ const SidePanel = () => {
   }, []);
 
   return (
-    <div className={`side-panel ${isDarkSection ? "dark" : ""}`}>
+    <>
+    <div className={`hamburger ${isDarkSection ? "dark" : ""} ${isOpen ? "active" : ""}`} onClick={handleHamburger}><span></span></div>
+    <div className={`side-panel ${isDarkSection ? "dark" : ""} ${isOpen ? "open" : ""}`}>
       <div className="logo" onClick={() => handleClick("top")}>
         <StaticImage
           src="../images/logo.png"
@@ -96,6 +104,7 @@ const SidePanel = () => {
         </Link>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,3 +1,4 @@
+@use "../variables" as *;
 
 .bar {
     position: relative;
@@ -14,14 +15,30 @@
 }
 
 .bar {
-    &.contact, &.about {
+    &.about {
         .title, .sub-title {
             right: auto;
             left: 120px;
         }
 
         .container {
-            justify-content: flex-end;
+            justify-content: center;
+
+            @media all and (max-width:$tablet) { 
+                flex-direction: column-reverse;
+            }
+        }
+    }
+
+    &.contact, &.built {
+        .title, .sub-title {
+            left: 120px;
+            right: 0;
+            text-align: center;
+        }
+
+        .container {
+            justify-content:center;
         }
     }
 

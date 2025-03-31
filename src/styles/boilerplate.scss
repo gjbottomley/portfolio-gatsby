@@ -1,4 +1,6 @@
 
+@use "variables" as *;
+
 *,
 *::before,
 *::after {
@@ -43,11 +45,7 @@ h1 {
 }
 
 h2 {
-    font-size: 7rem;
-
-    @media all and (max-width:960px) { 
-        font-size: 2rem;
-    }
+    font-size: calc(22px + 1.5vw);
 
     &:after {
         content: '.';
@@ -56,12 +54,7 @@ h2 {
 }
 
 h3 {
-    font-size: 3rem;
-
-    @media all and (max-width:960px) {
-        font-size: 3rem;
-    }
-
+    font-size: calc(12px + 1.5vw);
     &:after {
         content: '.';
         color: $green;
@@ -77,9 +70,15 @@ section {
     padding-left: 110px;
     overflow: hidden;
 
+    @media all and (max-width: $tablet) {
+        padding-left: 0px;
+        padding-top: 80px;
+    }
+
     &.header {
         justify-content: flex-start;
         align-items: flex-start;
+        padding-top: 0;
     }
 
     & > * {
