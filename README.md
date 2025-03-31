@@ -17,6 +17,7 @@
 
     ```
     cd portfolio-gatsby/
+    npm install
     gatsby develop
     ```
 
