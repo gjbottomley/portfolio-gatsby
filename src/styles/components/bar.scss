@@ -42,6 +42,14 @@
         }
     }
 
+    &.built {
+        .container {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
     &.portfolio {
         .container {
             justify-content: center;

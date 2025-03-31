@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   motion,
   useScroll,
@@ -26,8 +26,11 @@ const ParallaxText = ({ children, baseVelocity = 100 }) => {
 
   const directionFactor = useRef(1);
   const dragControls = useDragControls();
+  const [isHovered, setIsHovered] = useState(false);
 
   useAnimationFrame((t, delta) => {
+    if (isHovered) return; // Stop animation when hovered
+
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
     if (velocityFactor.get() < 0) {
@@ -43,8 +46,14 @@ const ParallaxText = ({ children, baseVelocity = 100 }) => {
 
   const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`);
   return (
-    <div className="parallax">
-      <motion.div className="scroller" style={{ x }} drag="x" dragControls={dragControls}>
+    <motion.div
+      className="parallax"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      drag="x" dragControls={dragControls}
+      style={{ touchAction: "none" }}
+    >
+      <motion.div className="scroller" style={{ x}}>
         <span>{children} </span>
         <span>{children} </span>
         <span>{children} </span>
@@ -54,7 +63,7 @@ const ParallaxText = ({ children, baseVelocity = 100 }) => {
         <span>{children} </span>
         <span>{children} </span>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 

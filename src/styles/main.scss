@@ -163,6 +163,12 @@
     color: $white;
     padding: 20px;
 
+    @media all and (max-width:$desktop) { 
+        font-size: calc(14px + 0.8vw);
+        margin-top: 90px;
+        padding: 20px;
+    }
+
     @media all and (max-width:$tablet) { 
         font-size: calc(14px + 0.8vw);
         margin-top: 0;

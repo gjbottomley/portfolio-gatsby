@@ -65,7 +65,7 @@ const Slider = () => {
               dragElastic={1}
               onDragEnd={(_, dragInfo) => dragEndHandler(dragInfo)}
               className="image"
-              style={{ overflow: "hidden" }}
+              style={{ overflow: "hidden", touchAction: "none" }}
             >
               <motion.div style={{ overflow: "auto", height: "fit-content" }}>
                 <img src={IMAGES[activeImageIndex].imageSrc} alt="slider" />

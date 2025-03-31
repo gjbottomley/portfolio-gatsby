@@ -105,7 +105,7 @@ const IndexPage = () => {
             lifecycle, from initial concept to final execution.
           </p>
         </motion.div>
-        <div className="velocity-container velcoity-container--skills"><h3>Knowledge in</h3>
+        <div className="velocity-container velcoity-container--skills"><h3>Technical Skills</h3>
         <ParallaxText baseVelocity={0.4}>
           <Tile skill="react" />
           <Tile skill="angular" />
