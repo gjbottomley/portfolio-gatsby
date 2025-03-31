@@ -101,18 +101,18 @@ const Modal = () => {
     
     
       const toggleFullScreen = useCallback(() => {
-        // if (isFullScreen) {
-        //   const requestMethod = getFullScreenCancelMethod();
-        //   if (requestMethod) {
-        //     requestMethod.call(document);
-        //   }
-        // } else {
-        //   const contentElement = document.getElementById('app');
-        //   const requestMethod = getFullScreenRequestMethod(contentElement);
-        //   if (requestMethod) {
-        //       requestMethod.call(contentElement);
-        //   }
-        // }
+        if (isFullScreen) {
+          const requestMethod = getFullScreenCancelMethod();
+          if (requestMethod) {
+            requestMethod.call(document);
+          }
+        } else {
+          const contentElement = document.getElementById('app');
+          const requestMethod = getFullScreenRequestMethod(contentElement);
+          if (requestMethod) {
+              requestMethod.call(contentElement);
+          }
+        }
 
         setModalOpen(false);
       }, [isFullScreen]);
@@ -145,7 +145,7 @@ const Modal = () => {
               <div className="button button--pink" onClick={toggleFullScreen}>Full screen</div>
           </motion.div>
       </div>
-    } */}
+    } 
     <MobileView>
       <motion.div className="fullscreen-button" onClick={toggleFullScreen} initial="show" whileHover="hover" whileInView="hide">
         {!isFullScreen &&
@@ -158,7 +158,7 @@ const Modal = () => {
                   { isFullScreen ? ' Exit' : ' Enter' } Fullscreen
           </motion.div>
       </motion.div>
-    </MobileView>
+    </MobileView>*/}
     </>
   );
 };

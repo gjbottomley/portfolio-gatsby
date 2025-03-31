@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
+import {BrowserView} from 'react-device-detect';
+
 const CustomCursor = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHoveringLink, setIsHoveringLink] = useState(false);
@@ -39,6 +41,7 @@ const CustomCursor = () => {
 
   return (
     <>
+    <BrowserView>
       <motion.div
         className="custom-cursor"
         style={{
@@ -55,6 +58,7 @@ const CustomCursor = () => {
         }}
         transition={{ type: "tween", stiffness: 0 }}
       />
+    </BrowserView>
       <motion.div
         className={`mouse-gradient ${isHoveringLink ? " active" : ""}`}
         animate={{
