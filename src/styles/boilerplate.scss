@@ -63,7 +63,6 @@ h3 {
 
 section {
     height: 100vh;
-    scroll-snap-align: start;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -84,5 +83,11 @@ section {
     & > * {
         //position: relative;
         z-index: 2;
+    }
+}
+
+.snap {
+    section {
+        scroll-snap-align: start;
     }
 }

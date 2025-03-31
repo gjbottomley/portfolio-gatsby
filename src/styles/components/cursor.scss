@@ -22,5 +22,8 @@
     position: fixed;
     //pointer-events: none;
     z-index: 9999;
-
+    
+    @media screen {
+        display: none;
+    }
 }

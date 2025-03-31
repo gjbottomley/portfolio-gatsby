@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { StaticImage } from "gatsby-plugin-image";
 import {
   motion,
   useScroll,

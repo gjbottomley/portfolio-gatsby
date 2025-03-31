@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 
 const Contact = ({ onSuccess }) => {
   const [state, handleSubmit] = useForm("mnnpvzyq");
+  const [inputSelected, setInputSelected] = useState(false)
 
+  const handleFocus = () => {
+    setInputSelected(true);
+  };
+  const handleBlur = () => {
+    setInputSelected(false);
+  };
+
+  useEffect(() => {
+    console.log("focus");
+
+    if (inputSelected) {
+      document.body.classList.remove('snap');
+    } else {
+      document.body.classList.add('snap');
+    }
+  }, [inputSelected]);
+  
   if (state.succeeded) {
     onSuccess(true);
     return <div className="thank-you">Thanks for getting in touch!</div>;
@@ -21,6 +39,8 @@ const Contact = ({ onSuccess }) => {
         <input
           type="hidden"
           name="form-name"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           value="contact"
           disabled={state.submitting}
         />
@@ -30,6 +50,8 @@ const Contact = ({ onSuccess }) => {
             type="text"
             name="name"
             id="name"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
             required
             disabled={state.submitting}
           />
@@ -40,6 +62,8 @@ const Contact = ({ onSuccess }) => {
             type="email"
             name="email"
             id="email"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
             required
             disabled={state.submitting}
           />
@@ -50,6 +74,8 @@ const Contact = ({ onSuccess }) => {
           <textarea
             name="message"
             id="message"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
             required
             disabled={state.submitting}
           />
