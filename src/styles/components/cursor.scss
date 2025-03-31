@@ -22,8 +22,8 @@
     position: fixed;
     //pointer-events: none;
     z-index: 9999;
-    
-    @media screen {
+
+    @media all and (max-width:$mobile) {
         display: none;
     }
 }

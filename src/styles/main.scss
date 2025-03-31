@@ -10,18 +10,19 @@
 @use "components/form";
 @use "components/velocity";
 @use "components/tile";
+@use "components/modal";
 
 
 .container {
     display: flex;
     padding: 40px 20px;
     width: 100%;
-    align-items: center;
 
-    @media all and (max-width:$desktop) {    
+    @media all and (max-width:$tablet) {    
         max-width: 1000px;
         margin: 0 auto;
         flex-direction: column;
+        align-items: center;
     }
 }
 

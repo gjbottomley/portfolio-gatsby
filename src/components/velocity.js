@@ -44,7 +44,7 @@ const ParallaxText = ({ children, baseVelocity = 100 }) => {
   const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`);
   return (
     <div className="parallax">
-      <motion.div className="scroller" style={{ x }} drag="x" dragConstraints={{ left: -100, right: 100 }} dragControls={dragControls}>
+      <motion.div className="scroller" style={{ x }} drag="x" dragControls={dragControls}>
         <span>{children} </span>
         <span>{children} </span>
         <span>{children} </span>
