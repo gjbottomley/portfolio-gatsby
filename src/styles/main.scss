@@ -63,18 +63,37 @@
     transition: 0.3s ease;
     pointer-events: none;
 
-    @media all and (max-width:$mobile) { 
+    @media all and (max-width:$tablet) { 
         bottom: 100px;
     }
 }
 
 .headshot {
+    @media (max-height:1200px) and (max-width:$tablet) { 
+        width: 700px;
+    }
+    @media (max-height:1040px) and (max-width:$mobile) { 
+        width: 480px;
+    }
+    @media (max-height:920px) and (max-width:$mobile) { 
+        width: 440px;
+    }
+    @media (max-height:850px) and (max-width:$mobile) { 
+        width: 400px;
+    }
+
+    @media (max-height:720px) and (max-width:$mobile) { 
+        width: 260px;
+    }
+
     @media all and (max-width:$desktop) { 
         width: 500px;
     }
+
     @media all and (max-width:$tablet) { 
         width: 400px;
     }
+
     @media all and (max-width:$mobile) { 
         width: 260px;
     }
