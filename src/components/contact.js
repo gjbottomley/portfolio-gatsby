@@ -13,8 +13,6 @@ const Contact = ({ onSuccess }) => {
   };
 
   useEffect(() => {
-    console.log("focus");
-
     if (inputSelected) {
       document.body.classList.remove('snap');
     } else {

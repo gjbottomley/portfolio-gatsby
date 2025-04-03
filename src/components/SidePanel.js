@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { StaticImage } from "gatsby-plugin-image";
 import { Link } from "gatsby";
 
-const logo = require("../images/logo.png");
-
 const SidePanel = () => {
   const [isDarkSection, setIsDarkSection] = useState(false);
   const [isOpen, setIsOpen] = useState(false);

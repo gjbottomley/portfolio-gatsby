@@ -61,6 +61,15 @@ h3 {
     }
 }
 
+h4 {
+    font-size: calc(12px + 1vw);
+    &:after {
+        content: '.';
+        color: $green;
+    }
+}
+
+
 section {
     height: 100vh; /* old browsers */  
     height: 100dvh; /* new browsers */

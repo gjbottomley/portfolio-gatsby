@@ -13,38 +13,95 @@
 
     position: relative;
 
+    img {
+        pointer-events: none;
+    }
+}
+
+.card {
+    border-radius: 6px;
+    width: 300px;
+    height: 380px;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .tile-title {
-        position: absolute;
-        bottom: calc(100% - 10px);
-        //left: 0;
-        background: rgba($black, 0.6);
-        font-size: 22px;
-        color: $white;
-        padding: 14px;
-        border-radius: 6px;
-        text-transform: capitalize;
-        font-weight: 400;
-        letter-spacing: 0;
+        transition: 0.2s background-color, border-color ease;
+        &:hover {
+            background: rgba($black, 0.8);
 
-
-        &::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0; 
-            height: 0; 
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            
-            border-top: 10px solid rgba($black, 0.6);
+            &:after {
+             border-top-color:  rgba($black, 0.8);
+            }
         }
-
     }
+
+}
+
+.card-inner {
+    
+    padding: 10px;
+    //background: rgba($white, 0.3);
+    border-radius: 6px;
+    position: relative;
 
     img {
         pointer-events: none;
+    }
+}
+
+.tile-title {
+    position: absolute;
+    bottom: calc(100% - 10px);
+    //left: 0;
+    background: rgba($black, 0.6);
+    font-size: 22px;
+    color: $white;
+    padding: 14px;
+    border-radius: 6px;
+    text-transform: capitalize;
+    font-weight: 400;
+    letter-spacing: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0; 
+        height: 0; 
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        
+        border-top: 10px solid rgba($black, 0.6);
+    }
+}
+
+.tile-more {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: $green;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s scale ease;
+
+    &:hover {
+        scale: 1.2;
     }
 }

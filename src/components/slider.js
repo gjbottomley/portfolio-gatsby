@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { wrap } from "@popmotion/popcorn";
-
-import { IMAGES } from "./sliderImages";
+import { PORTFOLIO } from "./portfolioCards";
 
 const sliderVariants = {
   incoming: (direction) => ({
@@ -27,7 +26,7 @@ const Slider = () => {
   const [[imageCount, direction], setImageCount] = useState([0, 0]);
   const [infoShow, setInfoShow] = useState(false);
 
-  const activeImageIndex = wrap(0, IMAGES.length, imageCount);
+  const activeImageIndex = wrap(0, PORTFOLIO.length, imageCount);
 
   const swipeToImage = (swipeDirection) => {
     setImageCount([imageCount + swipeDirection, swipeDirection]);
@@ -68,7 +67,7 @@ const Slider = () => {
               style={{ overflow: "hidden", touchAction: "none" }}
             >
               <motion.div style={{ overflow: "auto", height: "fit-content" }}>
-                <img src={IMAGES[activeImageIndex].imageSrc} alt="slider" />
+                <img src={PORTFOLIO[activeImageIndex].url} alt="slider" />
               </motion.div>
             </motion.div>
           </AnimatePresence>
@@ -102,7 +101,7 @@ const Slider = () => {
             infoShow ? "show" : ""
           }`}
           dangerouslySetInnerHTML={{
-            __html: IMAGES[activeImageIndex].description,
+            __html: PORTFOLIO[activeImageIndex].description,
           }}
         />
       </AnimatePresence>

@@ -6,26 +6,31 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 9999;
+    z-index: 9998;
 
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px;
-    background: rgba($black, 0.2);
+    background: rgba($black, 0.8);
 }
 
 .modal {
-    background: $blue;
-    padding: 20px;
-    width: 100%;
-    max-width: 600px;
-    height: 400px;
+    //position: relative;
+    //padding: 20px;
+    //width: 100%;
+    
     border-radius: 6px;
     color: $white;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    //box-shadow: 0 0 20px rgba($black, 0.4);
+
+    * {
+        color: $blue;
+    }
 
     h3 {
         margin-bottom: 20px;
@@ -34,9 +39,57 @@
     span {
         font-size: 12px;
     }
+}
+.modal-inner {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+}
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    background: $white;
+    padding: 20px;
+    border-radius: 6px;
+    max-width: 600px;
+    position: relative;
+    margin-top: -72px;
+
+
+    h3 {
+        margin: 0;
+    }
+    div {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+    }
+    span {
+        background-color: #2abd79;
+        color: white;  
+        padding: 6px 15px;
+        border-radius: 20px;
+    }
+}
+
+div.modal-navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top: 20px;
+
+    position: absolute;
+    top: 100%;
 
     .button {
-        width: 100%;
-        max-width: 100%;
+        background-image: none;
     }
 }

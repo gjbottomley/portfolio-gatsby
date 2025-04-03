@@ -9,12 +9,13 @@ import {
 
 import Layout from "../components/layout";
 import { SEO } from "../components/SEO";
-import CustomCursor from "../components/customCursor";
 import { ParallaxText, Tile } from "../components/velocity";
 import Contact from "../components/contact";
 import Slider from "../components/slider";
 import Section from "../components/section";
 import GradientBox from "../components/gradient-box";
+import Portfolio from "../components/portfolio";
+import { BrowserView, MobileOnlyView } from "react-device-detect";
 
 const IndexPage = () => {
   const { scrollY } = useScroll();
@@ -23,11 +24,10 @@ const IndexPage = () => {
 
   return (
     <Layout>
-      <CustomCursor />
       <section className="bar header" id="top">
         <div className="velocity-container">
-          <ParallaxText baseVelocity={-1}>Software Developer</ParallaxText>
-          <ParallaxText baseVelocity={2}>UI/UX Designer</ParallaxText>
+          <ParallaxText baseVelocity={-0.5}>Software Developer</ParallaxText>
+          <ParallaxText baseVelocity={1}>UI/UX Designer</ParallaxText>
         </div>
         <div className="head">
           <div className="content">
@@ -130,7 +130,8 @@ const IndexPage = () => {
         </motion.div>
         <GradientBox color="green" location="top" />
         <div className="flex-wrapper">
-          <Slider />
+          <BrowserView><Portfolio /></BrowserView>
+          <MobileOnlyView><Slider /></MobileOnlyView>
         </div>
       </Section>
       <Section title="Contact" color={`#30314f`} id="contact">
@@ -149,14 +150,26 @@ const IndexPage = () => {
         </div>
       </Section>
       <Section title="Built with" color={`#292a45`} id="built">
-      <ul className="built">
-        <li>React</li>
-        <li><Link to="https://www.gatsbyjs.com/" target="_blank" title="gatsby">Gatsby</Link></li>
-        <li><Link to="https://motion.dev/" target="_blank" title="framer motion">Framer Motion</Link></li>
-        <li>Sass</li>
-        <li>Git</li>
-      </ul><div>
-      <Link className="button button--pink center" to="https://github.com/gjbottomley/portfolio-gatsby" target="_blank" title="Github Repository">See Repository</Link></div>
+        <div className="built-container">
+          <h4>Dependancies</h4>
+          <ul className="built">
+            <li>React</li>
+            <li><Link to="https://www.gatsbyjs.com/" target="_blank" title="gatsby">Gatsby</Link></li>
+            <li><Link to="https://motion.dev/" target="_blank" title="framer motion">Framer Motion</Link></li>
+            <li>Sass</li>
+            <li>Node</li>
+          </ul>
+          <h4>Tools</h4>
+          <ul className="built">
+            <li>Visual Studio Code</li>
+            <li>Git</li>
+            <li>Github Copilot</li>
+            <li>Figma</li>
+            <li>NPM</li>
+            <li>Adobe Photoshop</li>
+          </ul>
+            <Link className="button button--pink center" to="https://github.com/gjbottomley/portfolio-gatsby" target="_blank" title="Github Repository">See Repository</Link>
+      </div>
       </Section>
     </Layout>
   );

@@ -5,7 +5,7 @@ import Favicon from "react-favicon";
 import "../styles/main.scss";
 import icon from "../images/favicon.png";
 import SidePanel from "./sidePanel";
-import Modal from "./modal";
+import CustomCursor from "../components/customCursor";
 
 export default function Layout({ children }) {
 
@@ -17,7 +17,7 @@ export default function Layout({ children }) {
     <>
       <Favicon url={icon} />
       <SidePanel />
-      <Modal />
+      <CustomCursor />
       <main>{children}</main>
     </>
   );

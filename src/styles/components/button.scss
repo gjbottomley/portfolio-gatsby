@@ -68,22 +68,30 @@
     }
 }
 
-.fullscreen-button {
-    position: fixed;
-    left: 0;
-    top: 80px;
-    background: $white;
-    box-shadow: 0 0 20px rgba($black, 0.1);
-    z-index: 9998;
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    padding: 10px 10px 10px 10px;
-    border-radius: 0 6px 6px 0;
+.button--close {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+    border-radius: 60px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
 
+    &::before, &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 3px;
+        width: 35px;
+        background: $pink;
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
 
-    .fullscreen__text {
-        overflow: hidden;
-        white-space: nowrap;
+    &:after {
+        
+        transform: translate(-50%, -50%) rotate(-45deg);
     }
 }
